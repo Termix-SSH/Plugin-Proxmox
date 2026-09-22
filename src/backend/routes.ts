@@ -1,28 +1,28 @@
-import { getErrorMessage } from "../../../src/backend/utils/error-message.js";
+import { getErrorMessage } from "../../../../src/backend/utils/error-message.js";
 import express from "express";
 import { Client as SSHClient } from "ssh2";
-import { logger } from "../../../src/backend/utils/logger.js";
-import { DataCrypto } from "../../../src/backend/utils/data-crypto.js";
-import { createCurrentHostRepository } from "../../../src/backend/database/repositories/factory.js";
-import { AuthManager } from "../../../src/backend/utils/auth-manager.js";
+import { logger } from "../../../../src/backend/utils/logger.js";
+import { DataCrypto } from "../../../../src/backend/utils/data-crypto.js";
+import { createCurrentHostRepository } from "../../../../src/backend/database/repositories/factory.js";
+import { AuthManager } from "../../../../src/backend/utils/auth-manager.js";
 import {
   type AuthenticatedRequest,
   type SSHHost,
-} from "../../../src/types/index.js";
-import { SSHHostKeyVerifier } from "../../../src/backend/hosts/host-key-verifier.js";
-import { resolveHostById } from "../../../src/backend/hosts/host-resolver.js";
-import { createJumpHostChain } from "../../../src/backend/hosts/jump-host-chain.js";
+} from "../../../../src/types/index.js";
+import { SSHHostKeyVerifier } from "../../../../src/backend/hosts/host-key-verifier.js";
+import { resolveHostById } from "../../../../src/backend/hosts/host-resolver.js";
+import { createJumpHostChain } from "../../../../src/backend/hosts/jump-host-chain.js";
 import { resolveProxmoxImportAuth } from "./proxmox-import-auth.js";
 import {
   parseProxmoxJumpHosts,
   serializeProxmoxJumpHosts,
 } from "./proxmox-jump-hosts.js";
-import { isSafeNodeName } from "../../../src/backend/hosts/proxmox-shared.js";
-import { execElevated } from "../../../src/backend/hosts/metrics-shared/exec-elevated.js";
+import { isSafeNodeName } from "../../../../src/backend/hosts/proxmox-shared.js";
+import { execElevated } from "../../../../src/backend/hosts/metrics-shared/exec-elevated.js";
 import {
   registerProxmoxRouter,
   unregisterProxmoxRouter,
-} from "../../../src/backend/database/routes/proxmox-dispatch.js";
+} from "../../../../src/backend/database/routes/proxmox-dispatch.js";
 
 const router = express.Router();
 const proxmoxLogger = logger;
@@ -350,7 +350,7 @@ async function discoverProxmoxGuestsForHost(
       sshConfig.passphrase = resolvedCredentials.keyPassword;
   } else if (authType === "agent") {
     const { applyAgentAuth } =
-      await import("../../../src/backend/hosts/terminal-auth-helpers.js");
+      await import("../../../../src/backend/hosts/terminal-auth-helpers.js");
     const result = await applyAgentAuth(
       sshConfig,
       host.terminalConfig as unknown as Record<string, unknown> | undefined,

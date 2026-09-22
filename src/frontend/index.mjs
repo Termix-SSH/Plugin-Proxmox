@@ -29,7 +29,7 @@ export const hostEditorTabId = "proxmox";
 export async function register({ registerHostEditorTab, icons }) {
   if (registerHostEditorTab) {
     const { HostProxmoxTab } =
-      await import("../../../src/ui/sidebar/HostEditorFeatureTabs.tsx");
+      await import("../../../../src/ui/sidebar/HostEditorFeatureTabs.tsx");
     registerHostEditorTab({
       id: hostEditorTabId,
       labelKey: "hosts.tabProxmox",
