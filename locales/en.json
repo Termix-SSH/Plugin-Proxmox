@@ -46,7 +46,9 @@
     "filterVm": "VM",
     "filterLxc": "LXC",
     "noGuests": "No VMs or LXC containers found on this node.",
-    "noGuestsMatch": "No guests match the current filters."
+    "noGuestsMatch": "No guests match the current filters.",
+    "notEnabled": "Proxmox stats are not enabled for this host",
+    "notEnabledHint": "Turn on Proxmox stats in this host's settings to see its node and guests."
   },
   "hosts": {
     "tabProxmox": "Proxmox",

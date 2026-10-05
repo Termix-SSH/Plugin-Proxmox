@@ -323,37 +323,37 @@ function ProxmoxStatsInner({
     >
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         {retry.status === "connected" && !notEnabled && (
-          <div className="mx-3 mt-3 flex shrink-0 items-center justify-between border border-border bg-card px-3 py-3">
-            <div className="flex items-center gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center border border-border bg-muted">
-                <Server className="size-5 text-accent-brand" />
-              </div>
-              <h1 className="text-lg font-bold md:text-2xl">{title}</h1>
+          <div className="flex h-12.5 shrink-0 items-center justify-between gap-2 border-b border-border px-3">
+            <div className="flex min-w-0 items-center gap-2">
+              <Server className="size-4 shrink-0 text-accent-brand" />
+              <h1 className="truncate text-base font-bold tracking-tight">
+                {title}
+              </h1>
             </div>
             <Button
-              variant="outline"
-              size="default"
+              variant="ghost"
+              size="icon"
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="gap-2 font-semibold"
+              title={t("proxmoxStats.refresh")}
+              className="text-accent-brand"
             >
               <RefreshCw
-                className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`}
+                className={`size-4 ${isRefreshing ? "animate-spin" : ""}`}
               />
-              {t("proxmoxStats.refresh")}
             </Button>
           </div>
         )}
 
         {showContent && (
-          <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-3 pb-3 pt-3">
+          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-2.5">
             <div className="shrink-0">
               <NodeSummaryStrip node={snapshot.node} histories={histories} />
             </div>
 
             <GuestTable guests={snapshot.guests.guests} />
 
-            <div className="grid shrink-0 grid-cols-1 gap-3 pb-1 md:grid-cols-3">
+            <div className="grid shrink-0 grid-cols-1 gap-2 md:grid-cols-3">
               <NodeNetworkCard snapshot={snapshot} />
               <StoragePoolsCard snapshot={snapshot} />
               {snapshot.cluster.clustered && (
@@ -364,21 +364,19 @@ function ProxmoxStatsInner({
         )}
 
         <ConnectionScreen
-          status={notEnabled ? "connected" : retry.status}
+          status={notEnabled ? "error" : retry.status}
           message={t("proxmoxStats.connecting")}
           attempt={retry.attempt}
           maxAttempts={retry.maxAttempts}
           nextRetryInMs={retry.nextRetryInMs}
           onManualRetry={retry.retryNow}
-          emptyState={
-            notEnabled ? (
-              <div className="text-center opacity-40">
-                <Server className="mx-auto mb-4 size-16" />
-                <p className="text-xl font-bold uppercase tracking-widest">
-                  {t("proxmoxStats.noHostSelected")}
-                </p>
-              </div>
-            ) : undefined
+          unavailable={
+            notEnabled
+              ? {
+                  title: t("proxmoxStats.notEnabled"),
+                  hint: t("proxmoxStats.notEnabledHint"),
+                }
+              : null
           }
         />
       </div>

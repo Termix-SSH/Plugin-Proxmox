@@ -34,12 +34,12 @@ describe("ProxmoxStatsTab", () => {
   it("reads the stats switch from the plugin host settings", () => {
     render(<ProxmoxStatsTab hostConfig={host({ enableProxmoxStats: true })} />);
     expect(
-      screen.queryByText("proxmoxStats.noHostSelected"),
+      screen.queryByText("proxmoxStats.notEnabled"),
     ).not.toBeInTheDocument();
   });
 
   it("shows the empty state when stats are off for the host", () => {
     render(<ProxmoxStatsTab hostConfig={host({})} />);
-    expect(screen.getByText("proxmoxStats.noHostSelected")).toBeInTheDocument();
+    expect(screen.getByText("proxmoxStats.notEnabled")).toBeInTheDocument();
   });
 });

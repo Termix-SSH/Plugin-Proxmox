@@ -5,15 +5,7 @@ import {
 } from "@termix/plugin-sdk/frontend";
 import { Server, RefreshCw, CheckSquare, Square, Download } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@termix/plugin-sdk/ui";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@termix/plugin-sdk/ui";
-import { Select2 } from "@termix/plugin-sdk/ui";
+import { Button, InlineView, Select2 } from "@termix/plugin-sdk/ui";
 import {
   discoverProxmoxGuestsStream,
   importProxmoxHosts,
@@ -78,7 +70,7 @@ export function ProxmoxDiscoverDialog({
       )?.proxmox?.enableProxmox === true,
   );
 
-  // The Proxmox host the discovery runs against — imported guests are grouped
+  // The Proxmox host the discovery runs against; imported guests are grouped
   // into a folder named after it. Use the same id resolution as discovery so
   // it also works when launched directly from a host action (preselectedHostId).
   const effectiveHostId =
@@ -244,7 +236,7 @@ export function ProxmoxDiscoverDialog({
   const canDiscover = preselectedHostId != null || !!selectedHostId;
 
   return (
-    <Dialog
+    <InlineView
       open={open}
       onOpenChange={(v) => {
         if (!v) {
@@ -252,161 +244,20 @@ export function ProxmoxDiscoverDialog({
           onClose();
         }
       }}
-    >
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Server className="size-4" />
-            {t("hosts.proxmoxImportTitle")}
-          </DialogTitle>
-          <a
-            href="https://docs.termix.site/features/files-and-hosts/proxmox-import"
-            target="_blank"
-            rel="noreferrer"
-            className="text-[10px] text-accent-brand hover:underline"
-          >
-            {t("hosts.docsLink")}
-          </a>
-        </DialogHeader>
-
-        <div className="space-y-3">
-          {/* Host selector — hidden when launched from a specific host */}
-          {!preselectedHostId && (
-            <div className="flex gap-2">
-              <Select2
-                value={selectedHostId}
-                onChange={(event) => setSelectedHostId(event.target.value)}
-                disabled={discovering}
-                placeholder={t("hosts.proxmoxSelectHost")}
-                className="flex-1 text-xs h-8"
-              >
-                {sshHosts.map((h) => (
-                  <option key={h.id} value={String(h.id)}>
-                    {h.name || h.ip}
-                  </option>
-                ))}
-              </Select2>
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={!canDiscover || discovering}
-                onClick={handleDiscover}
-                className="shrink-0"
-              >
-                <RefreshCw
-                  className={`size-3.5 mr-1.5 ${discovering ? "animate-spin" : ""}`}
-                />
-                {t("hosts.proxmoxDiscover")}
-              </Button>
-            </div>
-          )}
-
-          {/* When launched from a specific host, show Discover directly */}
-          {preselectedHostId && !guests && (
-            <Button
-              size="sm"
-              variant="outline"
-              disabled={discovering}
-              onClick={handleDiscover}
-              className="w-full"
-            >
-              <RefreshCw
-                className={`size-3.5 mr-1.5 ${discovering ? "animate-spin" : ""}`}
-              />
-              {discovering
-                ? progress
-                  ? `${t("hosts.proxmoxDiscovering")} ${progress.done}/${progress.total}`
-                  : t("hosts.proxmoxDiscovering")
-                : t("hosts.proxmoxDiscoverGuests")}
-            </Button>
-          )}
-
-          {/* Guest list */}
-          {guests !== null && (
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>
-                  {t("hosts.proxmoxGuestsSelected", {
-                    count: guests.length,
-                    selected: selected.size,
-                  })}
-                </span>
-                <div className="flex gap-3">
-                  <button
-                    className="hover:text-foreground transition-colors"
-                    onClick={() =>
-                      setSelected(new Set(guests.map((g) => g.vmid)))
-                    }
-                  >
-                    {t("hosts.proxmoxSelectAll")}
-                  </button>
-                  <button
-                    className="hover:text-foreground transition-colors"
-                    onClick={() => setSelected(new Set())}
-                  >
-                    {t("hosts.proxmoxDeselectAll")}
-                  </button>
-                </div>
-              </div>
-
-              {guests.length === 0 ? (
-                <p className="text-xs text-muted-foreground py-4 text-center">
-                  {t("hosts.proxmoxNoGuests")}
-                </p>
-              ) : (
-                <div className="max-h-64 overflow-y-auto rounded-md border border-border divide-y divide-border">
-                  {Object.entries(nodeGroups).map(([node, nodeGuests]) => (
-                    <div key={node}>
-                      <div className="px-2 py-1 text-[10px] font-medium text-muted-foreground bg-muted/50 uppercase tracking-wider">
-                        {node}
-                      </div>
-                      {nodeGuests.map((g) => (
-                        <button
-                          key={g.vmid}
-                          className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent transition-colors text-left"
-                          onClick={() => {
-                            setSelected((prev) => {
-                              const next = new Set(prev);
-                              if (next.has(g.vmid)) next.delete(g.vmid);
-                              else next.add(g.vmid);
-                              return next;
-                            });
-                          }}
-                        >
-                          {selected.has(g.vmid) ? (
-                            <CheckSquare className="size-3.5 text-primary shrink-0" />
-                          ) : (
-                            <Square className="size-3.5 text-muted-foreground shrink-0" />
-                          )}
-                          <span className="flex-1 truncate">{g.name}</span>
-                          <span className="text-muted-foreground text-[10px] shrink-0">
-                            {g.type.toUpperCase()} {g.vmid}
-                          </span>
-                          <span
-                            className={`shrink-0 text-[10px] ${g.status === "running" ? "text-green-400" : "text-muted-foreground"}`}
-                          >
-                            {g.status}
-                          </span>
-                          <span
-                            className={`shrink-0 text-[10px] font-mono ${
-                              g.ip
-                                ? "text-muted-foreground"
-                                : "text-amber-400/80 italic"
-                            }`}
-                          >
-                            {g.ip || "no IP"}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        <DialogFooter>
+      title={t("hosts.proxmoxImportTitle")}
+      icon={<Server className="size-4" />}
+      actions={
+        <a
+          href="https://docs.termix.site/features/files-and-hosts/proxmox-import"
+          target="_blank"
+          rel="noreferrer"
+          className="px-2 text-[10px] text-accent-brand hover:underline"
+        >
+          {t("hosts.docsLink")}
+        </a>
+      }
+      footer={
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
           <Button
             variant="ghost"
             size="sm"
@@ -427,8 +278,145 @@ export function ProxmoxDiscoverDialog({
               {t("hosts.proxmoxImportButton", { count: selected.size })}
             </Button>
           )}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+      }
+    >
+      <div className="space-y-3">
+        {/* Host selector, hidden when launched from a specific host */}
+        {!preselectedHostId && (
+          <div className="flex gap-2">
+            <Select2
+              value={selectedHostId}
+              onChange={(event) => setSelectedHostId(event.target.value)}
+              disabled={discovering}
+              placeholder={t("hosts.proxmoxSelectHost")}
+              className="flex-1 text-xs h-8"
+            >
+              {sshHosts.map((h) => (
+                <option key={h.id} value={String(h.id)}>
+                  {h.name || h.ip}
+                </option>
+              ))}
+            </Select2>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={!canDiscover || discovering}
+              onClick={handleDiscover}
+              className="shrink-0"
+            >
+              <RefreshCw
+                className={`size-3.5 mr-1.5 ${discovering ? "animate-spin" : ""}`}
+              />
+              {t("hosts.proxmoxDiscover")}
+            </Button>
+          </div>
+        )}
+
+        {/* When launched from a specific host, show Discover directly */}
+        {preselectedHostId && !guests && (
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={discovering}
+            onClick={handleDiscover}
+            className="w-full"
+          >
+            <RefreshCw
+              className={`size-3.5 mr-1.5 ${discovering ? "animate-spin" : ""}`}
+            />
+            {discovering
+              ? progress
+                ? `${t("hosts.proxmoxDiscovering")} ${progress.done}/${progress.total}`
+                : t("hosts.proxmoxDiscovering")
+              : t("hosts.proxmoxDiscoverGuests")}
+          </Button>
+        )}
+
+        {/* Guest list */}
+        {guests !== null && (
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <span>
+                {t("hosts.proxmoxGuestsSelected", {
+                  count: guests.length,
+                  selected: selected.size,
+                })}
+              </span>
+              <div className="flex gap-3">
+                <button
+                  className="hover:text-foreground transition-colors"
+                  onClick={() =>
+                    setSelected(new Set(guests.map((g) => g.vmid)))
+                  }
+                >
+                  {t("hosts.proxmoxSelectAll")}
+                </button>
+                <button
+                  className="hover:text-foreground transition-colors"
+                  onClick={() => setSelected(new Set())}
+                >
+                  {t("hosts.proxmoxDeselectAll")}
+                </button>
+              </div>
+            </div>
+
+            {guests.length === 0 ? (
+              <p className="text-xs text-muted-foreground py-4 text-center">
+                {t("hosts.proxmoxNoGuests")}
+              </p>
+            ) : (
+              <div className="max-h-64 overflow-y-auto rounded-md border border-border divide-y divide-border">
+                {Object.entries(nodeGroups).map(([node, nodeGuests]) => (
+                  <div key={node}>
+                    <div className="px-2 py-1 text-[10px] font-medium text-muted-foreground bg-muted/50 uppercase tracking-wider">
+                      {node}
+                    </div>
+                    {nodeGuests.map((g) => (
+                      <button
+                        key={g.vmid}
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-accent transition-colors text-left"
+                        onClick={() => {
+                          setSelected((prev) => {
+                            const next = new Set(prev);
+                            if (next.has(g.vmid)) next.delete(g.vmid);
+                            else next.add(g.vmid);
+                            return next;
+                          });
+                        }}
+                      >
+                        {selected.has(g.vmid) ? (
+                          <CheckSquare className="size-3.5 text-primary shrink-0" />
+                        ) : (
+                          <Square className="size-3.5 text-muted-foreground shrink-0" />
+                        )}
+                        <span className="flex-1 truncate">{g.name}</span>
+                        <span className="text-muted-foreground text-[10px] shrink-0">
+                          {g.type.toUpperCase()} {g.vmid}
+                        </span>
+                        <span
+                          className={`shrink-0 text-[10px] ${g.status === "running" ? "text-green-400" : "text-muted-foreground"}`}
+                        >
+                          {g.status}
+                        </span>
+                        <span
+                          className={`shrink-0 text-[10px] font-mono ${
+                            g.ip
+                              ? "text-muted-foreground"
+                              : "text-warning/80 italic"
+                          }`}
+                        >
+                          {g.ip || "no IP"}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </InlineView>
   );
 }

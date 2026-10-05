@@ -35,7 +35,7 @@ function UsageCell({
     clamped >= 90
       ? "bg-red-500"
       : clamped >= 75
-        ? "bg-yellow-500"
+        ? "bg-warning"
         : "bg-accent-brand";
   return (
     <div className="flex min-w-[92px] flex-col gap-1">
