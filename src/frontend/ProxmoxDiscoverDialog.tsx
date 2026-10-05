@@ -2,16 +2,16 @@ import { useRef, useState } from "react";
 import {
   notifyHostsChanged,
   useTranslation,
-} from "@termix/plugin-sdk/frontend";
+} from "@termix-ssh/plugin-sdk/frontend";
 import { Server, RefreshCw, CheckSquare, Square, Download } from "lucide-react";
 import { toast } from "sonner";
-import { Button, InlineView, Select2 } from "@termix/plugin-sdk/ui";
+import { Button, InlineView, Select2 } from "@termix-ssh/plugin-sdk/ui";
 import {
   discoverProxmoxGuestsStream,
   importProxmoxHosts,
   listHosts,
 } from "./proxmox-api";
-import type { PluginHostRecord } from "@termix/plugin-sdk/frontend";
+import type { PluginHostRecord } from "@termix-ssh/plugin-sdk/frontend";
 import type { ProxmoxGuest } from "./types";
 import { resolveProxmoxImportAuth } from "./proxmox-import-auth";
 

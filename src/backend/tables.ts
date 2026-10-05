@@ -8,7 +8,7 @@ import {
   refUser,
   text,
   timestamp,
-} from "@termix/plugin-sdk/db";
+} from "@termix-ssh/plugin-sdk/db";
 
 /**
  * Per-host historical node stats samples (CPU, memory, disk, network),

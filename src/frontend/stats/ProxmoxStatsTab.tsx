@@ -5,12 +5,12 @@ import {
   ConnectionScreen,
   ConnectionLogProvider,
   useConnectionLog,
-} from "@termix/plugin-sdk/ui";
+} from "@termix-ssh/plugin-sdk/ui";
 import {
   useTranslation,
   usePluginApi,
   useHosts,
-} from "@termix/plugin-sdk/frontend";
+} from "@termix-ssh/plugin-sdk/frontend";
 import { RefreshCw, Server } from "lucide-react";
 import { createProxmoxStatsApi } from "./proxmox-stats-api";
 import type { ProxmoxStatsSnapshot, ProxmoxStatsConfig } from "../types";
@@ -19,8 +19,8 @@ import { GuestTable } from "./GuestTable";
 import { NodeNetworkCard } from "./cards/NodeNetworkCard";
 import { StoragePoolsCard } from "./cards/StoragePoolsCard";
 import { ClusterHealthCard } from "./cards/ClusterHealthCard";
-import { useConnectionRetry } from "@termix/plugin-sdk/frontend";
-import { runAdaptivePolling } from "@termix/plugin-sdk/ui";
+import { useConnectionRetry } from "@termix-ssh/plugin-sdk/frontend";
+import { runAdaptivePolling } from "@termix-ssh/plugin-sdk/ui";
 
 const HISTORY_LEN = 30;
 

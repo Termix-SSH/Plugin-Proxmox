@@ -1,6 +1,6 @@
 import { Network } from "lucide-react";
-import { useTranslation } from "@termix/plugin-sdk/frontend";
-import { StatRow, MetricCard } from "@termix/plugin-sdk/ui";
+import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
+import { StatRow, MetricCard } from "@termix-ssh/plugin-sdk/ui";
 import type { ProxmoxStatsSnapshot } from "../../types";
 
 export function NodeNetworkCard({

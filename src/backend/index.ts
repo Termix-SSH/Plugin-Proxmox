@@ -1,5 +1,5 @@
 import type { Router } from "express";
-import type { PluginContext } from "@termix/plugin-sdk/backend";
+import type { PluginContext } from "@termix-ssh/plugin-sdk/backend";
 import { setPluginSsh } from "./ssh.js";
 import { setPluginCtx } from "./plugin-ctx.js";
 import { startProxmoxService, stopProxmoxService } from "./routes.js";

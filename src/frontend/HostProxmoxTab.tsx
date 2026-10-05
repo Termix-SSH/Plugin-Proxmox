@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSshAuthTypes, useTranslation } from "@termix/plugin-sdk/frontend";
+import { useSshAuthTypes, useTranslation } from "@termix-ssh/plugin-sdk/frontend";
 import { Server } from "lucide-react";
 import {
   FakeSwitch,
@@ -7,8 +7,8 @@ import {
   SectionCard,
   Select2,
   SettingRow,
-} from "@termix/plugin-sdk/ui";
-import { listCredentials } from "@termix/plugin-sdk/frontend";
+} from "@termix-ssh/plugin-sdk/ui";
+import { listCredentials } from "@termix-ssh/plugin-sdk/frontend";
 import type { ProxmoxHostConfig } from "./types";
 
 interface HostProxmoxForm {

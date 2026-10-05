@@ -8,7 +8,7 @@
 
 import type { Router } from "express";
 import express from "express";
-import type { PluginContext } from "@termix/plugin-sdk/backend";
+import type { PluginContext } from "@termix-ssh/plugin-sdk/backend";
 import { pluginCtx } from "./plugin-ctx.js";
 import {
   ProxmoxPollingManager,

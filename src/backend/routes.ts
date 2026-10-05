@@ -1,12 +1,12 @@
 import express, { type Router } from "express";
 import type { Client as SSHClient } from "ssh2";
-import { execElevated } from "@termix/plugin-sdk/host-commands";
+import { execElevated } from "@termix-ssh/plugin-sdk/host-commands";
 import type {
   PluginHostCreateInput,
   PluginHostJumpHost,
   PluginHostUpdateInput,
   PluginSshHost,
-} from "@termix/plugin-sdk/backend";
+} from "@termix-ssh/plugin-sdk/backend";
 import { connectSsh } from "./ssh.js";
 import { pluginCtx } from "./plugin-ctx.js";
 import { resolveProxmoxImportAuth } from "./proxmox-import-auth.js";

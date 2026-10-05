@@ -1,5 +1,5 @@
 import { and, gte, lte, eq, asc, lt } from "drizzle-orm";
-import type { PluginDatabase } from "@termix/plugin-sdk/backend";
+import type { PluginDatabase } from "@termix-ssh/plugin-sdk/backend";
 
 export interface ProxmoxNodeHistoryRow {
   id: number;

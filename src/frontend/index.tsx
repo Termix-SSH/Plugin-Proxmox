@@ -7,9 +7,9 @@ import {
   type StandaloneViewProps,
   type TabProps,
   type TermixApp,
-} from "@termix/plugin-sdk/frontend";
-import { ComponentSlot, DropdownMenuItem } from "@termix/plugin-sdk/ui";
-import type { PluginHostRecord } from "@termix/plugin-sdk/frontend";
+} from "@termix-ssh/plugin-sdk/frontend";
+import { ComponentSlot, DropdownMenuItem } from "@termix-ssh/plugin-sdk/ui";
+import type { PluginHostRecord } from "@termix-ssh/plugin-sdk/frontend";
 import { setProxmoxApp } from "./proxmox-api";
 import { ProxmoxDiscoverDialog } from "./ProxmoxDiscoverDialog";
 import { HostProxmoxTab } from "./HostProxmoxTab";

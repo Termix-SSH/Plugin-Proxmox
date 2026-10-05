@@ -2,7 +2,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@termix/plugin-sdk/frontend", async (importOriginal) => ({
+vi.mock("@termix-ssh/plugin-sdk/frontend", async (importOriginal) => ({
   ...(await importOriginal<Record<string, unknown>>()),
   useTranslation: () => ({ t: (key: string) => key, language: "en" }),
   usePluginApi: () => ({}),

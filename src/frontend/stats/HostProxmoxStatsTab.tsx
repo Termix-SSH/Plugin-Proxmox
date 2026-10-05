@@ -1,11 +1,11 @@
-import { useTranslation } from "@termix/plugin-sdk/frontend";
+import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
 import { Server } from "lucide-react";
 import {
   Input,
   SectionCard,
   SettingRow,
   FakeSwitch,
-} from "@termix/plugin-sdk/ui";
+} from "@termix-ssh/plugin-sdk/ui";
 import type { ProxmoxStatsConfig } from "../types";
 
 interface HostProxmoxStatsForm {

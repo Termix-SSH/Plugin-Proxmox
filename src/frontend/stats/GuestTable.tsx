@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import { useTranslation } from "@termix/plugin-sdk/frontend";
+import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
 import { Box, Search, Server as ServerIcon } from "lucide-react";
-import { Input } from "@termix/plugin-sdk/ui";
+import { Input } from "@termix-ssh/plugin-sdk/ui";
 import type { ProxmoxGuestSummary } from "../types";
-import { cn } from "@termix/plugin-sdk/ui";
+import { cn } from "@termix-ssh/plugin-sdk/ui";
 
 type StatusFilter = "all" | "running" | "stopped";
 type TypeFilter = "all" | "qemu" | "lxc";
