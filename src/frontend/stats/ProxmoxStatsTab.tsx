@@ -400,6 +400,11 @@ function ProxmoxStatsInner({
         <ConnectionScreen
           status={notEnabled ? "error" : retry.status}
           message={t("proxmoxStats.connecting")}
+          detail={
+            currentHostConfig?.ip
+              ? `${currentHostConfig.username ? `${currentHostConfig.username}@` : ""}${currentHostConfig.ip}${currentHostConfig.port ? `:${currentHostConfig.port}` : ""}`
+              : undefined
+          }
           attempt={retry.attempt}
           maxAttempts={retry.maxAttempts}
           nextRetryInMs={retry.nextRetryInMs}
