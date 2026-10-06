@@ -2,7 +2,7 @@ import type { Client } from "ssh2";
 import { execCommand, toFixedNum } from "./common-utils.js";
 import { isSafeNodeName } from "../proxmox-shared.js";
 
-export interface ProxmoxGuestSummaryEntry {
+interface ProxmoxGuestSummaryEntry {
   vmid: number;
   name: string;
   type: "qemu" | "lxc";

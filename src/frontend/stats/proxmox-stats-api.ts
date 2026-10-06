@@ -62,9 +62,9 @@ export function createProxmoxStatsApi(api: PluginApiClient) {
   };
 }
 
-export type ProxmoxStatsApi = ReturnType<typeof createProxmoxStatsApi>;
+type ProxmoxStatsApi = ReturnType<typeof createProxmoxStatsApi>;
 
-export interface ProxmoxStatsHistoryRow {
+interface ProxmoxStatsHistoryRow {
   ts: string;
   cpu_percent: number | null;
   mem_percent: number | null;

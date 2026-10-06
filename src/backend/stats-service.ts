@@ -362,5 +362,3 @@ function registerRoutes(
     }
   });
 }
-
-export { parseProxmoxStatsConfig };

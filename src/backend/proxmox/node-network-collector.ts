@@ -2,7 +2,7 @@ import type { Client } from "ssh2";
 import { execCommand } from "./common-utils.js";
 import { isSafeNodeName } from "../proxmox-shared.js";
 
-export interface ProxmoxNodeNetworkInterface {
+interface ProxmoxNodeNetworkInterface {
   name: string;
   ip: string | null;
   state: string | null;

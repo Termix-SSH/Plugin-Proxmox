@@ -28,7 +28,7 @@ export interface ProxmoxNodeStats {
   };
 }
 
-export interface ProxmoxNodeNetwork {
+interface ProxmoxNodeNetwork {
   interfaces: Array<{
     name: string;
     ip: string | null;
@@ -53,12 +53,12 @@ export interface ProxmoxGuestSummary {
   uptimeSeconds: number | null;
 }
 
-export interface ProxmoxGuestsSummary {
+interface ProxmoxGuestsSummary {
   guests: ProxmoxGuestSummary[];
   counts: { running: number; stopped: number; total: number };
 }
 
-export interface ProxmoxStoragePool {
+interface ProxmoxStoragePool {
   name: string;
   type: string;
   active: boolean;
@@ -69,11 +69,11 @@ export interface ProxmoxStoragePool {
   percent: number | null;
 }
 
-export interface ProxmoxStorage {
+interface ProxmoxStorage {
   pools: ProxmoxStoragePool[];
 }
 
-export type ProxmoxClusterHealth =
+type ProxmoxClusterHealth =
   | { clustered: false }
   | {
       clustered: true;

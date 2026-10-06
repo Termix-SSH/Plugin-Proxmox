@@ -2,7 +2,7 @@ import type { Client } from "ssh2";
 import { execCommand, toFixedNum } from "./common-utils.js";
 import { isSafeNodeName } from "../proxmox-shared.js";
 
-export interface ProxmoxStoragePoolEntry {
+interface ProxmoxStoragePoolEntry {
   name: string;
   type: string;
   active: boolean;

@@ -1,7 +1,7 @@
 import type { Client } from "ssh2";
 import { execCommand } from "./common-utils.js";
 
-export interface ProxmoxClusterNodeEntry {
+interface ProxmoxClusterNodeEntry {
   name: string;
   online: boolean;
   local: boolean;
