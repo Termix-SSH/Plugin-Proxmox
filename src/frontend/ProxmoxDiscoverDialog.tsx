@@ -3,9 +3,14 @@ import {
   notifyHostsChanged,
   useTranslation,
 } from "@termix-ssh/plugin-sdk/frontend";
-import { Server, RefreshCw, CheckSquare, Square, Download } from "lucide-react";
+import { Server, RefreshCw, CheckSquare, Square } from "lucide-react";
 import { toast } from "sonner";
-import { Button, InlineView, Select2 } from "@termix-ssh/plugin-sdk/ui";
+import {
+  Button,
+  InlineView,
+  Select2,
+  FormFooter,
+} from "@termix-ssh/plugin-sdk/ui";
 import {
   discoverProxmoxGuestsStream,
   importProxmoxHosts,
@@ -257,28 +262,19 @@ export function ProxmoxDiscoverDialog({
         </a>
       }
       footer={
-        <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              reset();
-              onClose();
-            }}
-          >
-            {t("common.cancel")}
-          </Button>
-          {guests !== null && selected.size > 0 && (
-            <Button size="sm" disabled={importing} onClick={handleImport}>
-              {importing ? (
-                <RefreshCw className="size-3.5 animate-spin mr-1.5" />
-              ) : (
-                <Download className="size-3.5 mr-1.5" />
-              )}
-              {t("hosts.proxmoxImportButton", { count: selected.size })}
-            </Button>
-          )}
-        </div>
+        <FormFooter
+          onCancel={() => {
+            reset();
+            onClose();
+          }}
+          onSave={
+            guests !== null && selected.size > 0
+              ? () => void handleImport()
+              : undefined
+          }
+          saveLabel={t("hosts.proxmoxImportButton", { count: selected.size })}
+          saving={importing}
+        />
       }
     >
       <div className="space-y-3">

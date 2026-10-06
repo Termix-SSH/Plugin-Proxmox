@@ -3,6 +3,7 @@
     "proxmoxStats": "Proxmox Stats"
   },
   "proxmoxStats": {
+    "overview": "Overview",
     "tabTitle": "Proxmox Stats",
     "cpuUsage": "CPU Usage",
     "memoryUsage": "Memory Usage",

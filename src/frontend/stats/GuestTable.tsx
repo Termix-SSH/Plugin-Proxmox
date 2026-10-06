@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
-import { Box, Search, Server as ServerIcon } from "lucide-react";
-import { Input } from "@termix-ssh/plugin-sdk/ui";
+import { Box, Server as ServerIcon } from "lucide-react";
+import { PanelSearch, EmptyState, Segmented } from "@termix-ssh/plugin-sdk/ui";
 import type { ProxmoxGuestSummary } from "../types";
 import { cn } from "@termix-ssh/plugin-sdk/ui";
 
@@ -49,9 +49,9 @@ function UsageCell({
           </span>
         )}
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+      <div className="h-1 w-full overflow-hidden bg-muted">
         <div
-          className={cn("h-full rounded-full", barColor)}
+          className={cn("h-full", barColor)}
           style={{ width: `${clamped}%` }}
         />
       </div>
@@ -87,80 +87,48 @@ export function GuestTable({ guests }: { guests: ProxmoxGuestSummary[] }) {
   const running = guests.filter((g) => g.status === "running").length;
 
   return (
-    <div className="flex min-h-[420px] flex-1 flex-col overflow-hidden border border-border bg-card">
-      <div className="flex shrink-0 flex-wrap items-center gap-2 border-b border-border px-3 py-2.5">
-        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          {t("proxmoxStats.guestsSummary")}
-        </span>
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+      <div className="flex shrink-0 flex-wrap items-center gap-2 border-b border-border px-3 py-2">
         <span className="text-[11px] text-muted-foreground">
           {t("proxmoxStats.guestCounts", { running, total: guests.length })}
         </span>
         <div className="ml-auto flex items-center gap-1.5">
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-2 top-1/2 size-3 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t("proxmoxStats.searchGuests")}
-              className="h-7 w-40 pl-6 text-xs"
-            />
-          </div>
-          <div className="flex overflow-hidden rounded-none border border-border">
-            {(["all", "qemu", "lxc"] as TypeFilter[]).map((f) => (
-              <button
-                key={f}
-                onClick={() => setTypeFilter(f)}
-                className={cn(
-                  "px-2 py-1 text-[10px] font-semibold uppercase tracking-wide transition-colors",
-                  typeFilter === f
-                    ? "bg-accent-brand text-white"
-                    : "bg-background text-muted-foreground hover:bg-muted",
-                )}
-              >
-                {f === "all"
-                  ? t("proxmoxStats.filterAll")
-                  : f === "qemu"
-                    ? t("proxmoxStats.filterVm")
-                    : t("proxmoxStats.filterLxc")}
-              </button>
-            ))}
-          </div>
-          <div className="flex overflow-hidden rounded-none border border-border">
-            {(["all", "running", "stopped"] as StatusFilter[]).map((f) => (
-              <button
-                key={f}
-                onClick={() => setStatusFilter(f)}
-                className={cn(
-                  "px-2 py-1 text-[10px] font-semibold uppercase tracking-wide transition-colors",
-                  statusFilter === f
-                    ? "bg-accent-brand text-white"
-                    : "bg-background text-muted-foreground hover:bg-muted",
-                )}
-              >
-                {f === "all"
-                  ? t("proxmoxStats.filterAll")
-                  : f === "running"
-                    ? t("proxmoxStats.running")
-                    : t("proxmoxStats.stopped")}
-              </button>
-            ))}
-          </div>
+          <PanelSearch
+            value={query}
+            onChange={setQuery}
+            placeholder={t("proxmoxStats.searchGuests")}
+            className="w-40 md:w-56"
+          />
+          <Segmented<TypeFilter>
+            value={typeFilter}
+            onChange={setTypeFilter}
+            options={[
+              { value: "all", label: t("proxmoxStats.filterAll") },
+              { value: "qemu", label: t("proxmoxStats.filterVm") },
+              { value: "lxc", label: t("proxmoxStats.filterLxc") },
+            ]}
+          />
+          <Segmented<StatusFilter>
+            value={statusFilter}
+            onChange={setStatusFilter}
+            options={[
+              { value: "all", label: t("proxmoxStats.filterAll") },
+              { value: "running", label: t("proxmoxStats.running") },
+              { value: "stopped", label: t("proxmoxStats.stopped") },
+            ]}
+          />
         </div>
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto thin-scrollbar">
         {guests.length === 0 ? (
-          <div className="flex h-full items-center justify-center py-16 text-xs text-muted-foreground">
-            {t("proxmoxStats.noGuests")}
-          </div>
+          <EmptyState icon={ServerIcon} title={t("proxmoxStats.noGuests")} />
         ) : filtered.length === 0 ? (
-          <div className="flex h-full items-center justify-center py-16 text-xs text-muted-foreground">
-            {t("proxmoxStats.noGuestsMatch")}
-          </div>
+          <EmptyState title={t("proxmoxStats.noGuestsMatch")} />
         ) : (
           <table className="w-full border-collapse text-xs">
-            <thead className="sticky top-0 z-10 bg-card">
-              <tr className="border-b border-border text-[10px] uppercase tracking-wider text-muted-foreground">
+            <thead className="sticky top-0 z-10 bg-background">
+              <tr className="border-b border-border text-[10px] uppercase tracking-widest text-muted-foreground/70">
                 <th className="px-3 py-2 text-left font-semibold">
                   {t("proxmoxStats.name")}
                 </th>
@@ -198,7 +166,7 @@ export function GuestTable({ guests }: { guests: ProxmoxGuestSummary[] }) {
                       <span className="min-w-0 truncate font-semibold">
                         {guest.name}
                       </span>
-                      <span className="shrink-0 rounded-full border border-border px-1.5 py-0.5 text-[9px] uppercase text-muted-foreground">
+                      <span className="shrink-0 border border-border px-1 py-px text-[9px] uppercase text-muted-foreground">
                         {guest.type === "lxc" ? "LXC" : "VM"}
                       </span>
                     </div>
@@ -207,7 +175,7 @@ export function GuestTable({ guests }: { guests: ProxmoxGuestSummary[] }) {
                     <div className="flex items-center gap-1.5">
                       <span
                         className={cn(
-                          "size-1.5 shrink-0 rounded-full",
+                          "size-1.5 shrink-0",
                           guest.status === "running"
                             ? "bg-green-500"
                             : "bg-muted-foreground/50",

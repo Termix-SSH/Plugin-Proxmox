@@ -1,6 +1,9 @@
 import React from "react";
 import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
-import { FullScreenAppWrapper, ConnectionScreen } from "@termix-ssh/plugin-sdk/ui";
+import {
+  FullScreenAppWrapper,
+  ConnectionScreen,
+} from "@termix-ssh/plugin-sdk/ui";
 import { ProxmoxStatsTab } from "./ProxmoxStatsTab";
 
 interface ProxmoxStatsAppProps {

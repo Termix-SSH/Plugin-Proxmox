@@ -5,6 +5,7 @@ import {
   ConnectionScreen,
   ConnectionLogProvider,
   useConnectionLog,
+  TabStrip,
 } from "@termix-ssh/plugin-sdk/ui";
 import {
   useTranslation,
@@ -104,6 +105,7 @@ function ProxmoxStatsInner({
   );
   const { hosts } = useHosts();
 
+  const [view, setView] = React.useState<"overview" | "guests">("overview");
   const [snapshot, setSnapshot] = React.useState<ProxmoxStatsSnapshot | null>(
     null,
   );
@@ -329,6 +331,19 @@ function ProxmoxStatsInner({
               <h1 className="truncate text-base font-bold tracking-tight">
                 {title}
               </h1>
+              {snapshot && (
+                <>
+                  <span aria-hidden className="h-4 w-px shrink-0 bg-border" />
+                  <span className="truncate text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    {t("proxmoxStats.guestCounts", {
+                      running: snapshot.guests.guests.filter(
+                        (g) => g.status === "running",
+                      ).length,
+                      total: snapshot.guests.guests.length,
+                    })}
+                  </span>
+                </>
+              )}
             </div>
             <Button
               variant="ghost"
@@ -346,12 +361,31 @@ function ProxmoxStatsInner({
         )}
 
         {showContent && (
+          <div className="shrink-0 border-b border-border px-1">
+            <TabStrip
+              tabs={[
+                { id: "overview", label: t("proxmoxStats.overview") },
+                {
+                  id: "guests",
+                  label: t("proxmoxStats.guestsSummary"),
+                  count: snapshot.guests.guests.length,
+                },
+              ]}
+              activeTab={view}
+              onTabChange={(id) => setView(id as "overview" | "guests")}
+            />
+          </div>
+        )}
+
+        {showContent && view === "guests" && (
+          <GuestTable guests={snapshot.guests.guests} />
+        )}
+
+        {showContent && view === "overview" && (
           <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-2.5">
             <div className="shrink-0">
               <NodeSummaryStrip node={snapshot.node} histories={histories} />
             </div>
-
-            <GuestTable guests={snapshot.guests.guests} />
 
             <div className="grid shrink-0 grid-cols-1 gap-2 md:grid-cols-3">
               <NodeNetworkCard snapshot={snapshot} />

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSshAuthTypes, useTranslation } from "@termix-ssh/plugin-sdk/frontend";
+import {
+  useSshAuthTypes,
+  useTranslation,
+} from "@termix-ssh/plugin-sdk/frontend";
 import { Server } from "lucide-react";
 import {
   FakeSwitch,
