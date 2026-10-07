@@ -108,6 +108,7 @@
     "proxmoxResultFailed": "{{count}} failed",
     "proxmoxImportComplete": "Proxmox import complete: {{summary}}",
     "proxmoxDiscoveryFailed": "Discovery failed",
+    "proxmoxGuestImported": "Imported",
     "proxmoxImportFailed": "Import failed",
     "docsLink": "View docs",
     "hostNotFound": "Host not found",

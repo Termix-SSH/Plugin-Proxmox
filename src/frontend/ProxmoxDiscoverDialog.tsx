@@ -19,6 +19,7 @@ import {
 import type { PluginHostRecord } from "@termix-ssh/plugin-sdk/frontend";
 import type { ProxmoxGuest } from "./types";
 import { resolveProxmoxImportAuth } from "./proxmox-import-auth";
+import { guestKey, importedGuestKeys } from "./imported-guests";
 
 interface ProxmoxDiscoverDialogProps {
   open: boolean;
@@ -115,10 +116,13 @@ export function ProxmoxDiscoverDialog({
         setGuests(result.guests);
         setDiscoveredCredentialId(result.credentialId ?? null);
         setDiscoveredJumpHosts(result.jumpHosts ?? null);
+        const imported = importedGuestKeys(hosts, hostId);
         setSelected(
           new Set(
             result.guests
-              .filter((g) => g.status === "running")
+              .filter(
+                (g) => g.status === "running" && !imported.has(guestKey(g)),
+              )
               .map((g) => g.vmid),
           ),
         );
@@ -226,6 +230,10 @@ export function ProxmoxDiscoverDialog({
       setImporting(false);
     }
   }
+
+  const importedKeys = effectiveHostId
+    ? importedGuestKeys(hosts, Number(effectiveHostId))
+    : new Set<string>();
 
   const nodeGroups = guests
     ? guests.reduce(
@@ -387,6 +395,11 @@ export function ProxmoxDiscoverDialog({
                           <Square className="size-3.5 text-muted-foreground shrink-0" />
                         )}
                         <span className="flex-1 truncate">{g.name}</span>
+                        {importedKeys.has(guestKey(g)) && (
+                          <span className="shrink-0 text-[10px] text-muted-foreground">
+                            {t("hosts.proxmoxGuestImported")}
+                          </span>
+                        )}
                         <span className="text-muted-foreground text-[10px] shrink-0">
                           {g.type.toUpperCase()} {g.vmid}
                         </span>
