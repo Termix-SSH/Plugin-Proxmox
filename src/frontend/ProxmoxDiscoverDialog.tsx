@@ -20,6 +20,7 @@ import type { PluginHostRecord } from "@termix-ssh/plugin-sdk/frontend";
 import type { ProxmoxGuest } from "./types";
 import { resolveProxmoxImportAuth } from "./proxmox-import-auth";
 import { guestKey, importedGuestKeys } from "./imported-guests";
+import { docsUrl } from "./docs";
 
 interface ProxmoxDiscoverDialogProps {
   open: boolean;
@@ -261,7 +262,7 @@ export function ProxmoxDiscoverDialog({
       icon={<Server className="size-4" />}
       actions={
         <a
-          href="https://docs.termix.site/features/files-and-hosts/proxmox-import"
+          href={docsUrl()}
           target="_blank"
           rel="noreferrer"
           className="px-2 text-[10px] text-accent-brand hover:underline"

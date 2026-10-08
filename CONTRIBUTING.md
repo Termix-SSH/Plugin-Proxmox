@@ -10,16 +10,6 @@ npm run validate   # check manifest.json
 npm run format     # format the code with Prettier
 ```
 
-## Settings
+## Docs
 
-### Host
-
-- **Enable Proxmox:** mark this host as a Proxmox node so its guests can be imported
-- **Default Auth Type and Default Credential:** the login given to imported guests
-- **Windows / RDP detection and Docker detection:** name patterns that switch guests to RDP or turn on Docker
-- **Preferred IP ranges:** IP prefixes to prefer, in order
-- **Auto sync guests and Sync interval (minutes):** check the node for changes on a schedule, at least every 5 minutes
-- **Mark missing guests:** tag guests that disappear as `proxmox-missing` instead of deleting them
-- **Enable Proxmox Stats:** show the Proxmox Stats tab for this host
-- **Poll interval (seconds):** how often stats refresh, at least 15 seconds
-- **Node name override:** use this node name instead of the detected one
+The docs for this plugin are in [docs/](docs/) and are published at https://docs.termix.site/plugins/proxmox. Settings, permissions, services, environment variables and the API reference are made from `manifest.json` and the `@openapi` comments in the code, so keep those up to date instead of writing them by hand. See [writing docs](https://docs.termix.site/develop/docs).

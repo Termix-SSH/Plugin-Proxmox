@@ -13,6 +13,7 @@ import {
 } from "@termix-ssh/plugin-sdk/ui";
 import { listCredentials } from "@termix-ssh/plugin-sdk/frontend";
 import type { ProxmoxHostConfig } from "./types";
+import { docsUrl } from "./docs";
 
 interface HostProxmoxForm {
   enableProxmox: boolean;
@@ -83,7 +84,7 @@ export function HostProxmoxTab({
             <>
               {t("hosts.enableProxmoxDesc")}{" "}
               <a
-                href="https://docs.termix.site/features/files-and-hosts/proxmox-import"
+                href={docsUrl()}
                 target="_blank"
                 rel="noreferrer"
                 className="text-accent-brand hover:underline"

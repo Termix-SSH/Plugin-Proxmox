@@ -14,6 +14,8 @@
 
 Proxmox imports the VMs and containers on a Proxmox VE node as Termix hosts and shows stats for the node. It works over SSH, so no API token is needed.
 
+Read the [docs](https://docs.termix.site/plugins/proxmox) to set it up and use it.
+
 <br />
 
 ## Features
