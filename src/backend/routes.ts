@@ -673,7 +673,7 @@ async function writeSyncStatus(
 
 /**
  * @openapi
- * /proxmox/sync:
+ * /plugin-api/proxmox/sync:
  *   post:
  *     summary: Sync Proxmox guests for a host
  *     description: Re-runs discovery for a Proxmox node and creates, updates or marks missing the imported guest hosts.
@@ -764,78 +764,27 @@ let proxmoxAutoSyncStartupTimer: NodeJS.Timeout | undefined;
 
 /**
  * @openapi
- * /proxmox/discover:
- *   post:
- *     summary: Discover Proxmox guests on a node
- *     description: >
- *       Connects to an existing SSH host (a Proxmox node) using its stored
- *       credentials, runs pvesh to enumerate all guests (VMs and LXC
- *       containers) in the cluster, and returns them ready to be imported as
- *       Termix hosts. No separate Proxmox API token is required.
+ * /plugin-api/proxmox/discover/stream:
+ *   get:
+ *     summary: Discover the guests on a Proxmox node, with progress
+ *     description: Same as POST /discover, sent as server-sent events so the UI can show progress. The last event carries the guests.
  *     tags: [Proxmox]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [hostId]
- *             properties:
- *               hostId:
- *                 type: number
- *                 description: ID of the SSH host that is a Proxmox node.
+ *     parameters:
+ *       - in: query
+ *         name: hostId
+ *         required: true
+ *         schema:
+ *           type: number
+ *         description: ID of the SSH host that is a Proxmox node.
  *     responses:
  *       200:
- *         description: Discovered guests.
+ *         description: An event stream of discovery progress and the result.
  *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 guests:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       name:
- *                         type: string
- *                       vmid:
- *                         type: number
- *                       type:
- *                         type: string
- *                         enum: [qemu, lxc]
- *                       node:
- *                         type: string
- *                       status:
- *                         type: string
- *                       ip:
- *                         type: string
- *                         nullable: true
- *                       connectionType:
- *                         type: string
- *                         enum: [ssh, rdp]
- *                       enableDocker:
- *                         type: boolean
- *                 credentialId:
- *                   type: number
- *                   nullable: true
- *                 defaultCredentialId:
- *                   type: number
- *                   nullable: true
+ *           text/event-stream: {}
  *       400:
  *         description: Missing or invalid hostId.
- *       401:
- *         description: Authentication required or session expired.
- *       403:
- *         description: Access denied to the host.
- *       404:
- *         description: Host not found.
- *       422:
- *         description: Host is not a Proxmox node or is unreachable.
- *       500:
- *         description: Discovery failed.
  */
 router.get("/discover/stream", async (req, res) => {
   const userId = pluginCtx().currentActor()!;
