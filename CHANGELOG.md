@@ -1,11 +1,5 @@
 # Changelog
 
-## Unreleased
-
-### Changed
-
-- Discovery no longer preselects guests that are already imported, and marks them as imported
-
 ## 1.0.0
 
 ### Added
