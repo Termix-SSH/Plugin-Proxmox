@@ -6,8 +6,9 @@ interface GuestRef {
   vmid: number;
 }
 
-export function guestKey(guest: GuestRef): string {
-  return `${guest.node}:${guest.type}:${guest.vmid}`;
+/** VM ids are unique across a cluster, so a migrated guest keeps its key. */
+export function guestKey(guest: Pick<GuestRef, "type" | "vmid">): string {
+  return `${guest.type}:${guest.vmid}`;
 }
 
 /**
@@ -47,7 +48,7 @@ export function importedGuestKeys(
     const [type, node, idTag] = at === -1 ? [] : tags.slice(at + 1, at + 4);
     const vmid = /^(?:ct|vm)-(\d+)$/.exec(idTag ?? "")?.[1];
     if ((type === "lxc" || type === "qemu") && node && vmid) {
-      keys.add(guestKey({ node, type, vmid: Number(vmid) }));
+      keys.add(guestKey({ type, vmid: Number(vmid) }));
     }
   }
   return keys;

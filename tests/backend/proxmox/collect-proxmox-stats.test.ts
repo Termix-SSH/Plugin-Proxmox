@@ -26,9 +26,9 @@ describe("collectProxmoxStats", () => {
   it("throws a distinguishable error when pvesh is missing", async () => {
     execCommand.mockResolvedValueOnce(result("missing"));
 
-    await expect(collectProxmoxStats(fakeClient, null)).rejects.toThrow(
-      /pvesh not found/i,
-    );
+    await expect(collectProxmoxStats(fakeClient, null)).rejects.toMatchObject({
+      code: "PVESH_NOT_FOUND",
+    });
     // Only the pvesh-presence check should have run - no node resolution or
     // per-collector execs once that check fails.
     expect(execCommand).toHaveBeenCalledTimes(1);

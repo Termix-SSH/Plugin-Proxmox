@@ -22,6 +22,7 @@ import { StoragePoolsCard } from "./cards/StoragePoolsCard";
 import { ClusterHealthCard } from "./cards/ClusterHealthCard";
 import { useConnectionRetry } from "@termix-ssh/plugin-sdk/frontend";
 import { runAdaptivePolling } from "@termix-ssh/plugin-sdk/ui";
+import { proxmoxErrorText } from "../error-codes";
 
 const HISTORY_LEN = 30;
 
@@ -183,6 +184,15 @@ function ProxmoxStatsInner({
 
     const result = await api.startPolling(currentHostConfig.id);
     if (result.viewerSessionId) setViewerSessionId(result.viewerSessionId);
+    if (result.status === "error") {
+      throw new Error(
+        proxmoxErrorText(
+          t,
+          result.code,
+          result.error || t("proxmoxStats.connectionFailed"),
+        ),
+      );
+    }
 
     addLog({
       type: "info",

@@ -31,12 +31,14 @@ export function createProxmoxStatsApi(api: PluginApiClient) {
       viewerSessionId?: string;
       status?: string;
       error?: string;
+      code?: string;
     }> {
       const response = await api.post<{
         success: boolean;
         viewerSessionId?: string;
         status?: string;
         error?: string;
+        code?: string;
       }>(`/stats/start/${hostId}`);
       return response.data;
     },

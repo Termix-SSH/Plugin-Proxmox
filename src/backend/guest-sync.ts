@@ -40,13 +40,16 @@ export function getProxmoxSource(config: unknown): ProxmoxSource | null {
   return src as ProxmoxSource;
 }
 
+/**
+ * VM ids are unique across a cluster, so the node is left out: a guest that
+ * migrates to another node stays the same host.
+ */
 export function proxmoxSourceKey(source: {
   sourceHostId: number;
-  node: string;
   type: string;
   vmid: number;
 }): string {
-  return `${source.sourceHostId}:${source.node}:${source.type}:${source.vmid}`;
+  return `${source.sourceHostId}:${source.type}:${source.vmid}`;
 }
 
 export interface ImportedGuest<H = Record<string, unknown>> {

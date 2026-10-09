@@ -1,6 +1,6 @@
 import type { Client } from "ssh2";
 import { execCommand } from "./common-utils.js";
-import { isSafeNodeName } from "../proxmox-shared.js";
+import { ProxmoxError, isSafeNodeName } from "../proxmox-shared.js";
 import {
   collectProxmoxNodeStatus,
   type ProxmoxNodeStatusResult,
@@ -40,7 +40,10 @@ async function resolveNodeName(
     // value is rejected outright rather than silently falling back to
     // auto-detection, which would mask a misconfigured (or malicious) override.
     if (!isSafeNodeName(configuredNodeName)) {
-      throw new Error("Unable to determine a valid Proxmox node name");
+      throw new ProxmoxError(
+        "Unable to determine a valid Proxmox node name",
+        "NODE_NAME_INVALID",
+      );
     }
     return configuredNodeName;
   }
@@ -59,12 +62,18 @@ export async function collectProxmoxStats(
     10000,
   );
   if (pveshCheck.stdout.trim() !== "ok") {
-    throw new Error("pvesh not found — is this a Proxmox node?");
+    throw new ProxmoxError(
+      "pvesh was not found. Is this a Proxmox node?",
+      "PVESH_NOT_FOUND",
+    );
   }
 
   const nodeName = await resolveNodeName(client, configuredNodeName);
   if (!isSafeNodeName(nodeName)) {
-    throw new Error("Unable to determine a valid Proxmox node name");
+    throw new ProxmoxError(
+      "Unable to determine a valid Proxmox node name",
+      "NODE_NAME_INVALID",
+    );
   }
 
   const [node, network, guests, storage, cluster] = await Promise.all([

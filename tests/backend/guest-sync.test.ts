@@ -45,7 +45,7 @@ describe("indexImportedGuests", () => {
       1,
     );
     expect([...index.keys()]).toEqual([proxmoxSourceKey(source as never)]);
-    const entry = index.get("1:pve:qemu:101")!;
+    const entry = index.get("1:qemu:101")!;
     expect(entry.host.id).toBe(10);
     expect(entry.config.lastSyncAt).toBe("x");
   });
@@ -57,5 +57,11 @@ describe("indexImportedGuests", () => {
       1,
     );
     expect(index.size).toBe(0);
+  });
+
+  it("keys a guest without its node, so a migration keeps the host", () => {
+    expect(proxmoxSourceKey({ ...source, node: "pve2" } as never)).toBe(
+      proxmoxSourceKey(source as never),
+    );
   });
 });

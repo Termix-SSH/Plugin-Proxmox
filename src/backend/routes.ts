@@ -11,10 +11,11 @@ import { connectSsh } from "./ssh.js";
 import { pluginCtx } from "./plugin-ctx.js";
 import { resolveProxmoxImportAuth } from "./proxmox-import-auth.js";
 import { parseProxmoxJumpHosts } from "./proxmox-jump-hosts.js";
-import { isSafeNodeName } from "./proxmox-shared.js";
+import { ProxmoxError, errorCodeOf, isSafeNodeName } from "./proxmox-shared.js";
 import {
   indexImportedGuests,
   parseJsonObject,
+  proxmoxSourceKey,
   type ProxmoxSource,
 } from "./guest-sync.js";
 
@@ -198,10 +199,6 @@ type ProxmoxSyncResult = {
   errors: string[];
 };
 
-function guestSourceKey(sourceHostId: number, guest: ProxmoxGuest): string {
-  return `${sourceHostId}:${guest.node}:${guest.type}:${guest.vmid}`;
-}
-
 function guestTags(guest: ProxmoxGuest): string[] {
   const idTag = guest.type === "lxc" ? `ct-${guest.vmid}` : `vm-${guest.vmid}`;
   return [
@@ -270,21 +267,22 @@ async function discoverProxmoxGuestsForHost(
   );
   const config = parseProxmoxConfig(proxmoxCfgRaw);
 
-  const { client, host } = await connectSsh(parsedHostId, {
+  const { client, host, dispose } = await connectSsh(parsedHostId, {
     purpose: "proxmox",
     timeoutMs: 35000,
     overrides: { tryKeyboard: false, readyTimeout: 30000 },
   });
-  // connect() always hands back a redacted host; the sudo password comes
-  // from resolveHost, which needs credentials:read.
-  const full = await ctx.ssh.resolveHost(parsedHostId);
-  const hostWithSudo: PluginSshHostWithSudo = {
-    ...host,
-    sudoPassword: (full?.sudoPassword as string | undefined) ?? undefined,
-  };
-  const hostCredentialId = (hostWithSudo.credentialId as number | null) ?? null;
-
   try {
+    // connect() always hands back a redacted host; the sudo password comes
+    // from resolveHost, which needs credentials:read.
+    const full = await ctx.ssh.resolveHost(parsedHostId);
+    const hostWithSudo: PluginSshHostWithSudo = {
+      ...host,
+      sudoPassword: (full?.sudoPassword as string | undefined) ?? undefined,
+    };
+    const hostCredentialId =
+      (hostWithSudo.credentialId as number | null) ?? null;
+
     ctx.log.info("Proxmox discovery SSH connection established");
 
     const pveshCheck = await execCommand(
@@ -292,9 +290,11 @@ async function discoverProxmoxGuestsForHost(
       "command -v pvesh >/dev/null 2>&1 && echo ok || echo missing",
     );
     if (pveshCheck.trim() !== "ok") {
-      const error = new Error("pvesh not found — is this a Proxmox node?");
-      (error as Error & { status?: number }).status = 422;
-      throw error;
+      throw new ProxmoxError(
+        "pvesh was not found. Is this a Proxmox node?",
+        "PVESH_NOT_FOUND",
+        422,
+      );
     }
 
     const resourcesJson = await execPveshCommand(
@@ -307,11 +307,11 @@ async function discoverProxmoxGuestsForHost(
     try {
       resources = JSON.parse(resourcesJson);
     } catch {
-      const error = new Error(
-        "Failed to parse pvesh output — unexpected response",
+      throw new ProxmoxError(
+        "pvesh returned output that could not be read",
+        "PVESH_BAD_OUTPUT",
+        502,
       );
-      (error as Error & { status?: number }).status = 502;
-      throw error;
     }
 
     type GuestBase = {
@@ -439,7 +439,7 @@ async function discoverProxmoxGuestsForHost(
 
     // Low concurrency on purpose: pvesh is heavy and small Proxmox nodes
     // (especially reached over a high-latency jump chain) suffer severe
-    // contention when many run at once — calls then exceed execCommand's
+    // contention when many run at once, so calls then exceed execCommand's
     // timeout and IPs come back empty. 2 keeps each call well under budget.
     const CONCURRENCY = 2;
     const ips: (string | null)[] = new Array(guestBases.length).fill(null);
@@ -482,11 +482,8 @@ async function discoverProxmoxGuestsForHost(
       config,
     };
   } finally {
-    try {
-      client.end();
-    } catch {
-      // ignore cleanup errors
-    }
+    // dispose also closes the jump hosts the connection went through.
+    dispose();
   }
 }
 
@@ -535,7 +532,7 @@ async function syncProxmoxHost(
 
     const seen = new Set<string>();
     for (const guest of discovery.guests) {
-      const key = guestSourceKey(sourceHostId, guest);
+      const key = proxmoxSourceKey({ sourceHostId, ...guest });
       seen.add(key);
       const imported = existingBySource.get(key);
       const existing = imported?.host;
@@ -583,7 +580,13 @@ async function syncProxmoxHost(
         username,
         connectionType,
         folder: existing?.folder || sourceHostName,
-        tags: mergeTags(existing?.tags, guestTags(guest), ["proxmox-missing"]),
+        tags: mergeTags(existing?.tags, guestTags(guest), [
+          "proxmox-missing",
+          // The old node's tag, when the guest migrated.
+          ...(imported && imported.source.node !== guest.node
+            ? [imported.source.node]
+            : []),
+        ]),
         pluginSettings: { [ctx.pluginId]: { proxmoxConfig } },
       };
 
@@ -717,7 +720,9 @@ router.post("/sync", async (req, res) => {
       `Proxmox sync failed for host ${parsedHostId}`,
       err as Error,
     );
-    return res.status(status).json({ error: `Sync failed: ${message}` });
+    return res
+      .status(status)
+      .json({ error: `Sync failed: ${message}`, code: errorCodeOf(err) });
   }
 });
 
@@ -842,7 +847,7 @@ router.get("/discover/stream", async (req, res) => {
       `Proxmox discovery (stream) failed for host ${parsedHostId}`,
       err as Error,
     );
-    send("fail", { message });
+    send("fail", { message, code: errorCodeOf(err) });
   } finally {
     clearInterval(heartbeat);
     if (!closed) {
@@ -909,7 +914,9 @@ router.post("/discover", async (req, res) => {
       message.includes("connect ETIMEDOUT")
         ? 422
         : 500);
-    return res.status(status).json({ error: `Discovery failed: ${message}` });
+    return res
+      .status(status)
+      .json({ error: `Discovery failed: ${message}`, code: errorCodeOf(err) });
   }
 });
 

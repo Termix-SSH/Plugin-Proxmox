@@ -5,6 +5,7 @@ import {
 import type { ProxmoxNodeHistoryRepository } from "./proxmox-node-history-repository.js";
 import { pluginCtx } from "./plugin-ctx.js";
 import type { Client } from "ssh2";
+import { errorCodeOf, type ProxmoxErrorCode } from "./proxmox-shared.js";
 
 /**
  * Proxmox stats polling gets its own concurrency limiter so a burst of polls
@@ -91,6 +92,7 @@ interface CachedSnapshot {
 
 interface ErrorSnapshot {
   error: string;
+  code?: ProxmoxErrorCode;
   timestamp: number;
 }
 
@@ -168,6 +170,7 @@ export class ProxmoxPollingManager<
             error instanceof Error ? error.message : String(error);
           this.errorStore.set(host.id, {
             error: message,
+            code: errorCodeOf(error),
             timestamp: Date.now(),
           });
           pluginCtx().log.warn(

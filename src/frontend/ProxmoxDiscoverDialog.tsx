@@ -20,6 +20,7 @@ import type { PluginHostRecord } from "@termix-ssh/plugin-sdk/frontend";
 import type { ProxmoxGuest } from "./types";
 import { resolveProxmoxImportAuth } from "./proxmox-import-auth";
 import { guestKey, importedGuestKeys } from "./imported-guests";
+import { proxmoxErrorText } from "./error-codes";
 import { docsUrl } from "./docs";
 
 interface ProxmoxDiscoverDialogProps {
@@ -131,8 +132,14 @@ export function ProxmoxDiscoverDialog({
         setProgress(null);
         streamCloseRef.current = null;
       },
-      onError: (message) => {
-        toast.error(message ?? t("hosts.proxmoxDiscoveryFailed"));
+      onError: (message, code) => {
+        toast.error(
+          proxmoxErrorText(
+            t,
+            code,
+            message ?? t("hosts.proxmoxDiscoveryFailed"),
+          ),
+        );
         setDiscovering(false);
         setProgress(null);
         streamCloseRef.current = null;

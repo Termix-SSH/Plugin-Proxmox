@@ -59,6 +59,12 @@ async function fetchHostForPolling(
   };
 }
 
+/** Whether the caller can see the host, so cached stats never leak. */
+async function canSeeHost(hostId: number): Promise<boolean> {
+  if (!Number.isInteger(hostId) || hostId <= 0) return false;
+  return !!(await pluginCtx().hosts.get(hostId));
+}
+
 /** Called from activate(). Builds the polling manager and mounts its routes. */
 export function startProxmoxStatsService(
   ctx: PluginContext,
@@ -113,15 +119,19 @@ function registerRoutes(
    *       200:
    *         description: Proxmox stats snapshot.
    *       404:
-   *         description: Stats not available yet.
+   *         description: Stats not available yet, or the host is not found.
    */
   app.get("/:id", async (req, res) => {
     const id = Number(req.params.id);
+    if (!(await canSeeHost(id))) {
+      return res.status(404).json({ error: "Host not found" });
+    }
     const cached = manager.getStats(id);
     if (!cached) {
       const errorState = manager.getError(id);
       return res.status(404).json({
         error: errorState?.error || "Stats not available",
+        code: errorState?.code,
         ...EMPTY_SNAPSHOT,
         lastChecked: new Date().toISOString(),
       });
@@ -185,6 +195,7 @@ function registerRoutes(
           viewerSessionId,
           status: "error",
           error: errorState.error,
+          code: errorState.code,
         });
       }
       return res.json({ success: true, viewerSessionId, status: "collecting" });
@@ -300,9 +311,14 @@ function registerRoutes(
    *         description: Array of node history rows.
    *       400:
    *         description: Invalid range or date.
+   *       404:
+   *         description: Host not found.
    */
   app.get("/history/:hostId", async (req, res) => {
     const hostId = Number(req.params.hostId);
+    if (!(await canSeeHost(hostId))) {
+      return res.status(404).json({ error: "Host not found" });
+    }
     const { range, from, to } = req.query as Record<string, string | undefined>;
 
     const RANGE_OFFSETS: Record<string, number> = {

@@ -26,7 +26,8 @@ export function discoverProxmoxGuestsStream(
   handlers: {
     onProgress?: (done: number, total: number) => void;
     onResult: (result: ProxmoxDiscoverResult) => void;
-    onError: (message: string) => void;
+    /** No message means the stream broke; show a generic failure. */
+    onError: (message?: string, code?: string) => void;
   },
 ): () => void {
   const controller = new AbortController();
@@ -49,17 +50,17 @@ export function discoverProxmoxGuestsStream(
       try {
         handlers.onResult(JSON.parse(data));
       } catch {
-        handlers.onError("Failed to parse discovery result");
+        handlers.onError();
       }
     } else if (event === "fail") {
       finish();
-      let message = "Discovery failed";
+      let parsed: { message?: string; code?: string } = {};
       try {
-        message = JSON.parse(data).message || message;
+        parsed = JSON.parse(data);
       } catch {
-        // keep default message
+        // generic failure
       }
-      handlers.onError(message);
+      handlers.onError(parsed.message || undefined, parsed.code);
     }
   };
 
@@ -93,12 +94,12 @@ export function discoverProxmoxGuestsStream(
       }
       if (!settled) {
         settled = true;
-        handlers.onError("Discovery connection lost");
+        handlers.onError();
       }
     } catch {
       if (settled) return;
       settled = true;
-      handlers.onError("Discovery connection lost");
+      handlers.onError();
     }
   })();
 

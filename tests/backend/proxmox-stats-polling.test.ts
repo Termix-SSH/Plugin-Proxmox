@@ -145,4 +145,19 @@ describe("ProxmoxPollingManager", () => {
     expect(manager.getStats(4)).toBeUndefined();
     manager.destroy();
   });
+
+  it("keeps the error code so the UI can translate it", async () => {
+    const { ProxmoxError } =
+      await import("../../src/backend/proxmox-shared.js");
+    collectProxmoxStats.mockRejectedValue(
+      new ProxmoxError("pvesh was not found", "PVESH_NOT_FOUND"),
+    );
+    const { manager } = makeManager({ id: 5, userId: "user-1" });
+
+    manager.registerViewer(5, "viewer-1", "user-1");
+    await vi.waitFor(() => {
+      expect(manager.getError(5)?.code).toBe("PVESH_NOT_FOUND");
+    });
+    manager.destroy();
+  });
 });

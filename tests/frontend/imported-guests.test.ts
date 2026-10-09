@@ -46,9 +46,7 @@ describe("importedGuestKeys", () => {
       ],
       4,
     );
-    expect(keys.has(guestKey({ node: "pve1", type: "lxc", vmid: 101 }))).toBe(
-      true,
-    );
+    expect(keys.has(guestKey({ type: "lxc", vmid: 101 }))).toBe(true);
     expect(keys.size).toBe(1);
   });
 
@@ -57,7 +55,7 @@ describe("importedGuestKeys", () => {
       [host({ tags: ["prod", "proxmox", "qemu", "pve2", "vm-300", "docker"] })],
       4,
     );
-    expect([...keys]).toEqual(["pve2:qemu:300"]);
+    expect([...keys]).toEqual(["qemu:300"]);
     expect(importedGuestKeys([host({ tags: ["proxmox"] })], 4).size).toBe(0);
   });
 });
