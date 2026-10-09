@@ -1,7 +1,7 @@
 {
   "id": "proxmox",
   "name": "Proxmox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Import Proxmox VE guests as hosts, keep them in sync and watch node stats.",
   "author": {
     "name": "Termix"

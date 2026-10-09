@@ -25,36 +25,50 @@ describe("collectProxmoxNodeNetwork", () => {
     expect(execCommand).not.toHaveBeenCalled();
   });
 
-  it("falls back to /proc/net/dev when pvesh netstat fails", async () => {
-    // First call: pvesh netstat -> failure.
-    execCommand.mockResolvedValueOnce(result("", 1));
-    // Fallback calls: ip addr, ip link, /proc/net/dev.
-    execCommand.mockResolvedValueOnce(result("eth0 10.0.0.5/24\n"));
-    execCommand.mockResolvedValueOnce(result("eth0 UP\n"));
+  it("reads the node's own interfaces and skips guest devices", async () => {
     execCommand.mockResolvedValueOnce(
       result(
-        "Inter-|   Receive\n" +
-          " face |bytes    packets\n" +
-          "eth0: 123456    10    0    0    0     0          0         0   654321   20    0    0    0     0       0          0\n",
+        [
+          "vmbr0 10.0.0.5/24",
+          "tap101i0 fe80::1/64",
+          "fwbr101i0 fe80::2/64",
+        ].join("\n"),
+      ),
+    );
+    execCommand.mockResolvedValueOnce(
+      result(["vmbr0 UP", "tap101i0 UP"].join("\n")),
+    );
+    execCommand.mockResolvedValueOnce(
+      result(
+        [
+          "Inter-|   Receive",
+          " face |bytes    packets",
+          "vmbr0: 123456    10    0    0    0     0          0         0   654321   20    0    0    0     0       0          0",
+        ].join("\n"),
       ),
     );
 
     const res = await collectProxmoxNodeNetwork(fakeClient, "pve1");
-    expect(res.interfaces).toHaveLength(1);
-    expect(res.interfaces[0]).toMatchObject({
-      name: "eth0",
-      ip: "10.0.0.5",
-      state: "UP",
-      rxBytes: "123456",
-      txBytes: "654321",
-    });
+    expect(res.interfaces).toEqual([
+      {
+        name: "vmbr0",
+        ip: "10.0.0.5",
+        state: "UP",
+        rxBytes: "123456",
+        txBytes: "654321",
+      },
+    ]);
+    for (const call of execCommand.mock.calls) {
+      expect(String(call[1])).not.toContain("netstat");
+    }
   });
 
-  it("falls back to /proc/net/dev when pvesh returns unparseable data", async () => {
-    execCommand.mockResolvedValueOnce(result("not json", 0));
+  it("returns nothing when the node output is empty", async () => {
     execCommand.mockResolvedValueOnce(result(""));
     execCommand.mockResolvedValueOnce(result(""));
-    execCommand.mockResolvedValueOnce(result("Inter-|   Receive\n face |\n"));
+    execCommand.mockResolvedValueOnce(
+      result(["Inter-|   Receive", " face |"].join("\n")),
+    );
 
     const res = await collectProxmoxNodeNetwork(fakeClient, "pve1");
     expect(res.interfaces).toEqual([]);

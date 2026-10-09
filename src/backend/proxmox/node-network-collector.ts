@@ -86,6 +86,13 @@ async function collectFromProcNetDev(
   return { interfaces };
 }
 
+/** Per-guest devices Proxmox creates on the node: taps, veths and firewall bridges. */
+const GUEST_INTERFACE = /^(tap|veth|fwbr|fwpr|fwln)/;
+
+/**
+ * The node's own network interfaces. pvesh's netstat lists each guest's
+ * virtual NIC instead, so the node is read directly.
+ */
 export async function collectProxmoxNodeNetwork(
   client: Client,
   nodeName: string,
@@ -93,53 +100,8 @@ export async function collectProxmoxNodeNetwork(
   if (!isSafeNodeName(nodeName)) {
     return EMPTY_RESULT;
   }
-
-  try {
-    const { stdout, code } = await execCommand(
-      client,
-      `pvesh get /nodes/${nodeName}/netstat --output-format json`,
-      15000,
-    );
-    if (code !== 0) {
-      return collectFromProcNetDev(client);
-    }
-
-    const data = JSON.parse(stdout);
-    if (!Array.isArray(data)) {
-      return collectFromProcNetDev(client);
-    }
-
-    const interfaces: ProxmoxNodeNetworkInterface[] = data
-      .filter(
-        (entry): entry is Record<string, unknown> =>
-          !!entry && typeof entry === "object",
-      )
-      .map((entry) => ({
-        name:
-          typeof entry.dev === "string" ? entry.dev : String(entry.dev ?? ""),
-        ip: null,
-        state: null,
-        rxBytes:
-          typeof entry.in === "number"
-            ? String(entry.in)
-            : typeof entry.received === "number"
-              ? String(entry.received)
-              : null,
-        txBytes:
-          typeof entry.out === "number"
-            ? String(entry.out)
-            : typeof entry.transmitted === "number"
-              ? String(entry.transmitted)
-              : null,
-      }))
-      .filter((iface) => iface.name && iface.name !== "lo");
-
-    if (interfaces.length === 0) {
-      return collectFromProcNetDev(client);
-    }
-
-    return { interfaces };
-  } catch {
-    return collectFromProcNetDev(client);
-  }
+  const { interfaces } = await collectFromProcNetDev(client);
+  return {
+    interfaces: interfaces.filter((iface) => !GUEST_INTERFACE.test(iface.name)),
+  };
 }
