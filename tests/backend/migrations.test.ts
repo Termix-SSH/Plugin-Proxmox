@@ -1,6 +1,11 @@
+import fs from "node:fs";
+import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { createTestDb, type TestDb } from "@termix-ssh/plugin-sdk/testing";
+import { LEGACY_TABLE_OWNERS } from "@termix-ssh/plugin-sdk/db";
+import { findUnownedTableWrites } from "@termix-ssh/plugin-sdk/ddl";
 import { pluginDir } from "./helpers.js";
+import { tables } from "../../src/backend/tables.js";
 
 // proxmox_node_history and proxmox_stats_preferences as core's SQLite
 // bootstrap created them before 2.9.0.
@@ -69,7 +74,10 @@ describe("adopting proxmox_node_history and proxmox_stats_preferences", () => {
       },
     });
 
-    expect(db.applied).toEqual(["0001_adopt_proxmox_stats"]);
+    expect(db.applied).toEqual([
+      "0001_adopt_proxmox_stats",
+      "0002_mysql_indexes",
+    ]);
     expect(tableExists("proxmox_node_history")).toBe(false);
     expect(tableExists("proxmox_stats_preferences")).toBe(false);
     expect(tableExists("p_proxmox_node_history")).toBe(true);
@@ -95,5 +103,36 @@ describe("adopting proxmox_node_history and proxmox_stats_preferences", () => {
     expect(
       db.sqlite.prepare("SELECT * FROM p_proxmox_node_history").all(),
     ).toEqual([]);
+  });
+});
+
+describe("mysql migrations", () => {
+  const mysqlDir = path.join(pluginDir, "migrations", "mysql");
+  const mysqlSql = () =>
+    fs
+      .readdirSync(mysqlDir)
+      .filter((file) => file.endsWith(".sql"))
+      .sort()
+      .map((file) => fs.readFileSync(path.join(mysqlDir, file), "utf8"));
+
+  it("create every index tables.ts declares", () => {
+    const all = mysqlSql().join("\n");
+    for (const table of tables) {
+      for (const index of table.indexes) {
+        const unique = index.unique ? "UNIQUE " : "";
+        expect(all).toContain(`CREATE ${unique}INDEX \`${index.name}\``);
+      }
+    }
+  });
+
+  it("only write tables this plugin owns", () => {
+    const legacy = new Set(
+      Object.entries(LEGACY_TABLE_OWNERS)
+        .filter(([, owner]) => owner === "proxmox")
+        .map(([table]) => table),
+    );
+    for (const sql of mysqlSql()) {
+      expect(findUnownedTableWrites("proxmox", sql, legacy)).toEqual([]);
+    }
   });
 });
