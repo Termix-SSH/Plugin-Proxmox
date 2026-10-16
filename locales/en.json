@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Connected"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Import Proxmox VE guests as hosts, keep them in sync and watch node stats."
   }
 }

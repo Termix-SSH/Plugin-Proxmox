@@ -104,5 +104,9 @@
   },
   "terminal": {
     "connected": "已連線"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "將 Proxmox VE 虛擬機器和容器匯入為主機，保持同步並檢視節點統計。"
   }
 }

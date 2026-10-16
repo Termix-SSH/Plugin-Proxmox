@@ -104,5 +104,9 @@
   },
   "terminal": {
     "connected": "已连接"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "将 Proxmox VE 虚拟机和容器导入为主机，保持同步并查看节点统计。"
   }
 }
