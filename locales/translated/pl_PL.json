@@ -119,5 +119,9 @@
   },
   "terminal": {
     "connected": "Połączono"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importuj maszyny wirtualne Proxmox VE jako hosty, synchronizuj je i monitoruj statystyki węzłów."
   }
 }

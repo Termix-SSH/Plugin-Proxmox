@@ -119,5 +119,9 @@
   },
   "terminal": {
     "connected": "Připojeno"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importujte virtuální stroje z Proxmox VE jako hostitele, synchronizujte je a sledujte statistiky uzlů."
   }
 }

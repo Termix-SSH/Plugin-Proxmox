@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Yhdistetty"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Tuo Proxmox VE -vierasjärjestelmät isäntinä, pidä ne synkronoituna ja seuraa solmun tilastotietoja."
   }
 }

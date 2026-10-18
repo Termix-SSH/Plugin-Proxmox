@@ -129,5 +129,9 @@
   },
   "terminal": {
     "connected": "متصل"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "استيراد ضيوف Proxmox VE كمضيفين، والحفاظ على مزامنتهم، ومراقبة إحصائيات العقد."
   }
 }

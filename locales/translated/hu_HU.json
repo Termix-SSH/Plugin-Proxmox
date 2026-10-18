@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Csatlakozva"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Proxmox VE vendégek importálása hostként, szinkronizálásuk és a csomópontok statisztikáinak figyelése."
   }
 }

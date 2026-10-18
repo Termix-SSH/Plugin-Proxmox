@@ -114,5 +114,9 @@
   },
   "terminal": {
     "connected": "Povezano"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Uvozite Proxmox VE goste kao hostove, održavajte ih usklađenima i pratite statistiku čvorova."
   }
 }

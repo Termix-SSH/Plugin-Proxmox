@@ -104,5 +104,9 @@
   },
   "terminal": {
     "connected": "Đã kết nối"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Nhập máy khách Proxmox VE dưới dạng host, đồng bộ hóa chúng và xem thống kê nút."
   }
 }

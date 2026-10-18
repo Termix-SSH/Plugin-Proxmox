@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Συνδεδεμένος"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Εισαγωγή των guests του Proxmox VE ως hosts, διατήρηση συγχρονισμού και παρακολούθηση στατιστικών κόμβων."
   }
 }

@@ -119,5 +119,9 @@
   },
   "terminal": {
     "connected": "Prisijungta"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importuokite Proxmox VE svečius kaip serverius, sinchronizuokite juos ir stebėkite mazgų statistiką."
   }
 }

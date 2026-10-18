@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Verbunden"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importieren Sie Proxmox VE-Gäste als Hosts, halten Sie sie synchron und beobachten Sie die Knotenstatistiken."
   }
 }

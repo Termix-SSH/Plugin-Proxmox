@@ -114,5 +114,9 @@
   },
   "terminal": {
     "connected": "Ligado"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importe convidados do Proxmox VE como hosts, mantenha-os sincronizados e acompanhe as estatísticas dos nós."
   }
 }

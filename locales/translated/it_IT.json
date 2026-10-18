@@ -114,5 +114,9 @@
   },
   "terminal": {
     "connected": "Connesso"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importa le macchine virtuali di Proxmox VE come host, mantienile sincronizzate e monitora le statistiche dei nodi."
   }
 }

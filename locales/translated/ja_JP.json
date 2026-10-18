@@ -104,5 +104,9 @@
   },
   "terminal": {
     "connected": "接続済み"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Proxmox VE ゲストをホストとしてインポートし、同期を維持してノードの統計情報を確認します。"
   }
 }

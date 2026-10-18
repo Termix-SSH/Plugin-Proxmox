@@ -104,5 +104,9 @@
   },
   "terminal": {
     "connected": "Terhubung"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Impor tamu Proxmox VE sebagai host, sinkronkan, dan pantau statistik node."
   }
 }

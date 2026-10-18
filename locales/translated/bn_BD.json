@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "সংযুক্ত"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Proxmox VE গেস্টদের হোস্ট হিসেবে আমদানি করুন, তাদের সিঙ্ক রাখুন এবং নোড পরিসংখ্যান দেখুন।"
   }
 }

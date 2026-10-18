@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Tilkoblet"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importer Proxmox VE-gjest som vertsmaskiner, hold dem synkronisert og se nodestatistikk."
   }
 }

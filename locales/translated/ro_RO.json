@@ -114,5 +114,9 @@
   },
   "terminal": {
     "connected": "Conectat"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importați mașinile virtuale Proxmox VE ca gazde, mențineți-le sincronizate și monitorizați statisticile nodurilor."
   }
 }

@@ -119,5 +119,9 @@
   },
   "terminal": {
     "connected": "Pripojené"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importujte hostí Proxmox VE ako hostiteľov, udržiavajte ich synchronizáciu a sledujte štatistiky uzlov."
   }
 }

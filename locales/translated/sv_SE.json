@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Ansluten"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importera Proxmox VE-gäster som värdar, håll dem synkroniserade och övervaka nodstatistik."
   }
 }

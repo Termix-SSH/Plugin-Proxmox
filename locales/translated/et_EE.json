@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Ühendatud"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Impordi Proxmox VE külalised kui peremed, hoia neid sünkroonis ja jälgimad sõlme statistikat."
   }
 }

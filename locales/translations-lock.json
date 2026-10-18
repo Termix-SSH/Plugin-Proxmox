@@ -94,5 +94,7 @@
   "hosts.none": "6eef6648406c",
   "hosts.proxmoxGuestsSelected": "361079c7f06b",
   "hosts.proxmoxImportButton": "1d17aad25d58",
-  "terminal.connected": "c2f9b7b4897f"
+  "terminal.connected": "c2f9b7b4897f",
+  "plugin.name": "27f211ee8717",
+  "plugin.description": "047105a9ee8e"
 }

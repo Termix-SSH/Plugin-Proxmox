@@ -109,5 +109,9 @@
   },
   "terminal": {
     "connected": "Bağlı"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Proxmox VE misafirlerini ana bilgisayar olarak içe aktarın, senkronize tutun ve düğüm istatistiklerini izleyin."
   }
 }

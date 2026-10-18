@@ -104,5 +104,9 @@
   },
   "terminal": {
     "connected": "연결됨"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Proxmox VE 게스트를 호스트로 가져와서 동기화하고 노드 통계를 확인하세요."
   }
 }

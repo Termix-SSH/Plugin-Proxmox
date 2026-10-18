@@ -114,5 +114,9 @@
   },
   "terminal": {
     "connected": "מחובר"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "ייבוא אורחים מ-Proxmox VE כמארחים, שמירה על סנכרון ועקיפת סטטיסטיקות צומת."
   }
 }

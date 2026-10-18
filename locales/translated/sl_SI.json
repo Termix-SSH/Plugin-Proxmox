@@ -119,5 +119,9 @@
   },
   "terminal": {
     "connected": "Povezano"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Uvozite goste Proxmox VE kot gostitelje, jih sinhronizirajte in spremljajte statistiko vozlov."
   }
 }

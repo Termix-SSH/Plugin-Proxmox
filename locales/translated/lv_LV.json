@@ -114,5 +114,9 @@
   },
   "terminal": {
     "connected": "Savienots"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importējiet Proxmox VE viesus kā mezglus, sinhronizējiet tos un uzraugiet mezgla statistiku."
   }
 }

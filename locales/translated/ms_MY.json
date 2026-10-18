@@ -104,5 +104,9 @@
   },
   "terminal": {
     "connected": "Sambung"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Import tetamu Proxmox VE sebagai hos, kekalkan penyegerakan dan pantau statistik nod."
   }
 }

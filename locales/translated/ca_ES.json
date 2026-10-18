@@ -114,5 +114,9 @@
   },
   "terminal": {
     "connected": "Connectat"
+  },
+  "plugin": {
+    "name": "Proxmox",
+    "description": "Importa els convidats de Proxmox VE com a amfitrions, mantén-los sincronitzats i visualitza les estadístiques dels nodes."
   }
 }
