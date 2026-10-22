@@ -118,5 +118,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importa le macchine virtuali di Proxmox VE come host, mantienile sincronizzate e monitora le statistiche dei nodi."
+  },
+  "card": {
+    "title": "Nodi Proxmox",
+    "loading": "Caricamento...",
+    "empty": "Nessun nodo ancora. Attiva le statistiche Proxmox nelle impostazioni dell'host di un nodo."
   }
 }

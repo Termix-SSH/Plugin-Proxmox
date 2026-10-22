@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importera Proxmox VE-gäster som värdar, håll dem synkroniserade och övervaka nodstatistik."
+  },
+  "card": {
+    "title": "Proxmox-noder",
+    "loading": "Laddar...",
+    "empty": "Inga noder ännu. Aktivera Proxmox-statistik i värdens inställningar."
   }
 }

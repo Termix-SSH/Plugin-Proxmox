@@ -118,5 +118,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importa els convidats de Proxmox VE com a amfitrions, mantén-los sincronitzats i visualitza les estadístiques dels nodes."
+  },
+  "card": {
+    "title": "Nodes de Proxmox",
+    "loading": "S'està carregant...",
+    "empty": "Encara no hi ha nodes. Activeu les estadístiques de Proxmox a la configuració de l'amfitrió d'un node."
   }
 }

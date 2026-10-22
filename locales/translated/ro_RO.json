@@ -118,5 +118,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importați mașinile virtuale Proxmox VE ca gazde, mențineți-le sincronizate și monitorizați statisticile nodurilor."
+  },
+  "card": {
+    "title": "Noduri Proxmox",
+    "loading": "Se încarcă...",
+    "empty": "Încă nu există noduri. Activați statisticile Proxmox în setările gazdei unui nod."
   }
 }

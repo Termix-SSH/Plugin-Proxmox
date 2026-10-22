@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importeer Proxmox VE-gasten als hosts, houd ze gesynchroniseerd en bekijk de knooppuntstatistieken."
+  },
+  "card": {
+    "title": "Proxmox-knooppunten",
+    "loading": "Laden...",
+    "empty": "Nog geen knooppunten. Schakel Proxmox-statistieken in de host-instellingen van een knooppunt in."
   }
 }

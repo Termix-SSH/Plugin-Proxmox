@@ -16,6 +16,7 @@ import { HostProxmoxTab } from "./HostProxmoxTab";
 import { ProxmoxStatsTab } from "./stats/ProxmoxStatsTab";
 import ProxmoxStatsApp from "./stats/ProxmoxStatsApp";
 import { HostProxmoxStatsTab } from "./stats/HostProxmoxStatsTab";
+import { ProxmoxNodesCard } from "./stats/ProxmoxNodesCard";
 
 interface DiscoverRequest {
   hostId?: number;
@@ -213,5 +214,14 @@ export function activate(app: TermixApp): void {
     tabType: "proxmox-stats",
     copyUrlView: "proxmox-stats",
     when: (host) => proxmoxSettings(host).enableProxmoxStats === true,
+  });
+
+  app.registerDashboardCard({
+    id: "proxmox-nodes",
+    titleKey: "card.title",
+    defaultPanel: "main",
+    defaultHeight: 200,
+    frame: "framed",
+    component: ProxmoxNodesCard,
   });
 }

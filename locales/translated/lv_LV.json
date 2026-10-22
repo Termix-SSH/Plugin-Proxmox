@@ -118,5 +118,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importējiet Proxmox VE viesus kā mezglus, sinhronizējiet tos un uzraugiet mezgla statistiku."
+  },
+  "card": {
+    "title": "Proxmox mezgli",
+    "loading": "Ielādē...",
+    "empty": "Vēl nav mezglu. Ieslēdziet Proxmox statistiku mezgla hosta iestatījumos."
   }
 }

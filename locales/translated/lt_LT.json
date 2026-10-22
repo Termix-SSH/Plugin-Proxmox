@@ -123,5 +123,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importuokite Proxmox VE svečius kaip serverius, sinchronizuokite juos ir stebėkite mazgų statistiką."
+  },
+  "card": {
+    "title": "Proxmox mazgai",
+    "loading": "Įkeliamas...",
+    "empty": "Dar nėra mazgų. Įjunkite Proxmox statistiką mazgo hosto nustatymuose."
   }
 }

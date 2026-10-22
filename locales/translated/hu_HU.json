@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Proxmox VE vendégek importálása hostként, szinkronizálásuk és a csomópontok statisztikáinak figyelése."
+  },
+  "card": {
+    "title": "Proxmox csomópontok",
+    "loading": "Betöltés...",
+    "empty": "Még nincsenek csomópontok. Kapcsold be a Proxmox statisztikákat egy csomópont host beállításaiban."
   }
 }

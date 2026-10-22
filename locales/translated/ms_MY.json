@@ -108,5 +108,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Import tetamu Proxmox VE sebagai hos, kekalkan penyegerakan dan pantau statistik nod."
+  },
+  "card": {
+    "title": "Nod Proxmox",
+    "loading": "Memuatkan...",
+    "empty": "Belum ada nod. Hidupkan statistik Proxmox dalam tetapan hos nod."
   }
 }

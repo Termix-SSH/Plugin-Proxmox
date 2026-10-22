@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Proxmox VE misafirlerini ana bilgisayar olarak içe aktarın, senkronize tutun ve düğüm istatistiklerini izleyin."
+  },
+  "card": {
+    "title": "Proxmox düğümleri",
+    "loading": "Yükleniyor...",
+    "empty": "Henüz düğüm yok. Bir düğümün sunucu ayarlarında Proxmox istatistiklerini açın."
   }
 }

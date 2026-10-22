@@ -118,5 +118,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importez les invités Proxmox VE en tant qu'hôtes, gardez-les synchronisés et consultez les statistiques des nœuds."
+  },
+  "card": {
+    "title": "Nœuds Proxmox",
+    "loading": "Chargement...",
+    "empty": "Aucun nœud pour le moment. Activez les statistiques Proxmox dans les paramètres du hôte d'un nœud."
   }
 }

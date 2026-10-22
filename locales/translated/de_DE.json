@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importieren Sie Proxmox VE-Gäste als Hosts, halten Sie sie synchron und beobachten Sie die Knotenstatistiken."
+  },
+  "card": {
+    "title": "Proxmox-Knoten",
+    "loading": "Wird geladen...",
+    "empty": "Noch keine Knoten. Aktivieren Sie die Proxmox-Statistiken in den Host-Einstellungen eines Knotens."
   }
 }

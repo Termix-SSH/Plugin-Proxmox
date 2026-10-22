@@ -123,5 +123,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importujte hostí Proxmox VE ako hostiteľov, udržiavajte ich synchronizáciu a sledujte štatistiky uzlov."
+  },
+  "card": {
+    "title": "Uzly Proxmox",
+    "loading": "Načítava sa...",
+    "empty": "Zatiaľ žiadne uzly. Zapnite štatistiky Proxmox v nastaveniach hostiteľa uzla."
   }
 }

@@ -108,5 +108,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "將 Proxmox VE 虛擬機器和容器匯入為主機，保持同步並檢視節點統計。"
+  },
+  "card": {
+    "title": "Proxmox 節點",
+    "loading": "載入中...",
+    "empty": "目前沒有節點。請在節點的主機設定中啟用 Proxmox 統計資料。"
   }
 }

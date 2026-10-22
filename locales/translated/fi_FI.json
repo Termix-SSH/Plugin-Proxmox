@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Tuo Proxmox VE -vierasjärjestelmät isäntinä, pidä ne synkronoituna ja seuraa solmun tilastotietoja."
+  },
+  "card": {
+    "title": "Proxmox-solmuja",
+    "loading": "Ladataan...",
+    "empty": "Solmuja ei vielä ole. Ota Proxmox-tilastot käyttöön solmun isäntäasetuksista."
   }
 }

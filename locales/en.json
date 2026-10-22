@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Import Proxmox VE guests as hosts, keep them in sync and watch node stats."
+  },
+  "card": {
+    "title": "Proxmox nodes",
+    "loading": "Loading...",
+    "empty": "No nodes yet. Turn on Proxmox stats in a node's host settings."
   }
 }

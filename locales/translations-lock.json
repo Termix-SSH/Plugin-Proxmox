@@ -96,5 +96,8 @@
   "hosts.proxmoxImportButton": "1d17aad25d58",
   "terminal.connected": "c2f9b7b4897f",
   "plugin.name": "27f211ee8717",
-  "plugin.description": "047105a9ee8e"
+  "plugin.description": "047105a9ee8e",
+  "card.title": "2a36800d42a8",
+  "card.loading": "b04ba49f8486",
+  "card.empty": "92a9615e6523"
 }

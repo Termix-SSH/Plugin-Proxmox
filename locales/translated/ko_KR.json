@@ -108,5 +108,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Proxmox VE 게스트를 호스트로 가져와서 동기화하고 노드 통계를 확인하세요."
+  },
+  "card": {
+    "title": "Proxmox 노드",
+    "loading": "로딩 중...",
+    "empty": "아직 노드가 없습니다. 노드의 호스트 설정에서 Proxmox 통계를 활성화하세요."
   }
 }

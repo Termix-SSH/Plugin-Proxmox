@@ -1,7 +1,7 @@
 {
   "id": "proxmox",
   "name": "Proxmox",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Import Proxmox VE guests as hosts, keep them in sync and watch node stats.",
   "author": {
     "name": "Termix"
@@ -16,7 +16,8 @@
     "Find and import VMs and LXC containers from a node",
     "Keep imported hosts in sync on a schedule",
     "Set up Windows guests for RDP and turn on Docker for guests by name",
-    "Node, guest, storage and cluster stats in their own tab"
+    "Node, guest, storage and cluster stats in their own tab",
+    "A dashboard card with CPU, memory, disk and guests for each node"
   ],
   "engine": {
     "termix": ">=26.10.0",
@@ -71,7 +72,14 @@
           }
         ]
       }
-    }
+    },
+    "dashboardCards": [
+      {
+        "id": "proxmox-nodes",
+        "titleKey": "card.title",
+        "icon": "HardDrive"
+      }
+    ]
   },
   "locales": "locales",
   "platforms": ["linux", "win32", "darwin"]

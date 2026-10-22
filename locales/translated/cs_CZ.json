@@ -123,5 +123,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importujte virtuální stroje z Proxmox VE jako hostitele, synchronizujte je a sledujte statistiky uzlů."
+  },
+  "card": {
+    "title": "Uzly Proxmox",
+    "loading": "Načítání...",
+    "empty": "Zatím žádné uzly. Zapněte statistiky Proxmox v nastavení hostitele uzlu."
   }
 }

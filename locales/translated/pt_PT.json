@@ -118,5 +118,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importe convidados do Proxmox VE como hosts, mantenha-os sincronizados e acompanhe as estatísticas dos nós."
+  },
+  "card": {
+    "title": "Nós do Proxmox",
+    "loading": "A carregar...",
+    "empty": "Ainda não há nós. Ative as estatísticas do Proxmox nas definições do host de um nó."
   }
 }

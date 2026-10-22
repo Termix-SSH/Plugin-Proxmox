@@ -108,5 +108,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Nhập máy khách Proxmox VE dưới dạng host, đồng bộ hóa chúng và xem thống kê nút."
+  },
+  "card": {
+    "title": "Nút Proxmox",
+    "loading": "Đang tải...",
+    "empty": "Chưa có nút nào. Bật thống kê Proxmox trong cài đặt máy chủ của nút."
   }
 }

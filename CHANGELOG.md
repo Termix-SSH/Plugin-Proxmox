@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+### Added
+
+- Proxmox nodes dashboard card: CPU, memory, disk and running guests for every node with Proxmox Stats on
+
 ## 1.0.2
 
 ### Changed

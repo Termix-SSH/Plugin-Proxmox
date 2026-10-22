@@ -108,5 +108,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Impor tamu Proxmox VE sebagai host, sinkronkan, dan pantau statistik node."
+  },
+  "card": {
+    "title": "Node Proxmox",
+    "loading": "Memuat...",
+    "empty": "Belum ada node. Aktifkan statistik Proxmox di pengaturan host node."
   }
 }

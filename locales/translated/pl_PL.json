@@ -123,5 +123,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Importuj maszyny wirtualne Proxmox VE jako hosty, synchronizuj je i monitoruj statystyki węzłów."
+  },
+  "card": {
+    "title": "Węzły Proxmox",
+    "loading": "Ładowanie...",
+    "empty": "Brak węzłów. Włącz statystyki Proxmox w ustawieniach hosta węzła."
   }
 }

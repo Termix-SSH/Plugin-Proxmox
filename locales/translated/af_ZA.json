@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Voeg Proxmox VE-gaste as gasheerbedieners by, hou hulle op datum en monitor nodusstatistieke."
+  },
+  "card": {
+    "title": "Proxmox-knope",
+    "loading": "Laai tans...",
+    "empty": "Nog geen knope nie. Skakel Proxmox-statistieke aan in die gasheerinstellings van 'n knoop."
   }
 }

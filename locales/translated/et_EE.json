@@ -113,5 +113,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Impordi Proxmox VE külalised kui peremed, hoia neid sünkroonis ja jälgimad sõlme statistikat."
+  },
+  "card": {
+    "title": "Proxmox-i sõlmed",
+    "loading": "Laadimine...",
+    "empty": "Sõlmi veel ei ole. Lülitage Proxmoxi statistika sisse sõlme hosti seadetes."
   }
 }

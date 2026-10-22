@@ -118,5 +118,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Uvozite Proxmox VE goste kao hostove, održavajte ih usklađenima i pratite statistiku čvorova."
+  },
+  "card": {
+    "title": "Proxmox čvorovi",
+    "loading": "Učitavanje...",
+    "empty": "Još nema čvorova. Uključite Proxmox statistiku u postavkama hosta čvora."
   }
 }

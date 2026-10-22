@@ -108,5 +108,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "将 Proxmox VE 虚拟机和容器导入为主机，保持同步并查看节点统计。"
+  },
+  "card": {
+    "title": "Proxmox 节点",
+    "loading": "加载中...",
+    "empty": "暂无节点。请在节点的主机设置中启用 Proxmox 统计信息。"
   }
 }

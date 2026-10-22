@@ -123,5 +123,10 @@
   "plugin": {
     "name": "Proxmox",
     "description": "Uvozite goste Proxmox VE kot gostitelje, jih sinhronizirajte in spremljajte statistiko vozlov."
+  },
+  "card": {
+    "title": "Proxmox vozlišča",
+    "loading": "Nalaganje...",
+    "empty": "Še ni vozlišč. Omogočite Proxmox statistiko v nastavitvah gostitelja vozlišča."
   }
 }
