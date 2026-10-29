@@ -100,7 +100,12 @@
     "loadingHost": "กำลังโหลด host...",
     "none": "ไม่มี",
     "proxmoxGuestsSelected_other": "guest {{count}} รายการ, เลือก {{selected}} รายการ",
-    "proxmoxImportButton_other": "นำเข้า host {{count}} รายการ"
+    "proxmoxImportButton_other": "นำเข้า host {{count}} รายการ",
+    "proxmoxFolderName": "โฟลเดอร์สำหรับเครื่องเสมือน",
+    "proxmoxFolderNameDesc": "ตำแหน่งที่จะเก็บเครื่องเสมือนที่นำเข้า หากเว้นว่างไว้จะใช้ชื่อคลัสเตอร์ หรือชื่อโฮสต์นี้หากไม่ได้อยู่ในคลัสเตอร์",
+    "proxmoxFolderNamePlaceholder": "ชื่อคลัสเตอร์",
+    "proxmoxGroupByNode": "แยกโฟลเดอร์ตามโหนด",
+    "proxmoxGroupByNodeDesc": "จัดเครื่องเสมือนแต่ละตัวลงในโฟลเดอร์ย่อยที่มีชื่อตามโหนดที่ทำงานอยู่ เครื่องเสมือนจะย้ายตามเมื่อมีการย้ายโหนด"
   },
   "terminal": {
     "connected": "เชื่อมต่อแล้ว"

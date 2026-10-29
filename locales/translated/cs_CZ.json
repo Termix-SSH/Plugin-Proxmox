@@ -115,7 +115,12 @@
     "proxmoxImportButton_one": "Importovat {{count}} hostitele",
     "proxmoxImportButton_few": "Importovat {{count}} hostitele",
     "proxmoxImportButton_many": "Importovat {{count}} hostitelů",
-    "proxmoxImportButton_other": "Importovat {{count}} hostitelů"
+    "proxmoxImportButton_other": "Importovat {{count}} hostitelů",
+    "proxmoxFolderName": "Složka pro virtuální stroje",
+    "proxmoxFolderNameDesc": "Kam se mají importované virtuální stroje umístit. Pokud je pole prázdné, použije se název clusteru, nebo název tohoto hostitele, pokud není součástí clusteru.",
+    "proxmoxFolderNamePlaceholder": "Název clusteru",
+    "proxmoxGroupByNode": "Složka pro každý uzel",
+    "proxmoxGroupByNodeDesc": "Umístí každý virtuální stroj do podsložky pojmenované podle uzlu, na kterém běží. Virtuální stroje se přesunou při migraci."
   },
   "terminal": {
     "connected": "Připojeno"

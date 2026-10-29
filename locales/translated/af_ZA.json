@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} gaste, {{selected}} gekies",
     "proxmoxGuestsSelected_other": "{{count}} gaste, {{selected}} gekies",
     "proxmoxImportButton_one": "Voer {{count}} eienaar in",
-    "proxmoxImportButton_other": "Voer {{count}} eienaars in"
+    "proxmoxImportButton_other": "Voer {{count}} eienaars in",
+    "proxmoxFolderName": "Vouergids vir gaste",
+    "proxmoxFolderNameDesc": "Waar ingevoerde gaste heen gaan. As dit leeg is, word die klustername gebruik, of die naam van hierdie gasheer as dit nie in 'n kluster is nie.",
+    "proxmoxFolderNamePlaceholder": "Klustername",
+    "proxmoxGroupByNode": "Vouergids per node",
+    "proxmoxGroupByNodeDesc": "Plaas elke gas in 'n subgids wat vernoem is na die node waarop dit loop. Gaste beweeg wanneer hulle migreer."
   },
   "terminal": {
     "connected": "Verbind"

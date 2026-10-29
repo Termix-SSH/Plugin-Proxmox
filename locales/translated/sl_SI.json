@@ -115,7 +115,12 @@
     "proxmoxImportButton_one": "Uvozi {{count}} gostitelja",
     "proxmoxImportButton_two": "Uvozi {{count}} gostitelja",
     "proxmoxImportButton_few": "Uvozi {{count}} gostitelje",
-    "proxmoxImportButton_other": "Uvozi {{count}} gostiteljev"
+    "proxmoxImportButton_other": "Uvozi {{count}} gostiteljev",
+    "proxmoxFolderName": "Mapa za goste",
+    "proxmoxFolderNameDesc": "Kam se uvozijo gostje. Če je prazno, se uporabi ime klasterja ali ime tega gostitelja, če ni v klasterju.",
+    "proxmoxFolderNamePlaceholder": "Ime klasterja",
+    "proxmoxGroupByNode": "Mapa na vozlišče",
+    "proxmoxGroupByNodeDesc": "Vsakega gosta dajte v podmapo, poimenovano po vozlišču, na katerem teče. Gosti se premaknejo ob migraciji."
   },
   "terminal": {
     "connected": "Povezano"

@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} gjest, {{selected}} valgt",
     "proxmoxGuestsSelected_other": "{{count}} gjester, {{selected}} valgt",
     "proxmoxImportButton_one": "Importer {{count}} vert",
-    "proxmoxImportButton_other": "Importer {{count}} verter"
+    "proxmoxImportButton_other": "Importer {{count}} verter",
+    "proxmoxFolderName": "Mappe for gjester",
+    "proxmoxFolderNameDesc": "Hvor importerte gjester plasseres. Hvis feltet er tomt, brukes klusterets navn, eller navnet på denne verten hvis den ikke er i et kluster.",
+    "proxmoxFolderNamePlaceholder": "Klusterets navn",
+    "proxmoxGroupByNode": "Mappe per node",
+    "proxmoxGroupByNodeDesc": "Plasser hver gjest i en undermappe oppkalt etter noden den kjører på. Gjestene flyttes automatisk ved migrering."
   },
   "terminal": {
     "connected": "Tilkoblet"

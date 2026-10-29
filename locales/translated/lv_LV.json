@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} viesi, {{selected}} izvēlēti",
     "proxmoxImportButton_zero": "Importēt {{count}} hostus",
     "proxmoxImportButton_one": "Importēt {{count}} hostu",
-    "proxmoxImportButton_other": "Importēt {{count}} hostus"
+    "proxmoxImportButton_other": "Importēt {{count}} hostus",
+    "proxmoxFolderName": "Mapne viesmācīņām",
+    "proxmoxFolderNameDesc": "Kur nonāk importētās viesmācīņas. Ja atstāts tukšs, tiek izmantots klastera nosaukums vai šī mezgla nosaukums, ja tas nav klasterī.",
+    "proxmoxFolderNamePlaceholder": "Klastera nosaukums",
+    "proxmoxGroupByNode": "Mapne katram mezglam",
+    "proxmoxGroupByNodeDesc": "Katru viesmācīņu novieto apakšmapē ar nosaukumu pēc mezgla, uz kura tā darbojas. Viesmācīņas pārvietojas, kad tās migrē."
   },
   "terminal": {
     "connected": "Savienots"

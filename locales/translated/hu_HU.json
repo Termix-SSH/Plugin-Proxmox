@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} vendégrendszer, {{selected}} kijelölve",
     "proxmoxGuestsSelected_other": "{{count}} vendégrendszer, {{selected}} kijelölve",
     "proxmoxImportButton_one": "{{count}} gazdagép importálása",
-    "proxmoxImportButton_other": "{{count}} gazdagép importálása"
+    "proxmoxImportButton_other": "{{count}} gazdagép importálása",
+    "proxmoxFolderName": "Mappa a vendégeknek",
+    "proxmoxFolderNameDesc": "Ide kerülnek az importált vendégrendszerek. Ha üres, a klaszter neve, vagy ha nincs klaszterben, akkor ennek a hosztnek a neve lesz használva.",
+    "proxmoxFolderNamePlaceholder": "Klaszter neve",
+    "proxmoxGroupByNode": "Mappa csománonként",
+    "proxmoxGroupByNodeDesc": "Minden vendégrendszert tegyél egy alcsoportba, amely a futtatási csomópont nevét viseli. A vendégrendszerek akkor is mozognak, amikor migrálnak."
   },
   "terminal": {
     "connected": "Csatlakozva"

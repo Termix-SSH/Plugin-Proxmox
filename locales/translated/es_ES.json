@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} invitados, {{selected}} seleccionados",
     "proxmoxImportButton_one": "Importar {{count}} host",
     "proxmoxImportButton_many": "Importar {{count}} hosts",
-    "proxmoxImportButton_other": "Importar {{count}} hosts"
+    "proxmoxImportButton_other": "Importar {{count}} hosts",
+    "proxmoxFolderName": "Carpeta para invitados",
+    "proxmoxFolderNameDesc": "Dónde se colocan los invitados importados. Si está vacío, se usa el nombre del clúster o el nombre de este host si no pertenece a un clúster.",
+    "proxmoxFolderNamePlaceholder": "Nombre del clúster",
+    "proxmoxGroupByNode": "Carpeta por nodo",
+    "proxmoxGroupByNodeDesc": "Coloca cada invitado en una subcarpeta con el nombre del nodo donde se ejecuta. Los invitados se mueven cuando migran."
   },
   "terminal": {
     "connected": "Conectado"

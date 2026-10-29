@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} gostiju, {{selected}} odabrano",
     "proxmoxImportButton_one": "Uvezi {{count}} host",
     "proxmoxImportButton_few": "Uvezi {{count}} hosta",
-    "proxmoxImportButton_other": "Uvezi {{count}} hostova"
+    "proxmoxImportButton_other": "Uvezi {{count}} hostova",
+    "proxmoxFolderName": "Mapa za goste",
+    "proxmoxFolderNameDesc": "Gdje se uvozni gosti spremaju. Ako je prazno, koristi se naziv klastera ili naziv ovog hosta ako nije u klasteru.",
+    "proxmoxFolderNamePlaceholder": "Naziv klastera",
+    "proxmoxGroupByNode": "Mapa po čvoru",
+    "proxmoxGroupByNodeDesc": "Svaki gost se stavlja u podmapu nazvanu po čvoru na kojem se izvršava. Gosti se pomiču prilikom migracije."
   },
   "terminal": {
     "connected": "Povezano"

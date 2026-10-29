@@ -100,7 +100,12 @@
     "loadingHost": "正在載入主機...",
     "none": "無",
     "proxmoxGuestsSelected_other": "{{count}} 個虛擬機器，已選取 {{selected}} 個",
-    "proxmoxImportButton_other": "匯入 {{count}} 個主機"
+    "proxmoxImportButton_other": "匯入 {{count}} 個主機",
+    "proxmoxFolderName": "Guest 資料夾",
+    "proxmoxFolderNameDesc": "匯入的 Guest 存放位置。留空時將使用叢集名稱，若未加入叢集則使用此主機名稱。",
+    "proxmoxFolderNamePlaceholder": "叢集名稱",
+    "proxmoxGroupByNode": "依節點分資料夾",
+    "proxmoxGroupByNodeDesc": "將每個 Guest 放入以其執行節點命名的子資料夾中。Guest 遷移時會隨之移動。"
   },
   "terminal": {
     "connected": "已連線"

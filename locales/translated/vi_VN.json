@@ -100,7 +100,12 @@
     "loadingHost": "Đang tải máy chủ...",
     "none": "Không có",
     "proxmoxGuestsSelected_other": "{{count}} máy khách, {{selected}} đã chọn",
-    "proxmoxImportButton_other": "Nhập {{count}} máy chủ"
+    "proxmoxImportButton_other": "Nhập {{count}} máy chủ",
+    "proxmoxFolderName": "Thư mục cho máy khách",
+    "proxmoxFolderNameDesc": "Nơi lưu trữ các máy khách được nhập. Để trống sẽ sử dụng tên cụm, hoặc tên của máy chủ này nếu nó không nằm trong cụm.",
+    "proxmoxFolderNamePlaceholder": "Tên cụm",
+    "proxmoxGroupByNode": "Thư mục cho mỗi nút",
+    "proxmoxGroupByNodeDesc": "Đặt mỗi máy khách vào một thư mục con mang tên của nút mà nó đang chạy. Máy khách sẽ di chuyển khi chúng được di chuyển (migrate)."
   },
   "terminal": {
     "connected": "Đã kết nối"

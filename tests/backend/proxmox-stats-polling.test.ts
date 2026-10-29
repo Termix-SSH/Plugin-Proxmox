@@ -160,4 +160,24 @@ describe("ProxmoxPollingManager", () => {
     });
     manager.destroy();
   });
+
+  it("ensurePolling waits for a poll that registerViewer already started", async () => {
+    const host: TestHost = { id: 6, userId: "user-1" };
+    let release: (v: unknown) => void = () => {};
+    collectProxmoxStats.mockImplementation(
+      () => new Promise((resolve) => (release = resolve)),
+    );
+    const { manager, withSshConnection } = makeManager(host);
+
+    manager.registerViewer(6, "viewer-1", "user-1");
+    await vi.waitFor(() => expect(withSshConnection).toHaveBeenCalled());
+
+    const ensured = manager.ensurePolling(host, "user-1");
+    release(snapshot());
+    await ensured;
+
+    expect(manager.getStats(6)).toBeDefined();
+    expect(withSshConnection).toHaveBeenCalledTimes(1);
+    manager.destroy();
+  });
 });

@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} guest, {{selected}} selected",
     "proxmoxGuestsSelected_other": "{{count}} guests, {{selected}} selected",
     "proxmoxImportButton_one": "Import {{count}} host",
-    "proxmoxImportButton_other": "Import {{count}} hosts"
+    "proxmoxImportButton_other": "Import {{count}} hosts",
+    "proxmoxFolderName": "Folder for guests",
+    "proxmoxFolderNameDesc": "Where imported guests go. Empty uses the cluster name, or this host's name when it is not in a cluster.",
+    "proxmoxFolderNamePlaceholder": "Cluster name",
+    "proxmoxGroupByNode": "Folder per node",
+    "proxmoxGroupByNodeDesc": "Put each guest in a subfolder named after the node it runs on. Guests move when they migrate."
   },
   "terminal": {
     "connected": "Connected"

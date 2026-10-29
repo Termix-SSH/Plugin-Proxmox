@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} misafir, {{selected}} seçili",
     "proxmoxGuestsSelected_other": "{{count}} misafir, {{selected}} seçili",
     "proxmoxImportButton_one": "{{count}} ana bilgisayarı içe aktar",
-    "proxmoxImportButton_other": "{{count}} ana bilgisayarı içe aktar"
+    "proxmoxImportButton_other": "{{count}} ana bilgisayarı içe aktar",
+    "proxmoxFolderName": "Misafirler için klasör",
+    "proxmoxFolderNameDesc": "İçe aktarılan misafirlerin gideceği yer. Boş bırakılırsa küme adı, küme içinde değilse bu sunucunun adı kullanılır.",
+    "proxmoxFolderNamePlaceholder": "Küme adı",
+    "proxmoxGroupByNode": "Düğüm başına klasör",
+    "proxmoxGroupByNodeDesc": "Her misafiri, çalıştığı düğümün adıyla adlandırılmış bir alt klasöre yerleştir. Misafirler göç ettiğinde klasörler de değişir."
   },
   "terminal": {
     "connected": "Bağlı"

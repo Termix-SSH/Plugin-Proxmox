@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} guest-uri, {{selected}} selectate",
     "proxmoxImportButton_one": "Importă {{count}} host",
     "proxmoxImportButton_few": "Importă {{count}} host-uri",
-    "proxmoxImportButton_other": "Importă {{count}} host-uri"
+    "proxmoxImportButton_other": "Importă {{count}} host-uri",
+    "proxmoxFolderName": "Dosar pentru mașini virtuale",
+    "proxmoxFolderNameDesc": "Unde sunt plasate mașinile virtuale importate. Dacă este lăsat gol, se folosește numele clusterului sau, dacă nu face parte dintr-un cluster, numele acestui gazdă.",
+    "proxmoxFolderNamePlaceholder": "Numele clusterului",
+    "proxmoxGroupByNode": "Dosar pentru fiecare nod",
+    "proxmoxGroupByNodeDesc": "Plasează fiecare mașină virtuală într-un subdosar numit după nodul pe care rulează. Mașinile virtuale se mută automat când migrează."
   },
   "terminal": {
     "connected": "Conectat"

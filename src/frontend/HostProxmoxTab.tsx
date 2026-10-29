@@ -195,6 +195,36 @@ export function HostProxmoxTab({
               />
             </SettingRow>
             <SettingRow
+              label={t("hosts.proxmoxFolderName")}
+              description={t("hosts.proxmoxFolderNameDesc")}
+            >
+              <Input
+                className="w-44 h-7 text-xs"
+                value={cfg.folderName ?? ""}
+                onChange={(e) =>
+                  setField("proxmoxConfig", {
+                    ...cfg,
+                    folderName: e.target.value,
+                  })
+                }
+                placeholder={t("hosts.proxmoxFolderNamePlaceholder")}
+              />
+            </SettingRow>
+            <SettingRow
+              label={t("hosts.proxmoxGroupByNode")}
+              description={t("hosts.proxmoxGroupByNodeDesc")}
+            >
+              <FakeSwitch
+                checked={cfg.groupByNode === true}
+                onChange={(v) =>
+                  setField("proxmoxConfig", {
+                    ...cfg,
+                    groupByNode: v,
+                  })
+                }
+              />
+            </SettingRow>
+            <SettingRow
               label={t("hosts.proxmoxAutoSync")}
               description={t("hosts.proxmoxAutoSyncDesc")}
             >

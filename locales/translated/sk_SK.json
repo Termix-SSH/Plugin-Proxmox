@@ -115,7 +115,12 @@
     "proxmoxImportButton_one": "Importovať {{count}} hostiteľa",
     "proxmoxImportButton_few": "Importovať {{count}} hostiteľov",
     "proxmoxImportButton_many": "Importovať {{count}} hostiteľov",
-    "proxmoxImportButton_other": "Importovať {{count}} hostiteľov"
+    "proxmoxImportButton_other": "Importovať {{count}} hostiteľov",
+    "proxmoxFolderName": "Priečinok pre hostí",
+    "proxmoxFolderNameDesc": "Kam sa umiestnia importovaní hostia. Ak je pole prázdne, použije sa názov klastra, alebo názov tohto hostiteľa, ak nie je súčasťou klastra.",
+    "proxmoxFolderNamePlaceholder": "Názov klastra",
+    "proxmoxGroupByNode": "Priečinok pre každý uzol",
+    "proxmoxGroupByNodeDesc": "Umiestni každého hostiteľa do podpriečinka pomenovaného podľa uzla, na ktorom beží. Hostia sa presunú pri migrácii."
   },
   "terminal": {
     "connected": "Pripojené"

@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} machines invitées, {{selected}} sélectionnées",
     "proxmoxImportButton_one": "Importer {{count}} hôte",
     "proxmoxImportButton_many": "Importer {{count}} hôtes",
-    "proxmoxImportButton_other": "Importer {{count}} hôtes"
+    "proxmoxImportButton_other": "Importer {{count}} hôtes",
+    "proxmoxFolderName": "Dossier pour les invités",
+    "proxmoxFolderNameDesc": "Emplacement des invités importés. Laisser vide pour utiliser le nom du cluster, ou le nom de cet hôte s'il n'appartient à aucun cluster.",
+    "proxmoxFolderNamePlaceholder": "Nom du cluster",
+    "proxmoxGroupByNode": "Un dossier par nœud",
+    "proxmoxGroupByNodeDesc": "Placer chaque invité dans un sous-dossier nommé d'après le nœud sur lequel il s'exécute. Les invités se déplacent lors de leur migration."
   },
   "terminal": {
     "connected": "Connecté"

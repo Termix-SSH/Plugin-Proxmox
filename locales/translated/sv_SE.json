@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} gäst, {{selected}} vald",
     "proxmoxGuestsSelected_other": "{{count}} gäster, {{selected}} valda",
     "proxmoxImportButton_one": "Importera {{count}} värd",
-    "proxmoxImportButton_other": "Importera {{count}} värdar"
+    "proxmoxImportButton_other": "Importera {{count}} värdar",
+    "proxmoxFolderName": "Mapp för gäster",
+    "proxmoxFolderNameDesc": "Där importerade gäster hamnar. Lämna tomt för att använda klusternamnet, eller värdens namn om den inte är i ett kluster.",
+    "proxmoxFolderNamePlaceholder": "Klusternamn",
+    "proxmoxGroupByNode": "En mapp per nod",
+    "proxmoxGroupByNodeDesc": "Placera varje gäst i en undermapp med samma namn som noden den körs på. Gäster flyttas när de migrerar."
   },
   "terminal": {
     "connected": "Ansluten"

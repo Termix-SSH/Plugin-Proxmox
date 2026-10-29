@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} convidats, {{selected}} seleccionats",
     "proxmoxImportButton_one": "Importa {{count}} amfitrió",
     "proxmoxImportButton_many": "Importa {{count}} amfitrions",
-    "proxmoxImportButton_other": "Importa {{count}} amfitrions"
+    "proxmoxImportButton_other": "Importa {{count}} amfitrions",
+    "proxmoxFolderName": "Carpeta per a convidats",
+    "proxmoxFolderNameDesc": "On es guarden els convidats importats. Si està buit, s'utilitza el nom del clúster o el nom d'aquest host si no forma part d'un clúster.",
+    "proxmoxFolderNamePlaceholder": "Nom del clúster",
+    "proxmoxGroupByNode": "Carpeta per a cada node",
+    "proxmoxGroupByNodeDesc": "Col·loca cada convidat en una subcarpeta amb el nom del node on s'executa. Els convidats es mouen quan es migren."
   },
   "terminal": {
     "connected": "Connectat"

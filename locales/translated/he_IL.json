@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} אורחים, {{selected}} נבחרו",
     "proxmoxImportButton_one": "ייבא {{count}} מארח",
     "proxmoxImportButton_two": "ייבא {{count}} מארחים",
-    "proxmoxImportButton_other": "ייבא {{count}} מארחים"
+    "proxmoxImportButton_other": "ייבא {{count}} מארחים",
+    "proxmoxFolderName": "תיקייה לאורחים",
+    "proxmoxFolderNameDesc": "לאן ייכנסו האורחים המיובאים. השארה ריקה תשתמש בשם הקלאסטר, או בשם המארח כשהוא לא בקלאסטר.",
+    "proxmoxFolderNamePlaceholder": "שם קלאסטר",
+    "proxmoxGroupByNode": "תיקייה לכל צומת",
+    "proxmoxGroupByNodeDesc": "הכנס כל אורח לתיקייה משנה לפי שם הצומת שבו הוא רץ. אורחים יעברו תיקייה כשהם ייגרו."
   },
   "terminal": {
     "connected": "מחובר"

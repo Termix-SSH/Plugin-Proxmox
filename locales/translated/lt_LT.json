@@ -115,7 +115,12 @@
     "proxmoxImportButton_one": "Importuoti {{count}} hostą",
     "proxmoxImportButton_few": "Importuoti {{count}} hostus",
     "proxmoxImportButton_many": "Importuoti {{count}} hostų",
-    "proxmoxImportButton_other": "Importuoti {{count}} hostų"
+    "proxmoxImportButton_other": "Importuoti {{count}} hostų",
+    "proxmoxFolderName": "Aplankas svečiams",
+    "proxmoxFolderNameDesc": "Kur patenka importuoti svečiai. Jei palikta tuščia, naudojamas klasterio pavadinimas arba šio kompiuterio pavadinimas, jei jis nėra klasterio dalis.",
+    "proxmoxFolderNamePlaceholder": "Klasterio pavadinimas",
+    "proxmoxGroupByNode": "Aplankas kiekvienam mazgui",
+    "proxmoxGroupByNodeDesc": "Kiekvieną svečią dėti į poaplankį, pavadintą pagal mazgą, kuriame jis veikia. Svečiai persikelia kartu su migracija."
   },
   "terminal": {
     "connected": "Prisijungta"

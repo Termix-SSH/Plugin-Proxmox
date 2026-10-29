@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} gæst, {{selected}} valgt",
     "proxmoxGuestsSelected_other": "{{count}} gæster, {{selected}} valgt",
     "proxmoxImportButton_one": "Importer {{count}} vært",
-    "proxmoxImportButton_other": "Importer {{count}} værter"
+    "proxmoxImportButton_other": "Importer {{count}} værter",
+    "proxmoxFolderName": "Mappe for gæster",
+    "proxmoxFolderNameDesc": "Hvor importerede gæster placeres. Hvis feltet er tomt, bruges cluster-navnet, eller dette værts navn, hvis det ikke er en del af et cluster.",
+    "proxmoxFolderNamePlaceholder": "Cluster-navn",
+    "proxmoxGroupByNode": "Mappe pr. node",
+    "proxmoxGroupByNodeDesc": "Placer hver gæst i en undermappe navngivet efter den node, den kører på. Gæster flyttes, når de migrerer."
   },
   "terminal": {
     "connected": "Forbundet"

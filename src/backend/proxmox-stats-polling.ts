@@ -106,7 +106,7 @@ export class ProxmoxPollingManager<
   private errorStore = new Map<number, ErrorSnapshot>();
   private activeViewers = new Map<number, Set<string>>();
   private viewerDetails = new Map<string, ViewerDetail>();
-  private inFlight = new Set<number>();
+  private inFlight = new Map<number, Promise<void>>();
   private viewerCleanupInterval: NodeJS.Timeout;
 
   constructor(
@@ -142,52 +142,56 @@ export class ProxmoxPollingManager<
     host: THost,
     viewerUserId?: string,
   ): Promise<void> {
-    if (this.inFlight.has(host.id)) return;
-    this.inFlight.add(host.id);
-
+    const running = this.inFlight.get(host.id);
+    if (running) return running;
+    const run = this.runPoll(host, viewerUserId);
+    this.inFlight.set(host.id, run);
     try {
-      await proxmoxStatsPollLimiter.run(async () => {
-        const userId = viewerUserId || host.userId;
-        const refreshed =
-          (await this.deps.fetchHostById(host.id, userId)) ?? host;
-        const config = parseProxmoxStatsConfig(refreshed.proxmoxStatsConfig);
-
-        try {
-          const snapshot = await this.deps.withSshConnection(
-            refreshed,
-            (client) =>
-              collectProxmoxStats(
-                client,
-                config.nodeName,
-                refreshed.sudoPassword,
-              ),
-          );
-
-          this.snapshotStore.set(host.id, {
-            data: snapshot,
-            timestamp: Date.now(),
-          });
-          this.errorStore.delete(host.id);
-
-          if (this.deps.historyEnabled?.() ?? true) {
-            await this.insertHistory(host.id, snapshot);
-          }
-        } catch (error) {
-          const message =
-            error instanceof Error ? error.message : String(error);
-          this.errorStore.set(host.id, {
-            error: message,
-            code: errorCodeOf(error),
-            timestamp: Date.now(),
-          });
-          pluginCtx().log.warn(
-            `Proxmox stats poll failed for host ${host.id}: ${message}`,
-          );
-        }
-      });
+      await run;
     } finally {
       this.inFlight.delete(host.id);
     }
+  }
+
+  private async runPoll(host: THost, viewerUserId?: string): Promise<void> {
+    await proxmoxStatsPollLimiter.run(async () => {
+      const userId = viewerUserId || host.userId;
+      const refreshed =
+        (await this.deps.fetchHostById(host.id, userId)) ?? host;
+      const config = parseProxmoxStatsConfig(refreshed.proxmoxStatsConfig);
+
+      try {
+        const snapshot = await this.deps.withSshConnection(
+          refreshed,
+          (client) =>
+            collectProxmoxStats(
+              client,
+              config.nodeName,
+              refreshed.sudoPassword,
+            ),
+        );
+
+        this.snapshotStore.set(host.id, {
+          data: snapshot,
+          timestamp: Date.now(),
+        });
+        this.errorStore.delete(host.id);
+
+        if (this.deps.historyEnabled?.() ?? true) {
+          await this.insertHistory(host.id, snapshot);
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        this.errorStore.set(host.id, {
+          error: message,
+          code: errorCodeOf(error),
+          timestamp: Date.now(),
+        });
+        pluginCtx().log.warn(
+          `Proxmox stats poll failed for host ${host.id}: ${message}`,
+        );
+      }
+    });
   }
 
   private async insertHistory(
@@ -265,7 +269,7 @@ export class ProxmoxPollingManager<
     if (!this.pollingConfigs.has(host.id)) {
       this.startPollingForHost(host, viewerUserId);
     }
-    if (!this.snapshotStore.has(host.id) && !this.inFlight.has(host.id)) {
+    if (!this.snapshotStore.has(host.id)) {
       await this.pollHostStats(host, viewerUserId);
     }
   }

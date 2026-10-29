@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} convidados, {{selected}} selecionados",
     "proxmoxImportButton_one": "Importar {{count}} host",
     "proxmoxImportButton_many": "Importar {{count}} hosts",
-    "proxmoxImportButton_other": "Importar {{count}} hosts"
+    "proxmoxImportButton_other": "Importar {{count}} hosts",
+    "proxmoxFolderName": "Pasta para convidados",
+    "proxmoxFolderNameDesc": "Para onde vão os convidados importados. Se estiver vazio, usa o nome do cluster, ou o nome deste host quando não está num cluster.",
+    "proxmoxFolderNamePlaceholder": "Nome do cluster",
+    "proxmoxGroupByNode": "Pasta por nó",
+    "proxmoxGroupByNodeDesc": "Coloca cada convidado numa subpasta com o nome do nó em que está a executar. Os convidados mudam de pasta quando migram."
   },
   "terminal": {
     "connected": "Ligado"

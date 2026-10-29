@@ -115,7 +115,12 @@
     "proxmoxImportButton_one": "Імпортувати {{count}} хост",
     "proxmoxImportButton_few": "Імпортувати {{count}} хости",
     "proxmoxImportButton_many": "Імпортувати {{count}} хостів",
-    "proxmoxImportButton_other": "Імпортувати {{count}} хостів"
+    "proxmoxImportButton_other": "Імпортувати {{count}} хостів",
+    "proxmoxFolderName": "Тека для віртуальних машин",
+    "proxmoxFolderNameDesc": "Куди потрапляють імпортовані віртуальні машини. Якщо залишити порожнім, використовуватиметься назва кластера або назва цього хоста, якщо він не входить до кластера.",
+    "proxmoxFolderNamePlaceholder": "Назва кластера",
+    "proxmoxGroupByNode": "Тека для кожного вузла",
+    "proxmoxGroupByNodeDesc": "Розміщуйте кожну віртуальну машину в підтеці з назвою вузла, на якому вона працює. Віртуальні машини переміщуються під час міграції."
   },
   "terminal": {
     "connected": "Підключено"

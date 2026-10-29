@@ -122,6 +122,8 @@ export interface ProxmoxHostConfig {
   autoSyncEnabled?: boolean;
   syncIntervalMinutes?: number;
   markMissingGuests?: boolean;
+  folderName?: string;
+  groupByNode?: boolean;
   lastSyncAt?: string;
   lastSyncStatus?: "success" | "error";
   lastSyncError?: string | null;
@@ -150,4 +152,5 @@ export interface ProxmoxDiscoverResult {
   credentialId: number | null;
   defaultCredentialId: number | null;
   jumpHosts?: unknown[] | null;
+  clusterName?: string | null;
 }

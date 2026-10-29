@@ -15,6 +15,9 @@ import { ProxmoxError, errorCodeOf, isSafeNodeName } from "./proxmox-shared.js";
 import {
   indexImportedGuests,
   parseJsonObject,
+  guestFolder,
+  nextGuestFolder,
+  parseClusterName,
   proxmoxSourceKey,
   type ProxmoxSource,
 } from "./guest-sync.js";
@@ -134,6 +137,8 @@ function parseProxmoxConfig(raw: unknown): {
   autoSyncEnabled: boolean;
   syncIntervalMinutes: number;
   markMissingGuests: boolean;
+  folderName: string;
+  groupByNode: boolean;
 } {
   const split = (s: string) =>
     s
@@ -150,6 +155,8 @@ function parseProxmoxConfig(raw: unknown): {
       autoSyncEnabled: false,
       syncIntervalMinutes: DEFAULT_SYNC_INTERVAL_MINUTES,
       markMissingGuests: true,
+      folderName: "",
+      groupByNode: false,
     };
   }
   const cfg = raw as Record<string, unknown>;
@@ -183,6 +190,8 @@ function parseProxmoxConfig(raw: unknown): {
         ? interval
         : DEFAULT_SYNC_INTERVAL_MINUTES,
     markMissingGuests: cfg.markMissingGuests !== false,
+    folderName: typeof cfg.folderName === "string" ? cfg.folderName.trim() : "",
+    groupByNode: cfg.groupByNode === true,
   };
 }
 
@@ -268,6 +277,7 @@ async function discoverProxmoxGuestsForHost(
   defaultCredentialId: number | null;
   jumpHosts: unknown[] | null;
   config: ReturnType<typeof parseProxmoxConfig>;
+  clusterName: string | null;
 }> {
   const ctx = pluginCtx();
   const proxmoxCfgRaw = await ctx.settings.getHost(
@@ -310,6 +320,16 @@ async function discoverProxmoxGuestsForHost(
       client,
       "pvesh get /cluster/resources --output-format json 2>/dev/null",
       hostWithSudo.sudoPassword,
+    );
+
+    // Every node of a cluster lists the whole cluster's guests, so the
+    // cluster's name lets the other nodes find guests already imported.
+    const clusterName = parseClusterName(
+      await execPveshCommand(
+        client,
+        "pvesh get /cluster/status --output-format json 2>/dev/null",
+        hostWithSudo.sudoPassword,
+      ).catch(() => ""),
     );
 
     let resources: Array<Record<string, unknown>>;
@@ -366,7 +386,16 @@ async function discoverProxmoxGuestsForHost(
         } catch {
           configIp = null;
         }
-        if (configIp) return configIp;
+        // A static IP outside the preferred ranges may sit next to a DHCP NIC
+        // that is in them, which only the live interface list shows.
+        const configPreferred =
+          !!configIp &&
+          (config.preferredPrefixes.length === 0 ||
+            config.preferredPrefixes.some((prefix) =>
+              configIp!.startsWith(prefix),
+            ));
+        if (configIp && (configPreferred || g.status !== "running"))
+          return configIp;
         // Static config parsing found nothing (e.g. net0 uses ip=dhcp).
         // Fall back to the live interface list for running containers.
         if (g.status === "running") {
@@ -394,13 +423,13 @@ async function discoverProxmoxGuestsForHost(
                 const match = allIps.find((ip) => ip.startsWith(prefix));
                 if (match) return match;
               }
-              return allIps[0];
+              return configIp ?? allIps[0];
             }
           } catch {
             // Guest not running or interfaces unavailable
           }
         }
-        return null;
+        return configIp;
       }
       if (g.type === "qemu" && g.status === "running") {
         try {
@@ -489,6 +518,7 @@ async function discoverProxmoxGuestsForHost(
       defaultCredentialId: config.defaultCredentialId,
       jumpHosts: parseProxmoxJumpHosts(hostWithSudo.jumpHosts),
       config,
+      clusterName,
     };
   } finally {
     // dispose also closes the jump hosts the connection went through.
@@ -533,11 +563,27 @@ async function syncProxmoxHost(
     );
     const now = new Date().toISOString();
 
+    const owned = await ctx.hosts.listOwned();
+    const sourceSyncId =
+      owned.find((host) => host.id === sourceHostId)?.syncId ?? null;
+    const { clusterName } = discovery;
     const existingBySource = indexImportedGuests(
-      await ctx.hosts.listOwned(),
+      owned,
       await ctx.settings.listHostValues("proxmoxConfig"),
       sourceHostId,
+      sourceSyncId,
+      clusterName,
     );
+    const folderOptions = {
+      folderName: discovery.config.folderName,
+      clusterName,
+      sourceHostName,
+      groupByNode: discovery.config.groupByNode,
+    };
+    const managedFolders = [
+      guestFolder({ ...folderOptions, groupByNode: false, node: "" }),
+      sourceHostName,
+    ];
 
     const seen = new Set<string>();
     for (const guest of discovery.guests) {
@@ -545,9 +591,19 @@ async function syncProxmoxHost(
       seen.add(key);
       const imported = existingBySource.get(key);
       const existing = imported?.host;
+      // A guest found through another node of the cluster keeps its source,
+      // so two nodes syncing do not keep rewriting it.
+      const keepSource =
+        !!imported &&
+        imported.source.sourceHostId !== sourceHostId &&
+        (!sourceSyncId || imported.source.sourceSyncId !== sourceSyncId);
       const source: ProxmoxSource = {
         source: "proxmox",
-        sourceHostId,
+        sourceHostId: keepSource ? imported.source.sourceHostId : sourceHostId,
+        sourceSyncId: keepSource
+          ? (imported.source.sourceSyncId ?? null)
+          : sourceSyncId,
+        clusterName,
         node: guest.node,
         vmid: guest.vmid,
         type: guest.type,
@@ -588,7 +644,11 @@ async function syncProxmoxHost(
         port,
         username,
         connectionType,
-        folder: existing?.folder || sourceHostName,
+        folder: nextGuestFolder(
+          existing?.folder as string | null | undefined,
+          guestFolder({ ...folderOptions, node: guest.node }),
+          managedFolders,
+        ),
         tags: mergeTags(existing?.tags, guestTags(guest), [
           "proxmox-missing",
           // The old node's tag, when the guest migrated.
@@ -849,6 +909,7 @@ router.get("/discover/stream", async (req, res) => {
       credentialId: discovery.credentialId,
       defaultCredentialId: discovery.defaultCredentialId,
       jumpHosts: discovery.jumpHosts,
+      clusterName: discovery.clusterName,
     });
   } catch (err: unknown) {
     const message = getErrorMessage(err);
@@ -908,6 +969,7 @@ router.post("/discover", async (req, res) => {
       credentialId: discovery.credentialId,
       defaultCredentialId: discovery.defaultCredentialId,
       jumpHosts: discovery.jumpHosts,
+      clusterName: discovery.clusterName,
     });
   } catch (err: unknown) {
     const message = getErrorMessage(err);

@@ -100,7 +100,12 @@
     "loadingHost": "正在加载主机...",
     "none": "无",
     "proxmoxGuestsSelected_other": "{{count}} 个虚拟机，已选 {{selected}} 个",
-    "proxmoxImportButton_other": "导入 {{count}} 个主机"
+    "proxmoxImportButton_other": "导入 {{count}} 个主机",
+    "proxmoxFolderName": "虚拟机文件夹",
+    "proxmoxFolderNameDesc": "导入的虚拟机将存放于此。留空则使用集群名称，若不在集群中则使用此主机的名称。",
+    "proxmoxFolderNamePlaceholder": "集群名称",
+    "proxmoxGroupByNode": "按节点分文件夹",
+    "proxmoxGroupByNodeDesc": "将每个虚拟机放入以其运行节点命名的子文件夹中。虚拟机迁移时会自动移动。"
   },
   "terminal": {
     "connected": "已连接"

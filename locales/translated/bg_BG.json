@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} гост, {{selected}} избран",
     "proxmoxGuestsSelected_other": "{{count}} гости, {{selected}} избрани",
     "proxmoxImportButton_one": "Импортиране на {{count}} хост",
-    "proxmoxImportButton_other": "Импортиране на {{count}} хоста"
+    "proxmoxImportButton_other": "Импортиране на {{count}} хоста",
+    "proxmoxFolderName": "Папка за гости",
+    "proxmoxFolderNameDesc": "Къде да се съхраняват импортираните гости. Ако е празно, се използва името на кластера или името на този хост, ако не е част от кластер.",
+    "proxmoxFolderNamePlaceholder": "Име на кластера",
+    "proxmoxGroupByNode": "Папка за всеки възел",
+    "proxmoxGroupByNodeDesc": "Поставете всеки гост в подпапка, наименувана на възела, на който работи. Гостите се преместват при миграция."
   },
   "terminal": {
     "connected": "Свързан"

@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} külaline, {{selected}} valitud",
     "proxmoxGuestsSelected_other": "{{count}} külalist, {{selected}} valitud",
     "proxmoxImportButton_one": "Impordi {{count}} host",
-    "proxmoxImportButton_other": "Impordi {{count}} hosti"
+    "proxmoxImportButton_other": "Impordi {{count}} hosti",
+    "proxmoxFolderName": "Kaust külalistele",
+    "proxmoxFolderNameDesc": "Kuhu imporditud külalised paigutatakse. Tühjaks jättes kasutatakse klatri nime või selle hosti nime, kui see ei kuulu klatri.",
+    "proxmoxFolderNamePlaceholder": "Klatri nimi",
+    "proxmoxGroupByNode": "Kaust iga sõlme kohta",
+    "proxmoxGroupByNodeDesc": "Paiguta iga külaline alamkausta, mille nimi vastab sõlmel, kus see töötab. Külalised liiguvad koos migratsiooniga."
   },
   "terminal": {
     "connected": "Ühendatud"

@@ -17,7 +17,9 @@ This page is about managing guests on a Proxmox server you already run. To insta
 2. Termix lists every VM and container in the cluster, with its status and IP when it has one.
 3. Select the ones you want and import them.
 
-Imported guests go in a folder named after their node.
+Imported guests go in a folder named after the cluster, or after the node when it is not in a cluster. Set Folder
+for guests on the node to pick another name, and turn on Folder per node to put each guest in a subfolder named after
+the node it runs on.
 
 Termix guesses how each guest connects:
 
@@ -29,6 +31,10 @@ Both are comma separated name patterns, not case sensitive. You can change any g
 ## Keep them in sync
 
 Turn on Auto sync guests and set a Sync interval (5 minutes or more). Termix rediscovers the node on that schedule and creates or updates hosts to match. It runs as you, while your account is unlocked.
+
+Every node of a cluster sees the whole cluster, so you can turn on sync for more than one node. Termix knows they are
+in the same cluster and keeps one host per guest. When a guest moves to another node, its host is updated, not copied.
+A guest you moved to a folder of your own stays there.
 
 ## Proxmox Stats
 

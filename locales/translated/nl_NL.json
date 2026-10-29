@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} gast, {{selected}} geselecteerd",
     "proxmoxGuestsSelected_other": "{{count}} gasten, {{selected}} geselecteerd",
     "proxmoxImportButton_one": "{{count}} host importeren",
-    "proxmoxImportButton_other": "{{count}} hosts importeren"
+    "proxmoxImportButton_other": "{{count}} hosts importeren",
+    "proxmoxFolderName": "Map voor gasten",
+    "proxmoxFolderNameDesc": "Waar geïmporteerde gasten naartoe gaan. Als dit leeg is, wordt de clusternaam gebruikt, of de naam van deze host als deze niet in een cluster zit.",
+    "proxmoxFolderNamePlaceholder": "Clusternaam",
+    "proxmoxGroupByNode": "Map per node",
+    "proxmoxGroupByNodeDesc": "Zet elke gast in een submap met de naam van de node waarop deze draait. Gasten verplaatsen zich bij migratie."
   },
   "terminal": {
     "connected": "Verbonden"

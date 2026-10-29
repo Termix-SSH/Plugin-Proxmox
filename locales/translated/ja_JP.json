@@ -100,7 +100,12 @@
     "loadingHost": "ホストを読み込んでいます...",
     "none": "なし",
     "proxmoxGuestsSelected_other": "{{count}} ゲスト、{{selected}} 選択済み",
-    "proxmoxImportButton_other": "{{count}} ホストをインポート"
+    "proxmoxImportButton_other": "{{count}} ホストをインポート",
+    "proxmoxFolderName": "ゲスト用フォルダ",
+    "proxmoxFolderNameDesc": "インポートされたゲストが配置される場所。空欄の場合、クラスター名が使用されます。クラスターに属していない場合は、このホストの名前が使用されます。",
+    "proxmoxFolderNamePlaceholder": "クラスター名",
+    "proxmoxGroupByNode": "ノードごとにフォルダ分け",
+    "proxmoxGroupByNodeDesc": "各ゲストを、稼働中のノード名にちなんで名付けられたサブフォルダに配置します。ゲストがマイグレーションすると、フォルダも移動します。"
   },
   "terminal": {
     "connected": "接続済み"

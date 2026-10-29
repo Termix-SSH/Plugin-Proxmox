@@ -65,6 +65,7 @@ export function ProxmoxDiscoverDialog({
   const [discoveredJumpHosts, setDiscoveredJumpHosts] = useState<
     unknown[] | null
   >(null);
+  const [clusterName, setClusterName] = useState<string | null>(null);
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [importing, setImporting] = useState(false);
 
@@ -86,13 +87,27 @@ export function ProxmoxDiscoverDialog({
   const sourceHost = hosts.find(
     (h) => !("isFolder" in h) && String(h.id) === effectiveHostId,
   );
-  const importFolder = sourceHost?.name || "Proxmox";
+  const sourceConfig = (
+    sourceHost?.pluginSettings as
+      Record<string, Record<string, unknown> | undefined> | undefined
+  )?.proxmox?.proxmoxConfig as
+    { folderName?: unknown; groupByNode?: unknown } | undefined;
+  const folderBase =
+    (typeof sourceConfig?.folderName === "string"
+      ? sourceConfig.folderName.trim()
+      : "") ||
+    clusterName ||
+    sourceHost?.name ||
+    "Proxmox";
+  const importFolder = (node: string) =>
+    sourceConfig?.groupByNode === true ? `${folderBase} / ${node}` : folderBase;
 
   function reset() {
     if (!preselectedHostId) setSelectedHostId("");
     setGuests(null);
     setDiscoveredCredentialId(null);
     setDiscoveredJumpHosts(null);
+    setClusterName(null);
     setSelected(new Set());
     streamCloseRef.current?.();
     streamCloseRef.current = null;
@@ -118,7 +133,12 @@ export function ProxmoxDiscoverDialog({
         setGuests(result.guests);
         setDiscoveredCredentialId(result.credentialId ?? null);
         setDiscoveredJumpHosts(result.jumpHosts ?? null);
-        const imported = importedGuestKeys(hosts, hostId);
+        setClusterName(result.clusterName ?? null);
+        const imported = importedGuestKeys(
+          hosts,
+          hostId,
+          result.clusterName ?? null,
+        );
         setSelected(
           new Set(
             result.guests
@@ -168,7 +188,7 @@ export function ProxmoxDiscoverDialog({
           importAuth.authType === "credential"
             ? ""
             : (defaultUsername ?? "root"),
-        folder: importFolder,
+        folder: importFolder(g.node),
         // Inherit the jump-host chain from the scanned Proxmox host so the
         // imported guests are reachable the same way; user can override.
         jumpHosts: discoveredJumpHosts ?? undefined,
@@ -194,6 +214,7 @@ export function ProxmoxDiscoverDialog({
               source: {
                 source: "proxmox",
                 sourceHostId: Number(effectiveHostId),
+                clusterName,
                 node: g.node,
                 vmid: g.vmid,
                 type: g.type,

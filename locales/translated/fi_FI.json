@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} vieras, {{selected}} valittu",
     "proxmoxGuestsSelected_other": "{{count}} vierasta, {{selected}} valittu",
     "proxmoxImportButton_one": "Tuo {{count}} isäntä",
-    "proxmoxImportButton_other": "Tuo {{count}} isäntää"
+    "proxmoxImportButton_other": "Tuo {{count}} isäntää",
+    "proxmoxFolderName": "Kansio vieraille",
+    "proxmoxFolderNameDesc": "Mihin tuodut vieraat sijoitetaan. Tyhjänä käytetään klusterin nimeä tai tämän isäntälaitteen nimeä, jos se ei ole klusterissa.",
+    "proxmoxFolderNamePlaceholder": "Klusterin nimi",
+    "proxmoxGroupByNode": "Kansio per solmu",
+    "proxmoxGroupByNodeDesc": "Sijoita jokainen vieras alikansioon, jonka nimi on solmu, jolla se toimii. Vieraiden sijainti muuttuu, kun ne migraatioituvat."
   },
   "terminal": {
     "connected": "Yhdistetty"

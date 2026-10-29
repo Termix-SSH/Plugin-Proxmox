@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} গেস্ট, {{selected}} নির্বাচিত",
     "proxmoxGuestsSelected_other": "{{count}} গেস্ট, {{selected}} নির্বাচিত",
     "proxmoxImportButton_one": "{{count}} হোস্ট আমদানি করুন",
-    "proxmoxImportButton_other": "{{count}} হোস্ট আমদানি করুন"
+    "proxmoxImportButton_other": "{{count}} হোস্ট আমদানি করুন",
+    "proxmoxFolderName": "গেস্টদের জন্য ফোল্ডার",
+    "proxmoxFolderNameDesc": "ইম্পোর্ট করা গেস্টরা কোথায় যাবে। খালি রাখলে ক্লাস্টারের নাম ব্যবহার করা হবে, অথবা ক্লাস্টারে না থাকলে এই হোস্টের নাম ব্যবহার করা হবে।",
+    "proxmoxFolderNamePlaceholder": "ক্লাস্টারের নাম",
+    "proxmoxGroupByNode": "প্রতিটি নোডের জন্য ফোল্ডার",
+    "proxmoxGroupByNodeDesc": "প্রতিটি গেস্টকে সেই নোডের নামে একটি সাবফোল্ডারে রাখুন যেখানে এটি চলে। মাইগ্রেশনের সময় গেস্টগুলো সরে যায়।"
   },
   "terminal": {
     "connected": "সংযুক্ত"

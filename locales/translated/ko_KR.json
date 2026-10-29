@@ -100,7 +100,12 @@
     "loadingHost": "호스트 로딩 중...",
     "none": "없음",
     "proxmoxGuestsSelected_other": "{{count}}개 게스트, {{selected}}개 선택됨",
-    "proxmoxImportButton_other": "{{count}}개 호스트 가져오기"
+    "proxmoxImportButton_other": "{{count}}개 호스트 가져오기",
+    "proxmoxFolderName": "게스트용 폴더",
+    "proxmoxFolderNameDesc": "가져온 게스트가 저장되는 위치입니다. 비워두면 클러스터 이름이 사용되며, 클러스터에 속하지 않은 경우 이 호스트의 이름이 사용됩니다.",
+    "proxmoxFolderNamePlaceholder": "클러스터 이름",
+    "proxmoxGroupByNode": "노드별 폴더",
+    "proxmoxGroupByNodeDesc": "각 게스트를 실행 중인 노드 이름으로 된 하위 폴더에 배치합니다. 게스트가 마이그레이션되면 폴더도 함께 이동합니다."
   },
   "terminal": {
     "connected": "연결됨"

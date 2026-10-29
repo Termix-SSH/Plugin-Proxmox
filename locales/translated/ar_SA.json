@@ -125,7 +125,12 @@
     "proxmoxImportButton_two": "استيراد مضيفين",
     "proxmoxImportButton_few": "استيراد {{count}} مضيفين",
     "proxmoxImportButton_many": "استيراد {{count}} مضيفًا",
-    "proxmoxImportButton_other": "استيراد {{count}} مضيف"
+    "proxmoxImportButton_other": "استيراد {{count}} مضيف",
+    "proxmoxFolderName": "مجلد للضيوف",
+    "proxmoxFolderNameDesc": "المكان الذي تذهب إليه الضيوف المستوردة. إذا كان فارغاً، يتم استخدام اسم العنقود، أو اسم هذا المضيف إذا لم يكن جزءاً من عنقود.",
+    "proxmoxFolderNamePlaceholder": "اسم العنقود",
+    "proxmoxGroupByNode": "مجلد لكل عقدة",
+    "proxmoxGroupByNodeDesc": "ضع كل ضيف في مجلد فرعي يحمل اسم العقدة التي يعمل عليها. تتحرك الضيوف عند هجرتها."
   },
   "terminal": {
     "connected": "متصل"

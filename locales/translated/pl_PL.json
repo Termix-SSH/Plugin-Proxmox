@@ -115,7 +115,12 @@
     "proxmoxImportButton_one": "Importuj {{count}} host",
     "proxmoxImportButton_few": "Importuj {{count}} hosty",
     "proxmoxImportButton_many": "Importuj {{count}} hostów",
-    "proxmoxImportButton_other": "Importuj {{count}} hostów"
+    "proxmoxImportButton_other": "Importuj {{count}} hostów",
+    "proxmoxFolderName": "Folder dla maszyn wirtualnych",
+    "proxmoxFolderNameDesc": "Gdzie trafiają zaimportowane maszyny wirtualne. Jeśli pole jest puste, używana jest nazwa klastra lub nazwa tego hosta, jeśli nie należy do klastra.",
+    "proxmoxFolderNamePlaceholder": "Nazwa klastra",
+    "proxmoxGroupByNode": "Folder dla każdego węzła",
+    "proxmoxGroupByNodeDesc": "Umieść każdą maszynę wirtualną w podfolderze nazwanym po węźle, na którym działa. Maszyny wirtualne przenoszą się podczas migracji."
   },
   "terminal": {
     "connected": "Połączono"

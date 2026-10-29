@@ -100,7 +100,12 @@
     "loadingHost": "Memuatkan hos...",
     "none": "Tiada",
     "proxmoxGuestsSelected_other": "{{count}} tetamu, {{selected}} dipilih",
-    "proxmoxImportButton_other": "Import {{count}} hos"
+    "proxmoxImportButton_other": "Import {{count}} hos",
+    "proxmoxFolderName": "Folder untuk tetamu",
+    "proxmoxFolderNameDesc": "Di mana tetamu yang diimport akan diletakkan. Jika kosong, nama kluster akan digunakan, atau nama hos ini jika ia tidak berada dalam kluster.",
+    "proxmoxFolderNamePlaceholder": "Nama kluster",
+    "proxmoxGroupByNode": "Folder setiap nod",
+    "proxmoxGroupByNodeDesc": "Letakkan setiap tetamu dalam subfolder yang dinamakan mengikut nod tempat ia berjalan. Tetamu akan berpindah apabila ia bermigrasi."
   },
   "terminal": {
     "connected": "Sambung"

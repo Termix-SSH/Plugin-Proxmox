@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} गेस्ट, {{selected}} चयनित",
     "proxmoxGuestsSelected_other": "{{count}} गेस्ट, {{selected}} चयनित",
     "proxmoxImportButton_one": "{{count}} होस्ट आयात करें",
-    "proxmoxImportButton_other": "{{count}} होस्ट आयात करें"
+    "proxmoxImportButton_other": "{{count}} होस्ट आयात करें",
+    "proxmoxFolderName": "महमानों के लिए फ़ोल्डर",
+    "proxmoxFolderNameDesc": "आयातित महमान यहाँ जाएंगे। खाली छोड़ने पर क्लस्टर का नाम, या यदि यह क्लस्टर में नहीं है तो इस होस्ट का नाम उपयोग किया जाएगा।",
+    "proxmoxFolderNamePlaceholder": "क्लस्टर का नाम",
+    "proxmoxGroupByNode": "प्रति नोड फ़ोल्डर",
+    "proxmoxGroupByNodeDesc": "प्रत्येक महमान को उस नोड के नाम पर रखे गए सबफ़ोल्डर में रखें। जब वे माइग्रेट होते हैं तो महमान भी स्थानांतरित हो जाते हैं।"
   },
   "terminal": {
     "connected": "कनेक्ट किया गया"

@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} Gast, {{selected}} ausgewählt",
     "proxmoxGuestsSelected_other": "{{count}} Gäste, {{selected}} ausgewählt",
     "proxmoxImportButton_one": "{{count}} Host importieren",
-    "proxmoxImportButton_other": "{{count}} Hosts importieren"
+    "proxmoxImportButton_other": "{{count}} Hosts importieren",
+    "proxmoxFolderName": "Ordner für Gäste",
+    "proxmoxFolderNameDesc": "Dorthin werden importierte Gäste verschoben. Wenn leer, wird der Clustername oder der Name dieses Hosts verwendet, wenn er nicht Teil eines Clusters ist.",
+    "proxmoxFolderNamePlaceholder": "Clustername",
+    "proxmoxGroupByNode": "Ordner pro Knoten",
+    "proxmoxGroupByNodeDesc": "Jeder Gast wird in einen Unterordner mit dem Namen des Knotens, auf dem er läuft, verschoben. Gäste werden bei Migrationen verschoben."
   },
   "terminal": {
     "connected": "Verbunden"

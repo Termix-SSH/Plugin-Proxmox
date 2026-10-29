@@ -12,12 +12,14 @@ export function guestKey(guest: Pick<GuestRef, "type" | "vmid">): string {
 }
 
 /**
- * Guests of one Proxmox host that are already Termix hosts, by guestKey.
- * Matches the source an import records, or the tags older imports carry.
+ * Guests of one Proxmox host, or of any node of its cluster, that are already
+ * Termix hosts, by guestKey. Matches the source an import records, or the
+ * tags older imports carry.
  */
 export function importedGuestKeys(
   hosts: PluginHostRecord[],
   sourceHostId: number,
+  clusterName: string | null = null,
 ): Set<string> {
   const keys = new Set<string>();
   for (const host of hosts) {
@@ -26,13 +28,17 @@ export function importedGuestKeys(
           source?: Partial<GuestRef> & {
             source?: string;
             sourceHostId?: number;
+            clusterName?: string | null;
           };
         }
       | undefined;
     const source = config?.source;
     if (source?.source === "proxmox") {
+      const sameSource =
+        Number(source.sourceHostId) === sourceHostId ||
+        (!!clusterName && source.clusterName === clusterName);
       if (
-        Number(source.sourceHostId) === sourceHostId &&
+        sameSource &&
         source.node &&
         source.type &&
         typeof source.vmid === "number"

@@ -59,3 +59,26 @@ describe("importedGuestKeys", () => {
     expect(importedGuestKeys([host({ tags: ["proxmox"] })], 4).size).toBe(0);
   });
 });
+
+describe("importedGuestKeys across a cluster", () => {
+  it("matches guests another node of the same cluster imported", () => {
+    const record = host({
+      pluginSettings: {
+        proxmox: {
+          proxmoxConfig: {
+            source: {
+              source: "proxmox",
+              sourceHostId: 9,
+              clusterName: "lab",
+              node: "pve1",
+              type: "qemu",
+              vmid: 200,
+            },
+          },
+        },
+      },
+    });
+    expect(importedGuestKeys([record], 4).size).toBe(0);
+    expect([...importedGuestKeys([record], 4, "lab")]).toEqual(["qemu:200"]);
+  });
+});

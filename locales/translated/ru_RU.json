@@ -115,7 +115,12 @@
     "proxmoxImportButton_one": "Импортировать {{count}} хост",
     "proxmoxImportButton_few": "Импортировать {{count}} хоста",
     "proxmoxImportButton_many": "Импортировать {{count}} хостов",
-    "proxmoxImportButton_other": "Импортировать {{count}} хостов"
+    "proxmoxImportButton_other": "Импортировать {{count}} хостов",
+    "proxmoxFolderName": "Папка для гостей",
+    "proxmoxFolderNameDesc": "Куда импортируются гости. Если оставить пустым, будет использоваться имя кластера или имя этого хоста, если он не входит в кластер.",
+    "proxmoxFolderNamePlaceholder": "Имя кластера",
+    "proxmoxGroupByNode": "Папка для каждого узла",
+    "proxmoxGroupByNodeDesc": "Размещать каждого гостя в подпапке с именем узла, на котором он работает. Гости перемещаются при миграции."
   },
   "terminal": {
     "connected": "Подключено"

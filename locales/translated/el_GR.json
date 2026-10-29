@@ -105,7 +105,12 @@
     "proxmoxGuestsSelected_one": "{{count}} guest, {{selected}} επιλεγμένο",
     "proxmoxGuestsSelected_other": "{{count}} guests, {{selected}} επιλεγμένα",
     "proxmoxImportButton_one": "Εισαγωγή {{count}} host",
-    "proxmoxImportButton_other": "Εισαγωγή {{count}} hosts"
+    "proxmoxImportButton_other": "Εισαγωγή {{count}} hosts",
+    "proxmoxFolderName": "Φάκελος για τα guests",
+    "proxmoxFolderNameDesc": "Πού πάνε τα εισαγόμενα guests. Αν είναι κενό, χρησιμοποιείται το όνομα του cluster ή το όνομα αυτού του host αν δεν ανήκει σε cluster.",
+    "proxmoxFolderNamePlaceholder": "Όνομα cluster",
+    "proxmoxGroupByNode": "Φάκελος ανά node",
+    "proxmoxGroupByNodeDesc": "Τοποθέτηση κάθε guest σε υποφάκελο με το όνομα του node που τρέχει. Τα guests μετακινούνται όταν μεταναστεύουν."
   },
   "terminal": {
     "connected": "Συνδεδεμένος"

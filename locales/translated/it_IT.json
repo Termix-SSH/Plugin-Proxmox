@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} macchine virtuali, {{selected}} selezionate",
     "proxmoxImportButton_one": "Importa {{count}} host",
     "proxmoxImportButton_many": "Importa {{count}} host",
-    "proxmoxImportButton_other": "Importa {{count}} host"
+    "proxmoxImportButton_other": "Importa {{count}} host",
+    "proxmoxFolderName": "Cartella per le macchine virtuali",
+    "proxmoxFolderNameDesc": "Dove vengono inserite le macchine virtuali importate. Se lasciata vuota, viene usato il nome del cluster, oppure il nome di questo host se non fa parte di un cluster.",
+    "proxmoxFolderNamePlaceholder": "Nome del cluster",
+    "proxmoxGroupByNode": "Cartella per nodo",
+    "proxmoxGroupByNodeDesc": "Inserisci ogni macchina virtuale in una sottocartella con il nome del nodo su cui è in esecuzione. Le macchine virtuali si spostano quando vengono migrate."
   },
   "terminal": {
     "connected": "Connesso"

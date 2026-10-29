@@ -110,7 +110,12 @@
     "proxmoxGuestsSelected_other": "{{count}} гостију, {{selected}} изабрано",
     "proxmoxImportButton_one": "Увези {{count}} домаћина",
     "proxmoxImportButton_few": "Увези {{count}} домаћина",
-    "proxmoxImportButton_other": "Увези {{count}} домаћина"
+    "proxmoxImportButton_other": "Увези {{count}} домаћина",
+    "proxmoxFolderName": "Фасцикла за госте",
+    "proxmoxFolderNameDesc": "Где се увезени гости налазе. Ако је празно, користи се име кластера, или име овог хоста ако није у кластеру.",
+    "proxmoxFolderNamePlaceholder": "Име кластера",
+    "proxmoxGroupByNode": "Фасцикла по чвору",
+    "proxmoxGroupByNodeDesc": "Сваки гост се ставља у подфасциклу названу по чвору на коме ради. Гости се крећу када се мигрирају."
   },
   "terminal": {
     "connected": "Повезано"

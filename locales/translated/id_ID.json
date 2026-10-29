@@ -100,7 +100,12 @@
     "loadingHost": "Memuat host...",
     "none": "Tidak ada",
     "proxmoxGuestsSelected_other": "{{count}} tamu, {{selected}} dipilih",
-    "proxmoxImportButton_other": "Impor {{count}} host"
+    "proxmoxImportButton_other": "Impor {{count}} host",
+    "proxmoxFolderName": "Folder untuk tamu",
+    "proxmoxFolderNameDesc": "Tempat tamu yang diimpor akan disimpan. Kosongkan untuk menggunakan nama kluster, atau nama host ini jika tidak berada dalam kluster.",
+    "proxmoxFolderNamePlaceholder": "Nama kluster",
+    "proxmoxGroupByNode": "Folder per node",
+    "proxmoxGroupByNodeDesc": "Letakkan setiap tamu dalam subfolder yang dinamai sesuai node tempatnya berjalan. Tamu akan berpindah saat bermigrasi."
   },
   "terminal": {
     "connected": "Terhubung"
