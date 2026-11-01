@@ -38,6 +38,7 @@ function statsChangeKey(data: ProxmoxStatsSnapshot): string {
   });
 }
 const DEFAULT_POLL_INTERVAL = 60;
+const BACKGROUND_GRACE_MS = 10_000;
 
 interface HostConfig {
   id: number;
@@ -118,6 +119,11 @@ function ProxmoxStatsInner({
   const [currentHostConfig, setCurrentHostConfig] = React.useState(hostConfig);
   const [isRefreshing, setIsRefreshing] = React.useState(false);
   const [isPageVisible, setIsPageVisible] = React.useState(!document.hidden);
+  // Reconnecting after the page was in the background: the last stats stay up.
+  const [resuming, setResuming] = React.useState(false);
+  const backgroundedRef = React.useRef(false);
+  const snapshotRef = React.useRef(snapshot);
+  snapshotRef.current = snapshot;
   const [viewerSessionId, setViewerSessionId] = React.useState<string | null>(
     null,
   );
@@ -129,9 +135,18 @@ function ProxmoxStatsInner({
   );
 
   React.useEffect(() => {
-    const onVis = () => setIsPageVisible(!document.hidden);
+    // A quick switch away keeps the session.
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const onVis = () => {
+      clearTimeout(timer);
+      if (!document.hidden) return setIsPageVisible(true);
+      timer = setTimeout(() => setIsPageVisible(false), BACKGROUND_GRACE_MS);
+    };
     document.addEventListener("visibilitychange", onVis);
-    return () => document.removeEventListener("visibilitychange", onVis);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("visibilitychange", onVis);
+    };
   }, []);
 
   const isActuallyVisible = isVisible && isPageVisible;
@@ -258,6 +273,8 @@ function ProxmoxStatsInner({
               : t("proxmoxStats.connectionFailed"),
         });
         retry.markFailed();
+      } finally {
+        setResuming(false);
       }
     },
     enabled: isPageVisible && !notEnabled && !!currentHostConfig?.id,
@@ -266,6 +283,7 @@ function ProxmoxStatsInner({
 
   const retryRef = React.useRef(retry);
   retryRef.current = retry;
+  const connectionStatus = resuming ? "connected" : retry.status;
 
   // Connects once per host and stays connected while this tab exists, even
   // when the user switches to another tab and back. Only the browser tab
@@ -273,10 +291,13 @@ function ProxmoxStatsInner({
   // between Termix tabs must not tear down and reconnect the session.
   React.useEffect(() => {
     if (notEnabled || !currentHostConfig?.id) return;
+    if (!isPageVisible) backgroundedRef.current = true;
 
     let cancelled = false;
     const debounce = setTimeout(() => {
       if (isPageVisible && !cancelled) {
+        setResuming(backgroundedRef.current && !!snapshotRef.current);
+        backgroundedRef.current = false;
         clearLogs();
         retryRef.current.reset();
         retryRef.current.retryNow();
@@ -310,7 +331,7 @@ function ProxmoxStatsInner({
 
   const handleRefresh = async () => {
     if (!currentHostConfig?.id) return;
-    if (retry.status !== "connected") {
+    if (connectionStatus !== "connected") {
       retry.retryNow();
       return;
     }
@@ -326,7 +347,8 @@ function ProxmoxStatsInner({
     }
   };
 
-  const showContent = !notEnabled && retry.status === "connected" && snapshot;
+  const showContent =
+    !notEnabled && connectionStatus === "connected" && snapshot;
 
   return (
     <div
@@ -334,7 +356,7 @@ function ProxmoxStatsInner({
       className="relative flex flex-col overflow-hidden"
     >
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-        {retry.status === "connected" && !notEnabled && (
+        {connectionStatus === "connected" && !notEnabled && (
           <div className="flex h-12.5 shrink-0 items-center justify-between gap-2 border-b border-border px-3">
             <div className="flex min-w-0 items-center gap-2">
               <Server className="size-4 shrink-0 text-accent-brand" />
@@ -408,7 +430,7 @@ function ProxmoxStatsInner({
         )}
 
         <ConnectionScreen
-          status={notEnabled ? "error" : retry.status}
+          status={notEnabled ? "error" : connectionStatus}
           message={t("proxmoxStats.connecting")}
           detail={
             currentHostConfig?.ip

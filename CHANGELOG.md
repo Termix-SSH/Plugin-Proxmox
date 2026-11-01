@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+### Fixed
+
+- Switching browser tabs no longer shows the connection screen on Proxmox stats. A quick switch keeps the session, and after a longer one the stats stay up while they reconnect, unless the reconnect fails
+
 ## 1.2.0
 
 ### Added
