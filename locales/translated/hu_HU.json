@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Proxmox VE vendégek importálása hostként, szinkronizálásuk és a csomópontok statisztikáinak figyelése."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Értesítés vendég- és csomópont-változásokról",
+        "description": "Küldjön értesítést, amikor egy futó vendég leáll, vagy egy csomópont offline állapotba kerül."
+      }
+    }
+  },
+  "tile": {
+    "running": "Fut",
+    "stopped": "Leállítva",
+    "total": "Vendégek"
+  },
+  "widget": {
+    "name": "Proxmox vendégek",
+    "description": "Futó vendégek minden Proxmox csomóponton."
+  },
   "card": {
     "title": "Proxmox csomópontok",
     "loading": "Betöltés...",
     "empty": "Még nincsenek csomópontok. Kapcsold be a Proxmox statisztikákat egy csomópont host beállításaiban."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Proxmox vendégek kezelése",
+      "description": "VM-ek és konténerek indítása, leállítása és újraindítása azokat a Proxmox csomópontokon, amelyeket szerkeszthet."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Proxmox vendégek listázása"
+    },
+    "start": {
+      "title": "Vendég indítása"
+    },
+    "shutdown": {
+      "title": "Vendég leállítása"
+    },
+    "reboot": {
+      "title": "Vendég újraindítása"
+    },
+    "stop": {
+      "title": "Vendég erőltetett leállítása"
+    },
+    "guests": {
+      "title": "Proxmox vendégek",
+      "type": "Típus",
+      "node": "Csomópont",
+      "status": "Állapot",
+      "running": "Futó vendégek"
+    }
   }
 }

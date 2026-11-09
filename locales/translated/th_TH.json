@@ -114,9 +114,56 @@
     "name": "Proxmox",
     "description": "นำเข้าเครื่องเสมือนจาก Proxmox VE เป็นโฮสต์ ซิงค์ข้อมูลให้ทันสมัย และดูสถิติของโหนด"
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "แจ้งเตือนเมื่อมีการเปลี่ยนแปลงของ Guest และ Node",
+        "description": "ส่งการแจ้งเตือนเมื่อ Guest ที่กำลังทำงานหยุดทำงาน หรือเมื่อ Node ออฟไลน์"
+      }
+    }
+  },
+  "tile": {
+    "running": "กำลังทำงาน",
+    "stopped": "หยุดทำงาน",
+    "total": "Guests"
+  },
+  "widget": {
+    "name": "Proxmox guests",
+    "description": "Guests ที่กำลังทำงานบนแต่ละ Proxmox node"
+  },
   "card": {
     "title": "โหนด Proxmox",
     "loading": "กำลังโหลด...",
     "empty": "ยังไม่มีโหนด ให้เปิดสถิติ Proxmox ในการตั้งค่าโฮสต์ของโหนด"
+  },
+  "permissions": {
+    "guests": {
+      "title": "จัดการ Proxmox guests",
+      "description": "เริ่ม หยุด และรีบูต VMs และ containers บน Proxmox nodes ที่คุณสามารถแก้ไขได้"
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "แสดงรายการ Proxmox guests"
+    },
+    "start": {
+      "title": "เริ่ม Guest"
+    },
+    "shutdown": {
+      "title": "ปิด Guest"
+    },
+    "reboot": {
+      "title": "รีบูต Guest"
+    },
+    "stop": {
+      "title": "บังคับหยุด Guest"
+    },
+    "guests": {
+      "title": "Proxmox guests",
+      "type": "ประเภท",
+      "node": "Node",
+      "status": "สถานะ",
+      "running": "Guests ที่กำลังทำงาน"
+    }
   }
 }

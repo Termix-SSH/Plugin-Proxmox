@@ -139,9 +139,56 @@
     "name": "Proxmox",
     "description": "استيراد ضيوف Proxmox VE كمضيفين، والحفاظ على مزامنتهم، ومراقبة إحصائيات العقد."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "إرسال تنبيه عند تغيير حالة الضيوف أو العقد",
+        "description": "إرسال تنبيه عند توقف ضيف كان قيد التشغيل، أو عند انقطاع اتصال عقدة."
+      }
+    }
+  },
+  "tile": {
+    "running": "قيد التشغيل",
+    "stopped": "متوقف",
+    "total": "الضيوف"
+  },
+  "widget": {
+    "name": "ضيوف Proxmox",
+    "description": "الضيوف قيد التشغيل على كل عقدة Proxmox."
+  },
   "card": {
     "title": "عُقد Proxmox",
     "loading": "جارٍ التحميل...",
     "empty": "لا توجد عُقد بعد. فعّل إحصائيات Proxmox في إعدادات المضيف للعقدة."
+  },
+  "permissions": {
+    "guests": {
+      "title": "إدارة ضيوف Proxmox",
+      "description": "تشغيل وإيقاف وإعادة تشغيل الآلات الافتراضية والحاويات على عقد Proxmox التي يمكنك تعديلها."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "عرض قائمة ضيوف Proxmox"
+    },
+    "start": {
+      "title": "تشغيل الضيف"
+    },
+    "shutdown": {
+      "title": "إيقاف تشغيل الضيف"
+    },
+    "reboot": {
+      "title": "إعادة تشغيل الضيف"
+    },
+    "stop": {
+      "title": "إيقاف الضيف قسراً"
+    },
+    "guests": {
+      "title": "ضيوف Proxmox",
+      "type": "النوع",
+      "node": "العقدة",
+      "status": "الحالة",
+      "running": "الضيوف قيد التشغيل"
+    }
   }
 }

@@ -129,9 +129,56 @@
     "name": "Proxmox",
     "description": "Importuj maszyny wirtualne Proxmox VE jako hosty, synchronizuj je i monitoruj statystyki węzłów."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Powiadomienia o zmianach gości i węzłów",
+        "description": "Wyślij powiadomienie, gdy uruchomiony gość zostanie zatrzymany lub węzeł stanie się niedostępny."
+      }
+    }
+  },
+  "tile": {
+    "running": "Uruchomione",
+    "stopped": "Zatrzymane",
+    "total": "Goście"
+  },
+  "widget": {
+    "name": "Goście Proxmox",
+    "description": "Uruchomieni goście na każdym węźle Proxmox."
+  },
   "card": {
     "title": "Węzły Proxmox",
     "loading": "Ładowanie...",
     "empty": "Brak węzłów. Włącz statystyki Proxmox w ustawieniach hosta węzła."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Zarządzanie gośćmi Proxmox",
+      "description": "Uruchamianie, zatrzymywanie i restartowanie maszyn wirtualnych oraz kontenerów na węzłach Proxmox, które możesz edytować."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Lista gości Proxmox"
+    },
+    "start": {
+      "title": "Uruchom gościa"
+    },
+    "shutdown": {
+      "title": "Wyłącz gościa"
+    },
+    "reboot": {
+      "title": "Zrestartuj gościa"
+    },
+    "stop": {
+      "title": "Wymuś zatrzymanie gościa"
+    },
+    "guests": {
+      "title": "Goście Proxmox",
+      "type": "Typ",
+      "node": "Węzeł",
+      "status": "Status",
+      "running": "Uruchomieni goście"
+    }
   }
 }

@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "Importa invitados de Proxmox VE como hosts, manténlos sincronizados y consulta las estadísticas de los nodos."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Alertar ante cambios en invitados y nodos",
+        "description": "Enviar una alerta cuando un invitado que se estaba ejecutando se detenga o un nodo se desconecte."
+      }
+    }
+  },
+  "tile": {
+    "running": "En ejecución",
+    "stopped": "Detenido",
+    "total": "Invitados"
+  },
+  "widget": {
+    "name": "Invitados de Proxmox",
+    "description": "Invitados en ejecución en cada nodo de Proxmox."
+  },
   "card": {
     "title": "Nodos de Proxmox",
     "loading": "Cargando...",
     "empty": "Aún no hay nodos. Activa las estadísticas de Proxmox en la configuración del host de un nodo."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Gestionar invitados de Proxmox",
+      "description": "Iniciar, detener y reiniciar máquinas virtuales y contenedores en los nodos de Proxmox que puedas editar."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Listar invitados de Proxmox"
+    },
+    "start": {
+      "title": "Iniciar invitado"
+    },
+    "shutdown": {
+      "title": "Apagar invitado"
+    },
+    "reboot": {
+      "title": "Reiniciar invitado"
+    },
+    "stop": {
+      "title": "Detener invitado por la fuerza"
+    },
+    "guests": {
+      "title": "Invitados de Proxmox",
+      "type": "Tipo",
+      "node": "Nodo",
+      "status": "Estado",
+      "running": "Invitados en ejecución"
+    }
   }
 }

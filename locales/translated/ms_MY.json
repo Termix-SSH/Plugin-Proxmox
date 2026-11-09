@@ -114,9 +114,56 @@
     "name": "Proxmox",
     "description": "Import tetamu Proxmox VE sebagai hos, kekalkan penyegerakan dan pantau statistik nod."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Amaran perubahan tetamu dan nod",
+        "description": "Hantar amaran apabila tetamu yang sedang berjalan berhenti, atau nod menjadi luar talian."
+      }
+    }
+  },
+  "tile": {
+    "running": "Berjalan",
+    "stopped": "Berhenti",
+    "total": "Tetamu"
+  },
+  "widget": {
+    "name": "Tetamu Proxmox",
+    "description": "Tetamu yang berjalan pada setiap nod Proxmox."
+  },
   "card": {
     "title": "Nod Proxmox",
     "loading": "Memuatkan...",
     "empty": "Belum ada nod. Hidupkan statistik Proxmox dalam tetapan hos nod."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Urus tetamu Proxmox",
+      "description": "Mula, hentikan dan mulakan semula VM dan kontena pada nod Proxmox yang boleh anda sunting."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Senaraikan tetamu Proxmox"
+    },
+    "start": {
+      "title": "Mula tetamu"
+    },
+    "shutdown": {
+      "title": "Matikan tetamu"
+    },
+    "reboot": {
+      "title": "Mulakan semula tetamu"
+    },
+    "stop": {
+      "title": "Paksa hentikan tetamu"
+    },
+    "guests": {
+      "title": "Tetamu Proxmox",
+      "type": "Jenis",
+      "node": "Nod",
+      "status": "Status",
+      "running": "Tetamu berjalan"
+    }
   }
 }

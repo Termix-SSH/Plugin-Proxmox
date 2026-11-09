@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Importer Proxmox VE-gæster som værter, hold dem synkroniserede og overvåg nodestatistik."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Advar ved ændringer i gæster og noder",
+        "description": "Send en advarsel, når en kørende gæst stopper, eller en node går offline."
+      }
+    }
+  },
+  "tile": {
+    "running": "Kører",
+    "stopped": "Stoppet",
+    "total": "Gæster"
+  },
+  "widget": {
+    "name": "Proxmox-gæster",
+    "description": "Kørende gæster på hver Proxmox-node."
+  },
   "card": {
     "title": "Proxmox-noder",
     "loading": "Indlæser...",
     "empty": "Ingen noder endnu. Aktiver Proxmox-statistik i en nodes værtsindstillinger."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Administrer Proxmox-gæster",
+      "description": "Start, stop og genstart VM'er og containere på Proxmox-noder, du kan redigere."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Liste over Proxmox-gæster"
+    },
+    "start": {
+      "title": "Start gæst"
+    },
+    "shutdown": {
+      "title": "Sluk gæst"
+    },
+    "reboot": {
+      "title": "Genstart gæst"
+    },
+    "stop": {
+      "title": "Tving stop af gæst"
+    },
+    "guests": {
+      "title": "Proxmox-gæster",
+      "type": "Type",
+      "node": "Node",
+      "status": "Status",
+      "running": "Kørende gæster"
+    }
   }
 }

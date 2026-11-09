@@ -129,9 +129,56 @@
     "name": "Proxmox",
     "description": "Uvozite goste Proxmox VE kot gostitelje, jih sinhronizirajte in spremljajte statistiko vozlov."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Obvesti o spremembah gostov in vozlišč",
+        "description": "Pošljite obvestilo, ko se gost, ki je bil v delovanju, ustavi, ali ko vozlišče postane nedosegljivo."
+      }
+    }
+  },
+  "tile": {
+    "running": "V delovanju",
+    "stopped": "Ustavljeno",
+    "total": "Gosti"
+  },
+  "widget": {
+    "name": "Proxmox gosti",
+    "description": "Gosti v delovanju na vsakem Proxmox vozlišču."
+  },
   "card": {
     "title": "Proxmox vozlišča",
     "loading": "Nalaganje...",
     "empty": "Še ni vozlišč. Omogočite Proxmox statistiko v nastavitvah gostitelja vozlišča."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Upravljanje Proxmox gostov",
+      "description": "Zaženite, ustavite in ponovno zaženite VM-je in kontejnerje na Proxmox vozliščih, ki jih lahko urejate."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Seznam Proxmox gostov"
+    },
+    "start": {
+      "title": "Zaženi gosta"
+    },
+    "shutdown": {
+      "title": "Izklopi gosta"
+    },
+    "reboot": {
+      "title": "Ponovno zaženi gosta"
+    },
+    "stop": {
+      "title": "Vsili ustavitev gosta"
+    },
+    "guests": {
+      "title": "Proxmox gosti",
+      "type": "Vrsta",
+      "node": "Vozlišče",
+      "status": "Stanje",
+      "running": "Gosti v delovanju"
+    }
   }
 }

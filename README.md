@@ -30,6 +30,7 @@ Read the [docs](https://docs.termix.site/plugins/proxmox) to set it up and use i
 - Keep imported hosts in sync on a schedule
 - Set up Windows guests for RDP and turn on Docker for guests by name
 - Node, guest, storage and cluster stats in their own tab
+- Start, shut down, reboot and stop guests through Termix actions, with running guests as a status tile
 
 <br />
 

@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Importieren Sie Proxmox VE-Gäste als Hosts, halten Sie sie synchron und beobachten Sie die Knotenstatistiken."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Benachrichtigung bei Änderungen an Gästen und Knoten",
+        "description": "Sende eine Benachrichtigung, wenn ein laufender Gast gestoppt wird oder ein Knoten offline geht."
+      }
+    }
+  },
+  "tile": {
+    "running": "Läuft",
+    "stopped": "Gestoppt",
+    "total": "Gäste"
+  },
+  "widget": {
+    "name": "Proxmox-Gäste",
+    "description": "Laufende Gäste auf jedem Proxmox-Knoten."
+  },
   "card": {
     "title": "Proxmox-Knoten",
     "loading": "Wird geladen...",
     "empty": "Noch keine Knoten. Aktivieren Sie die Proxmox-Statistiken in den Host-Einstellungen eines Knotens."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Proxmox-Gäste verwalten",
+      "description": "Starte, stoppe und starte VMs und Container auf Proxmox-Knoten neu, die du bearbeiten kannst."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Proxmox-Gäste auflisten"
+    },
+    "start": {
+      "title": "Gast starten"
+    },
+    "shutdown": {
+      "title": "Gast herunterfahren"
+    },
+    "reboot": {
+      "title": "Gast neu starten"
+    },
+    "stop": {
+      "title": "Gast zwangsweise stoppen"
+    },
+    "guests": {
+      "title": "Proxmox-Gäste",
+      "type": "Typ",
+      "node": "Knoten",
+      "status": "Status",
+      "running": "Laufende Gäste"
+    }
   }
 }

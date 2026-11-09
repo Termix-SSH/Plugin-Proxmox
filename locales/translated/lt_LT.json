@@ -129,9 +129,56 @@
     "name": "Proxmox",
     "description": "Importuokite Proxmox VE svečius kaip serverius, sinchronizuokite juos ir stebėkite mazgų statistiką."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Pranešti apie svečių ir mazgų pokyčius",
+        "description": "Siųsti pranešimą, kai sustoja veikiantis svečias arba mazgas tampa nepasiekiamas."
+      }
+    }
+  },
+  "tile": {
+    "running": "Veikia",
+    "stopped": "Sustabdyta",
+    "total": "Svečiai"
+  },
+  "widget": {
+    "name": "Proxmox svečiai",
+    "description": "Veikiantys svečiai kiekviename Proxmox mazge."
+  },
   "card": {
     "title": "Proxmox mazgai",
     "loading": "Įkeliamas...",
     "empty": "Dar nėra mazgų. Įjunkite Proxmox statistiką mazgo hosto nustatymuose."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Tvarkyti Proxmox svečius",
+      "description": "Paleisti, sustabdyti ir perkrauti VM bei konteinerius Proxmox mazguose, kuriuos galite redaguoti."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Rodyti Proxmox svečius"
+    },
+    "start": {
+      "title": "Paleisti svečią"
+    },
+    "shutdown": {
+      "title": "Užbaigti svečio veikimą"
+    },
+    "reboot": {
+      "title": "Perkrauti svečią"
+    },
+    "stop": {
+      "title": "Priverstinai sustabdyti svečią"
+    },
+    "guests": {
+      "title": "Proxmox svečiai",
+      "type": "Tipas",
+      "node": "Mazgas",
+      "status": "Būsena",
+      "running": "Veikiantys svečiai"
+    }
   }
 }

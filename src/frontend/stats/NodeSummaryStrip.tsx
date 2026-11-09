@@ -1,7 +1,7 @@
 import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
 import { Cpu, MemoryStick, HardDrive, Clock, Server } from "lucide-react";
 import type { ProxmoxNodeStats } from "../types";
-import { cn } from "@termix-ssh/plugin-sdk/ui";
+import { StatTile, TileWall } from "@termix-ssh/plugin-sdk/ui";
 
 function Tile({
   icon,
@@ -17,41 +17,16 @@ function Tile({
   sparkline?: number[];
 }) {
   const clamped = percent === null ? null : Math.min(100, Math.max(0, percent));
-  const barColor =
-    clamped === null
-      ? "bg-muted-foreground/30"
-      : clamped >= 90
-        ? "bg-red-500"
-        : clamped >= 75
-          ? "bg-warning"
-          : "bg-accent-brand";
-
   return (
-    <div className="flex min-w-0 flex-1 flex-col gap-2 border border-border bg-card px-4 py-3">
-      <div className="flex items-center gap-2 text-muted-foreground">
-        {icon}
-        <span className="text-[10px] font-bold uppercase tracking-widest">
-          {label}
-        </span>
-      </div>
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="text-2xl font-bold tabular-nums">
-          {clamped === null ? "N/A" : `${clamped.toFixed(0)}%`}
-        </span>
-        {detail && (
-          <span className="truncate text-[11px] text-muted-foreground">
-            {detail}
-          </span>
-        )}
-      </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-        <div
-          className={cn("h-full rounded-full transition-all", barColor)}
-          style={{ width: `${clamped ?? 0}%` }}
-        />
-      </div>
+    <StatTile
+      label={label}
+      icon={icon}
+      value={clamped === null ? "N/A" : `${clamped.toFixed(0)}%`}
+      percent={clamped}
+      hint={detail}
+    >
       {sparkline && sparkline.length > 1 && <MiniSparkline data={sparkline} />}
-    </div>
+    </StatTile>
   );
 }
 
@@ -90,9 +65,9 @@ export function NodeSummaryStrip({
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <TileWall minWidth={200}>
       <Tile
-        icon={<Cpu className="size-3.5" />}
+        icon={<Cpu />}
         label={t("proxmoxStats.cpuUsage")}
         percent={node?.cpu.percent ?? null}
         detail={
@@ -103,7 +78,7 @@ export function NodeSummaryStrip({
         sparkline={histories.cpu}
       />
       <Tile
-        icon={<MemoryStick className="size-3.5" />}
+        icon={<MemoryStick />}
         label={t("proxmoxStats.memoryUsage")}
         percent={node?.memory.percent ?? null}
         detail={
@@ -114,7 +89,7 @@ export function NodeSummaryStrip({
         sparkline={histories.memory}
       />
       <Tile
-        icon={<HardDrive className="size-3.5" />}
+        icon={<HardDrive />}
         label={t("proxmoxStats.diskUsage")}
         percent={node?.disk.percent ?? null}
         detail={
@@ -124,24 +99,20 @@ export function NodeSummaryStrip({
         }
         sparkline={histories.disk}
       />
-      <div className="flex min-w-0 flex-1 flex-col justify-between gap-2 border border-border bg-card px-4 py-3">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <Clock className="size-3.5" />
-          <span className="text-[10px] font-bold uppercase tracking-widest">
-            {t("proxmoxStats.uptime")}
+      <StatTile
+        label={t("proxmoxStats.uptime")}
+        icon={<Clock />}
+        value={node?.uptime.formatted ?? "N/A"}
+        hint={
+          <span className="flex items-center gap-1.5">
+            <Server className="size-3 shrink-0" />
+            <span className="truncate">{node?.system.hostname ?? "-"}</span>
+            {node?.system.pveVersion && (
+              <span className="shrink-0">{node.system.pveVersion}</span>
+            )}
           </span>
-        </div>
-        <span className="text-2xl font-bold">
-          {node?.uptime.formatted ?? "N/A"}
-        </span>
-        <div className="flex items-center gap-1.5 truncate text-[11px] text-muted-foreground">
-          <Server className="size-3 shrink-0" />
-          <span className="truncate">{node?.system.hostname ?? "-"}</span>
-          {node?.system.pveVersion && (
-            <span className="ml-1 shrink-0">{node.system.pveVersion}</span>
-          )}
-        </div>
-      </div>
-    </div>
+        }
+      />
+    </TileWall>
   );
 }

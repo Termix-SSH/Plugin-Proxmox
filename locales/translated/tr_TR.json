@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Proxmox VE misafirlerini ana bilgisayar olarak içe aktarın, senkronize tutun ve düğüm istatistiklerini izleyin."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Misafir ve düğüm değişikliklerinde uyarı ver",
+        "description": "Çalışan bir misafir durduğunda veya bir düğüm çevrimdışı olduğunda uyarı gönder."
+      }
+    }
+  },
+  "tile": {
+    "running": "Çalışıyor",
+    "stopped": "Durduruldu",
+    "total": "Misafirler"
+  },
+  "widget": {
+    "name": "Proxmox misafirleri",
+    "description": "Her Proxmox düğümündeki çalışan misafirler."
+  },
   "card": {
     "title": "Proxmox düğümleri",
     "loading": "Yükleniyor...",
     "empty": "Henüz düğüm yok. Bir düğümün sunucu ayarlarında Proxmox istatistiklerini açın."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Proxmox misafirlerini yönet",
+      "description": "Düzenleyebileceğiniz Proxmox düğümlerindeki sanal makineleri ve konteynerleri başlatın, durdurun ve yeniden başlatın."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Proxmox misafirlerini listele"
+    },
+    "start": {
+      "title": "Misafiri başlat"
+    },
+    "shutdown": {
+      "title": "Misafiri kapat"
+    },
+    "reboot": {
+      "title": "Misafiri yeniden başlat"
+    },
+    "stop": {
+      "title": "Misafiri zorla durdur"
+    },
+    "guests": {
+      "title": "Proxmox misafirleri",
+      "type": "Tür",
+      "node": "Düğüm",
+      "status": "Durum",
+      "running": "Çalışan misafirler"
+    }
   }
 }

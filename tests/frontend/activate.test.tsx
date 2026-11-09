@@ -57,6 +57,14 @@ describe(`${manifest.id} activate`, () => {
     });
   });
 
+  it("adds a host page tile and a homepage widget", async () => {
+    rendered = await renderWithApp(plugin, { manifest, locales });
+    expect(rendered.registered.slot("host-page.tiles")).toHaveLength(1);
+    expect(rendered.registered.extensions("homepage.widgets")).toEqual([
+      "proxmox_guests",
+    ]);
+  });
+
   it("removes everything it registered on deactivate", async () => {
     const app = await renderWithApp(plugin, { manifest, locales });
     await app.deactivate();

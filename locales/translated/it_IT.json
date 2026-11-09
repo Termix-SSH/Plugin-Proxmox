@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "Importa le macchine virtuali di Proxmox VE come host, mantienile sincronizzate e monitora le statistiche dei nodi."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Avvisa in caso di modifiche a guest e nodi",
+        "description": "Invia un avviso quando un guest in esecuzione si arresta o un nodo va offline."
+      }
+    }
+  },
+  "tile": {
+    "running": "In esecuzione",
+    "stopped": "Arrestato",
+    "total": "Guest"
+  },
+  "widget": {
+    "name": "Guest Proxmox",
+    "description": "Guest in esecuzione su ciascun nodo Proxmox."
+  },
   "card": {
     "title": "Nodi Proxmox",
     "loading": "Caricamento...",
     "empty": "Nessun nodo ancora. Attiva le statistiche Proxmox nelle impostazioni dell'host di un nodo."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Gestisci guest Proxmox",
+      "description": "Avvia, arresta e riavvia VM e container sui nodi Proxmox che puoi modificare."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Elenca guest Proxmox"
+    },
+    "start": {
+      "title": "Avvia guest"
+    },
+    "shutdown": {
+      "title": "Arresta guest"
+    },
+    "reboot": {
+      "title": "Riavvia guest"
+    },
+    "stop": {
+      "title": "Arresta forzatamente guest"
+    },
+    "guests": {
+      "title": "Guest Proxmox",
+      "type": "Tipo",
+      "node": "Nodo",
+      "status": "Stato",
+      "running": "Guest in esecuzione"
+    }
   }
 }

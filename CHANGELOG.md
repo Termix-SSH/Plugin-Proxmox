@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.3.0
+
+### Added
+
+- Start, shut down, reboot and stop VMs and containers through Termix actions, list guests across clusters and see running guests as a status tile
+- Permission Manage Proxmox guests
+
+### Changed
+
+- Needs Termix 26.11.1 or newer
+- The overview uses the Termix tile look, with tiles edge to edge and lines between them instead of separate cards
+- Toolbars, loading screens, back buttons and Save bars match the rest of Termix
+
+### Fixed
+
+- The Discover button is as tall as the node picker next to it
+
 ## 1.2.1
 
 ### Fixed

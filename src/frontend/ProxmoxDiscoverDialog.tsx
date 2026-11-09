@@ -332,7 +332,6 @@ export function ProxmoxDiscoverDialog({
               ))}
             </Select2>
             <Button
-              size="sm"
               variant="outline"
               disabled={!canDiscover || discovering}
               onClick={handleDiscover}
@@ -399,7 +398,7 @@ export function ProxmoxDiscoverDialog({
                 {t("hosts.proxmoxNoGuests")}
               </p>
             ) : (
-              <div className="max-h-64 overflow-y-auto rounded-md border border-border divide-y divide-border">
+              <div className="max-h-64 overflow-y-auto border border-border divide-y divide-border">
                 {Object.entries(nodeGroups).map(([node, nodeGuests]) => (
                   <div key={node}>
                     <div className="px-2 py-1 text-[10px] font-medium text-muted-foreground bg-muted/50 uppercase tracking-wider">

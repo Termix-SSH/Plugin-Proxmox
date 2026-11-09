@@ -114,9 +114,56 @@
     "name": "Proxmox",
     "description": "將 Proxmox VE 虛擬機器和容器匯入為主機，保持同步並檢視節點統計。"
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "當虛擬機器或節點狀態變更時通知",
+        "description": "當正在執行的虛擬機器停止，或節機離線時發送通知。"
+      }
+    }
+  },
+  "tile": {
+    "running": "執行中",
+    "stopped": "已停止",
+    "total": "虛擬機器"
+  },
+  "widget": {
+    "name": "Proxmox 虛擬機器",
+    "description": "每個 Proxmox 節點上執行的虛擬機器。"
+  },
   "card": {
     "title": "Proxmox 節點",
     "loading": "載入中...",
     "empty": "目前沒有節點。請在節點的主機設定中啟用 Proxmox 統計資料。"
+  },
+  "permissions": {
+    "guests": {
+      "title": "管理 Proxmox 虛擬機器",
+      "description": "啟動、停止和重新啟動您有權編輯的 Proxmox 節點上的虛擬機器和容器。"
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "列出 Proxmox 虛擬機器"
+    },
+    "start": {
+      "title": "啟動虛擬機器"
+    },
+    "shutdown": {
+      "title": "關閉虛擬機器"
+    },
+    "reboot": {
+      "title": "重新啟動虛擬機器"
+    },
+    "stop": {
+      "title": "強制停止虛擬機器"
+    },
+    "guests": {
+      "title": "Proxmox 虛擬機器",
+      "type": "類型",
+      "node": "節點",
+      "status": "狀態",
+      "running": "執行中的虛擬機器"
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Database } from "lucide-react";
 import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
-import { MetricCard } from "@termix-ssh/plugin-sdk/ui";
+import { ListBadge, Meter, MetricCard } from "@termix-ssh/plugin-sdk/ui";
 import type { ProxmoxStatsSnapshot } from "../../types";
 
 export function StoragePoolsCard({
@@ -27,9 +27,7 @@ export function StoragePoolsCard({
                 <span className="min-w-0 flex-1 truncate font-medium">
                   {pool.name}
                 </span>
-                <span className="shrink-0 rounded-full border border-border px-1.5 py-0.5 text-[10px] uppercase text-muted-foreground">
-                  {pool.type}
-                </span>
+                <ListBadge>{pool.type}</ListBadge>
                 {!pool.active && (
                   <span className="shrink-0 text-[10px] text-muted-foreground">
                     {t("proxmoxStats.inactive")}
@@ -37,14 +35,7 @@ export function StoragePoolsCard({
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full bg-accent-brand"
-                    style={{
-                      width: `${Math.min(100, Math.max(0, pool.percent ?? 0))}%`,
-                    }}
-                  />
-                </div>
+                <Meter percent={pool.percent ?? 0} className="flex-1" />
                 <span className="shrink-0 text-[10px] tabular-nums text-muted-foreground">
                   {pool.usedGiB !== null && pool.totalGiB !== null
                     ? `${pool.usedGiB.toFixed(1)} / ${pool.totalGiB.toFixed(1)} GiB`

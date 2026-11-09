@@ -17,6 +17,8 @@ import { ProxmoxStatsTab } from "./stats/ProxmoxStatsTab";
 import ProxmoxStatsApp from "./stats/ProxmoxStatsApp";
 import { HostProxmoxStatsTab } from "./stats/HostProxmoxStatsTab";
 import { ProxmoxNodesCard } from "./stats/ProxmoxNodesCard";
+import { ProxmoxHostTile } from "./stats/ProxmoxHostTile";
+import { guestsWidget } from "./stats/HomepageWidget";
 
 interface DiscoverRequest {
   hostId?: number;
@@ -224,4 +226,19 @@ export function activate(app: TermixApp): void {
     frame: "framed",
     component: ProxmoxNodesCard,
   });
+
+  app.registerSlotContribution("host-page.tiles", {
+    actionId: "proxmox.hostTile",
+    titleKey: "nav.proxmoxStats",
+    icon: HardDrive,
+    kind: "component",
+    component: ProxmoxHostTile as unknown as ComponentType<
+      Record<string, unknown>
+    >,
+    when: (context?: { host?: PluginHostRecord }) =>
+      !context?.host ||
+      proxmoxSettings(context.host).enableProxmoxStats === true,
+  });
+
+  app.registerExtension("homepage.widgets", guestsWidget(app.t));
 }

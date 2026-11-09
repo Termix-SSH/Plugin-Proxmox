@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "Importați mașinile virtuale Proxmox VE ca gazde, mențineți-le sincronizate și monitorizați statisticile nodurilor."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Alertă la modificări ale oaspeților și nodurilor",
+        "description": "Trimite o alertă când un oaspete care rulează se oprește sau când un nod devine indisponibil."
+      }
+    }
+  },
+  "tile": {
+    "running": "Rulează",
+    "stopped": "Oprit",
+    "total": "Oaspeți"
+  },
+  "widget": {
+    "name": "Oaspeți Proxmox",
+    "description": "Oaspeții care rulează pe fiecare nod Proxmox."
+  },
   "card": {
     "title": "Noduri Proxmox",
     "loading": "Se încarcă...",
     "empty": "Încă nu există noduri. Activați statisticile Proxmox în setările gazdei unui nod."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Gestionează oaspeții Proxmox",
+      "description": "Pornește, oprește și repornește mașinile virtuale și containerele pe nodurile Proxmox pe care le poți edita."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Listează oaspeții Proxmox"
+    },
+    "start": {
+      "title": "Pornește oaspete"
+    },
+    "shutdown": {
+      "title": "Oprește oaspete"
+    },
+    "reboot": {
+      "title": "Repornire oaspete"
+    },
+    "stop": {
+      "title": "Oprește forțat oaspete"
+    },
+    "guests": {
+      "title": "Oaspeți Proxmox",
+      "type": "Tip",
+      "node": "Nod",
+      "status": "Stare",
+      "running": "Oaspeți care rulează"
+    }
   }
 }

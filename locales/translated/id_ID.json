@@ -114,9 +114,56 @@
     "name": "Proxmox",
     "description": "Impor tamu Proxmox VE sebagai host, sinkronkan, dan pantau statistik node."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Peringatan saat perubahan tamu dan node",
+        "description": "Kirim peringatan ketika tamu yang sedang berjalan berhenti, atau node menjadi offline."
+      }
+    }
+  },
+  "tile": {
+    "running": "Berjalan",
+    "stopped": "Berhenti",
+    "total": "Tamu"
+  },
+  "widget": {
+    "name": "Tamu Proxmox",
+    "description": "Tamu yang berjalan di setiap node Proxmox."
+  },
   "card": {
     "title": "Node Proxmox",
     "loading": "Memuat...",
     "empty": "Belum ada node. Aktifkan statistik Proxmox di pengaturan host node."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Kelola tamu Proxmox",
+      "description": "Mulai, hentikan, dan reboot VM serta container pada node Proxmox yang dapat Anda edit."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Daftar tamu Proxmox"
+    },
+    "start": {
+      "title": "Mulai tamu"
+    },
+    "shutdown": {
+      "title": "Matikan tamu"
+    },
+    "reboot": {
+      "title": "Reboot tamu"
+    },
+    "stop": {
+      "title": "Paksa hentikan tamu"
+    },
+    "guests": {
+      "title": "Tamu Proxmox",
+      "type": "Tipe",
+      "node": "Node",
+      "status": "Status",
+      "running": "Tamu berjalan"
+    }
   }
 }

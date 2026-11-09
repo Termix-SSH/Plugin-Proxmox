@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "Importe convidados do Proxmox VE como hosts, mantenha-os sincronizados e acompanhe as estatísticas dos nós."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Avisar sobre alterações em convidados e nós",
+        "description": "Enviar um aviso quando um convidado em execução parar ou um nó ficar offline."
+      }
+    }
+  },
+  "tile": {
+    "running": "Em execução",
+    "stopped": "Parado",
+    "total": "Convidados"
+  },
+  "widget": {
+    "name": "Convidados Proxmox",
+    "description": "Convidados em execução em cada nó Proxmox."
+  },
   "card": {
     "title": "Nós do Proxmox",
     "loading": "A carregar...",
     "empty": "Ainda não há nós. Ative as estatísticas do Proxmox nas definições do host de um nó."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Gerir convidados Proxmox",
+      "description": "Iniciar, parar e reiniciar VMs e contentores nos nós Proxmox que pode editar."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Listar convidados Proxmox"
+    },
+    "start": {
+      "title": "Iniciar convidado"
+    },
+    "shutdown": {
+      "title": "Desligar convidado"
+    },
+    "reboot": {
+      "title": "Reiniciar convidado"
+    },
+    "stop": {
+      "title": "Forçar paragem do convidado"
+    },
+    "guests": {
+      "title": "Convidados Proxmox",
+      "type": "Tipo",
+      "node": "Nó",
+      "status": "Estado",
+      "running": "Convidados em execução"
+    }
   }
 }

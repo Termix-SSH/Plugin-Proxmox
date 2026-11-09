@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Importeer Proxmox VE-gasten als hosts, houd ze gesynchroniseerd en bekijk de knooppuntstatistieken."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Waarschuwing bij wijzigingen van gasten en nodes",
+        "description": "Stuur een waarschuwing als een gast die liep stopt, of als een node offline gaat."
+      }
+    }
+  },
+  "tile": {
+    "running": "Actief",
+    "stopped": "Gestopt",
+    "total": "Gasten"
+  },
+  "widget": {
+    "name": "Proxmox-gasten",
+    "description": "Actieve gasten op elke Proxmox-node."
+  },
   "card": {
     "title": "Proxmox-knooppunten",
     "loading": "Laden...",
     "empty": "Nog geen knooppunten. Schakel Proxmox-statistieken in de host-instellingen van een knooppunt in."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Proxmox-gasten beheren",
+      "description": "Start, stop en herstart VM's en containers op Proxmox-nodes die je kunt bewerken."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Proxmox-gasten weergeven"
+    },
+    "start": {
+      "title": "Gast starten"
+    },
+    "shutdown": {
+      "title": "Gast afsluiten"
+    },
+    "reboot": {
+      "title": "Gast herstarten"
+    },
+    "stop": {
+      "title": "Gast geforceerd stoppen"
+    },
+    "guests": {
+      "title": "Proxmox-gasten",
+      "type": "Type",
+      "node": "Node",
+      "status": "Status",
+      "running": "Actieve gasten"
+    }
   }
 }

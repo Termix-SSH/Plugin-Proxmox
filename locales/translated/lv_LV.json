@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "Importējiet Proxmox VE viesus kā mezglus, sinhronizējiet tos un uzraugiet mezgla statistiku."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Brīdinājumi par viesu un mezglu izmaiņām",
+        "description": "Nosūtīt brīdinājumu, ja izpildes gaitā esošs viesis apstājas vai mezgls kļūst nepieejams."
+      }
+    }
+  },
+  "tile": {
+    "running": "Darbojas",
+    "stopped": "Apstādināts",
+    "total": "Viesi"
+  },
+  "widget": {
+    "name": "Proxmox viesi",
+    "description": "Darbojošies viesi katrā Proxmox mezglā."
+  },
   "card": {
     "title": "Proxmox mezgli",
     "loading": "Ielādē...",
     "empty": "Vēl nav mezglu. Ieslēdziet Proxmox statistiku mezgla hosta iestatījumos."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Proxmox viesu pārvaldība",
+      "description": "Sākt, apturēt un restartēt VM un konteinerus Proxmox mezglos, kurus varat rediģēt."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Proxmox viesu saraksts"
+    },
+    "start": {
+      "title": "Sākt viesi"
+    },
+    "shutdown": {
+      "title": "Apturēt viesi"
+    },
+    "reboot": {
+      "title": "Restartēt viesi"
+    },
+    "stop": {
+      "title": "Piespiedu apturēt viesi"
+    },
+    "guests": {
+      "title": "Proxmox viesi",
+      "type": "Tips",
+      "node": "Mezgls",
+      "status": "Statuss",
+      "running": "Darbojošies viesi"
+    }
   }
 }

@@ -1,18 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import {
-  Button,
   ConnectionScreen,
   ConnectionLogProvider,
   useConnectionLog,
   TabStrip,
+  PanelShell,
+  RefreshButton,
+  TileStack,
+  TileWall,
 } from "@termix-ssh/plugin-sdk/ui";
 import {
   useTranslation,
   usePluginApi,
   useHosts,
 } from "@termix-ssh/plugin-sdk/frontend";
-import { RefreshCw, Server } from "lucide-react";
+import { Server } from "lucide-react";
 import { createProxmoxStatsApi } from "./proxmox-stats-api";
 import type { ProxmoxStatsSnapshot, ProxmoxStatsConfig } from "../types";
 import { NodeSummaryStrip } from "./NodeSummaryStrip";
@@ -357,76 +360,65 @@ function ProxmoxStatsInner({
     >
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         {connectionStatus === "connected" && !notEnabled && (
-          <div className="flex h-12.5 shrink-0 items-center justify-between gap-2 border-b border-border px-3">
-            <div className="flex min-w-0 items-center gap-2">
-              <Server className="size-4 shrink-0 text-accent-brand" />
-              <h1 className="truncate text-base font-bold tracking-tight">
-                {title}
-              </h1>
-              {snapshot && (
-                <>
-                  <span aria-hidden className="h-4 w-px shrink-0 bg-border" />
-                  <span className="truncate text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                    {t("proxmoxStats.guestCounts", {
-                      running: snapshot.guests.guests.filter(
-                        (g) => g.status === "running",
-                      ).length,
-                      total: snapshot.guests.guests.length,
-                    })}
-                  </span>
-                </>
-              )}
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleRefresh}
-              disabled={isRefreshing}
-              title={t("proxmoxStats.refresh")}
-              className="text-accent-brand"
-            >
-              <RefreshCw
-                className={`size-4 ${isRefreshing ? "animate-spin" : ""}`}
+          <PanelShell
+            icon={<Server className="size-4" />}
+            title={title}
+            status={
+              snapshot
+                ? t("proxmoxStats.guestCounts", {
+                    running: snapshot.guests.guests.filter(
+                      (g) => g.status === "running",
+                    ).length,
+                    total: snapshot.guests.guests.length,
+                  })
+                : undefined
+            }
+            actions={
+              <RefreshButton
+                onClick={handleRefresh}
+                loading={isRefreshing}
+                label={t("proxmoxStats.refresh")}
               />
-            </Button>
-          </div>
-        )}
-
-        {showContent && (
-          <div className="shrink-0 border-b border-border px-1">
-            <TabStrip
-              tabs={[
-                { id: "overview", label: t("proxmoxStats.overview") },
-                {
-                  id: "guests",
-                  label: t("proxmoxStats.guestsSummary"),
-                  count: snapshot.guests.guests.length,
-                },
-              ]}
-              activeTab={view}
-              onTabChange={(id) => setView(id as "overview" | "guests")}
-            />
-          </div>
-        )}
-
-        {showContent && view === "guests" && (
-          <GuestTable guests={snapshot.guests.guests} />
-        )}
-
-        {showContent && view === "overview" && (
-          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-2.5">
-            <div className="shrink-0">
-              <NodeSummaryStrip node={snapshot.node} histories={histories} />
-            </div>
-
-            <div className="grid shrink-0 grid-cols-1 gap-2 md:grid-cols-3">
-              <NodeNetworkCard snapshot={snapshot} />
-              <StoragePoolsCard snapshot={snapshot} />
-              {snapshot.cluster.clustered && (
-                <ClusterHealthCard snapshot={snapshot} />
-              )}
-            </div>
-          </div>
+            }
+            tabs={
+              showContent ? (
+                <TabStrip
+                  tabs={[
+                    { id: "overview", label: t("proxmoxStats.overview") },
+                    {
+                      id: "guests",
+                      label: t("proxmoxStats.guestsSummary"),
+                      count: snapshot.guests.guests.length,
+                    },
+                  ]}
+                  activeTab={view}
+                  onTabChange={(id) => setView(id as "overview" | "guests")}
+                />
+              ) : undefined
+            }
+            scroll={false}
+          >
+            {showContent && view === "guests" && (
+              <GuestTable guests={snapshot.guests.guests} />
+            )}
+            {showContent && view === "overview" && (
+              <div className="min-h-0 flex-1 overflow-y-auto thin-scrollbar">
+                <TileStack>
+                  <NodeSummaryStrip
+                    node={snapshot.node}
+                    histories={histories}
+                  />
+                  <TileWall gridClassName="grid-cols-1 md:grid-cols-3">
+                    <NodeNetworkCard snapshot={snapshot} />
+                    <StoragePoolsCard snapshot={snapshot} />
+                    {snapshot.cluster.clustered && (
+                      <ClusterHealthCard snapshot={snapshot} />
+                    )}
+                  </TileWall>
+                </TileStack>
+              </div>
+            )}
+          </PanelShell>
         )}
 
         <ConnectionScreen

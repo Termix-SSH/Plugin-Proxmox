@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Import Proxmox VE guests as hosts, keep them in sync and watch node stats."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Alert on guest and node changes",
+        "description": "Send an alert when a guest that was running stops, or a node goes offline."
+      }
+    }
+  },
+  "tile": {
+    "running": "Running",
+    "stopped": "Stopped",
+    "total": "Guests"
+  },
+  "widget": {
+    "name": "Proxmox guests",
+    "description": "Running guests on each Proxmox node."
+  },
   "card": {
     "title": "Proxmox nodes",
     "loading": "Loading...",
     "empty": "No nodes yet. Turn on Proxmox stats in a node's host settings."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Manage Proxmox guests",
+      "description": "Start, stop and reboot VMs and containers on Proxmox nodes you can edit."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "List Proxmox guests"
+    },
+    "start": {
+      "title": "Start guest"
+    },
+    "shutdown": {
+      "title": "Shut down guest"
+    },
+    "reboot": {
+      "title": "Reboot guest"
+    },
+    "stop": {
+      "title": "Force stop guest"
+    },
+    "guests": {
+      "title": "Proxmox guests",
+      "type": "Type",
+      "node": "Node",
+      "status": "Status",
+      "running": "Guests running"
+    }
   }
 }

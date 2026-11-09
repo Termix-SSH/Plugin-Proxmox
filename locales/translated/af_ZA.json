@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Voeg Proxmox VE-gaste as gasheerbedieners by, hou hulle op datum en monitor nodusstatistieke."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Waarskuif oor gaste- en nodusveranderinge",
+        "description": "Stuur 'n waarskuwing wanneer 'n gast wat loop, stop, of 'n nodus aflyn gaan."
+      }
+    }
+  },
+  "tile": {
+    "running": "Loop",
+    "stopped": "Gestop",
+    "total": "Gaste"
+  },
+  "widget": {
+    "name": "Proxmox-gaste",
+    "description": "Lopende gaste op elke Proxmox-nodus."
+  },
   "card": {
     "title": "Proxmox-knope",
     "loading": "Laai tans...",
     "empty": "Nog geen knope nie. Skakel Proxmox-statistieke aan in die gasheerinstellings van 'n knoop."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Bestuur Proxmox-gaste",
+      "description": "Begin, stop en herbegin VM's en houer op Proxmox-nodusse wat jy kan redigeer."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Lys Proxmox-gaste"
+    },
+    "start": {
+      "title": "Begin gast"
+    },
+    "shutdown": {
+      "title": "Skakel gast af"
+    },
+    "reboot": {
+      "title": "Herbegin gast"
+    },
+    "stop": {
+      "title": "Gedwonge stop gast"
+    },
+    "guests": {
+      "title": "Proxmox-gaste",
+      "type": "Tipe",
+      "node": "Nodus",
+      "status": "Status",
+      "running": "Gaste loop"
+    }
   }
 }

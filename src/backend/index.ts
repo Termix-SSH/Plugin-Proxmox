@@ -7,6 +7,8 @@ import {
   startProxmoxStatsService,
   stopProxmoxStatsService,
 } from "./stats-service.js";
+import { registerOperations } from "./operations.js";
+import { startProxmoxAlerts } from "./alerts.js";
 import { proxmoxNodeHistory } from "./tables.js";
 import { createProxmoxNodeHistoryRepository } from "./proxmox-node-history-repository.js";
 
@@ -27,6 +29,8 @@ export async function activate(ctx: PluginContext) {
   ctx.disposables.add(stopProxmoxService);
   startProxmoxStatsService(ctx, router, historyRepository);
   ctx.disposables.add(stopProxmoxStatsService);
+  registerOperations(ctx);
+  startProxmoxAlerts(ctx);
   ctx.log.info("Proxmox routes mounted at /plugin-api/proxmox");
 }
 

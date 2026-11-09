@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "Uvozite Proxmox VE goste kao hostove, održavajte ih usklađenima i pratite statistiku čvorova."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Upozori na promjene gostiju i čvorova",
+        "description": "Pošalji upozorenje kada gost koji je bio pokrenut stane ili kada čvor postane nedostupan."
+      }
+    }
+  },
+  "tile": {
+    "running": "Pokrenuto",
+    "stopped": "Zaustavljeno",
+    "total": "Gosti"
+  },
+  "widget": {
+    "name": "Proxmox gosti",
+    "description": "Pokrenuti gosti na svakom Proxmox čvoru."
+  },
   "card": {
     "title": "Proxmox čvorovi",
     "loading": "Učitavanje...",
     "empty": "Još nema čvorova. Uključite Proxmox statistiku u postavkama hosta čvora."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Upravljanje Proxmox gostima",
+      "description": "Pokretanje, gašenje i ponovno pokretanje VM-ova i kontejnera na Proxmox čvorovima koje možete uređivati."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Popis Proxmox gostiju"
+    },
+    "start": {
+      "title": "Pokreni gosta"
+    },
+    "shutdown": {
+      "title": "Ugasi gosta"
+    },
+    "reboot": {
+      "title": "Ponovno pokreni gosta"
+    },
+    "stop": {
+      "title": "Prisilno zaustavi gosta"
+    },
+    "guests": {
+      "title": "Proxmox gosti",
+      "type": "Vrsta",
+      "node": "Čvor",
+      "status": "Status",
+      "running": "Pokrenuti gosti"
+    }
   }
 }

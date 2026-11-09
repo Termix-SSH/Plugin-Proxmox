@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "Importez les invités Proxmox VE en tant qu'hôtes, gardez-les synchronisés et consultez les statistiques des nœuds."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Alerter en cas de changement d'état des invités et des nœuds",
+        "description": "Envoyer une alerte lorsqu'un invité en cours d'exécution s'arrête ou qu'un nœud devient hors ligne."
+      }
+    }
+  },
+  "tile": {
+    "running": "En cours",
+    "stopped": "Arrêté",
+    "total": "Invités"
+  },
+  "widget": {
+    "name": "Invités Proxmox",
+    "description": "Invités en cours d'exécution sur chaque nœud Proxmox."
+  },
   "card": {
     "title": "Nœuds Proxmox",
     "loading": "Chargement...",
     "empty": "Aucun nœud pour le moment. Activez les statistiques Proxmox dans les paramètres du hôte d'un nœud."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Gérer les invités Proxmox",
+      "description": "Démarrer, arrêter et redémarrer les VM et conteneurs sur les nœuds Proxmox que vous pouvez modifier."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Lister les invités Proxmox"
+    },
+    "start": {
+      "title": "Démarrer l'invité"
+    },
+    "shutdown": {
+      "title": "Arrêter l'invité"
+    },
+    "reboot": {
+      "title": "Redémarrer l'invité"
+    },
+    "stop": {
+      "title": "Forcer l'arrêt de l'invité"
+    },
+    "guests": {
+      "title": "Invités Proxmox",
+      "type": "Type",
+      "node": "Nœud",
+      "status": "État",
+      "running": "Invités en cours d'exécution"
+    }
   }
 }

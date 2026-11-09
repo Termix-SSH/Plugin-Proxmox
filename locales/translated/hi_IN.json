@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Proxmox VE मेहमानों को होस्ट के रूप में आयात करें, उन्हें सिंक रखें और नोड सांख्यिकी देखें।"
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "गेस्ट और नोड परिवर्तनों पर अलर्ट",
+        "description": "जब कोई चल रहा गेस्ट रुक जाए या कोई नोड ऑफ़लाइन हो जाए, तो अलर्ट भेजें।"
+      }
+    }
+  },
+  "tile": {
+    "running": "चल रहा है",
+    "stopped": "रुक गया",
+    "total": "गेस्ट"
+  },
+  "widget": {
+    "name": "Proxmox गेस्ट",
+    "description": "प्रत्येक Proxmox नोड पर चल रहे गेस्ट।"
+  },
   "card": {
     "title": "Proxmox नोड्स",
     "loading": "लोड हो रहा है...",
     "empty": "अभी तक कोई नोड नहीं। किसी नोड के होस्ट सेटिंग्स में Proxmox स्टैट्स चालू करें।"
+  },
+  "permissions": {
+    "guests": {
+      "title": "Proxmox गेस्ट प्रबंधित करें",
+      "description": "उन Proxmox नोड्स पर VM और कंटेनर शुरू, रोक और रीबूट करें जिन्हें आप संपादित कर सकते हैं।"
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Proxmox गेस्ट सूची"
+    },
+    "start": {
+      "title": "गेस्ट शुरू करें"
+    },
+    "shutdown": {
+      "title": "गेस्ट बंद करें"
+    },
+    "reboot": {
+      "title": "गेस्ट रीबूट करें"
+    },
+    "stop": {
+      "title": "गेस्ट को जबरन रोकें"
+    },
+    "guests": {
+      "title": "Proxmox गेस्ट",
+      "type": "प्रकार",
+      "node": "नोड",
+      "status": "स्थिति",
+      "running": "चल रहे गेस्ट"
+    }
   }
 }

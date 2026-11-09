@@ -119,9 +119,56 @@
     "name": "Proxmox",
     "description": "Tuo Proxmox VE -vierasjärjestelmät isäntinä, pidä ne synkronoituna ja seuraa solmun tilastotietoja."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Ilmoita vieras- ja solmun muutoksista",
+        "description": "Lähetä ilmoitus, kun käynnissä ollut vieras loppuu tai solmu menee offline-tilaan."
+      }
+    }
+  },
+  "tile": {
+    "running": "Käynnissä",
+    "stopped": "Pysäytetty",
+    "total": "Vieraat"
+  },
+  "widget": {
+    "name": "Proxmox-vieraat",
+    "description": "Käynnissä olevat vieraat jokaisella Proxmox-solmulla."
+  },
   "card": {
     "title": "Proxmox-solmuja",
     "loading": "Ladataan...",
     "empty": "Solmuja ei vielä ole. Ota Proxmox-tilastot käyttöön solmun isäntäasetuksista."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Hallitse Proxmox-vieraita",
+      "description": "Käynnistä, pysäytä ja käynnistä uudelleen virtuaalikoneet ja kontit niillä Proxmox-solmuilla, joita voit muokata."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Listaa Proxmox-vieraat"
+    },
+    "start": {
+      "title": "Käynnistä vieras"
+    },
+    "shutdown": {
+      "title": "Sammuta vieras"
+    },
+    "reboot": {
+      "title": "Käynnistä vieras uudelleen"
+    },
+    "stop": {
+      "title": "Pakota vieras pysähtymään"
+    },
+    "guests": {
+      "title": "Proxmox-vieraat",
+      "type": "Tyyppi",
+      "node": "Solmu",
+      "status": "Tila",
+      "running": "Käynnissä olevia vieraita"
+    }
   }
 }

@@ -114,9 +114,56 @@
     "name": "Proxmox",
     "description": "将 Proxmox VE 虚拟机和容器导入为主机，保持同步并查看节点统计。"
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "在来宾和节点状态变更时发送提醒",
+        "description": "当正在运行的来宾停止，或节点离线时发送提醒。"
+      }
+    }
+  },
+  "tile": {
+    "running": "运行中",
+    "stopped": "已停止",
+    "total": "来宾"
+  },
+  "widget": {
+    "name": "Proxmox 来宾",
+    "description": "每个 Proxmox 节点上运行的来宾。"
+  },
   "card": {
     "title": "Proxmox 节点",
     "loading": "加载中...",
     "empty": "暂无节点。请在节点的主机设置中启用 Proxmox 统计信息。"
+  },
+  "permissions": {
+    "guests": {
+      "title": "管理 Proxmox 来宾",
+      "description": "启动、停止和重启您有编辑权限的 Proxmox 节点上的虚拟机和容器。"
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "列出 Proxmox 来宾"
+    },
+    "start": {
+      "title": "启动来宾"
+    },
+    "shutdown": {
+      "title": "关闭来宾"
+    },
+    "reboot": {
+      "title": "重启来宾"
+    },
+    "stop": {
+      "title": "强制停止来宾"
+    },
+    "guests": {
+      "title": "Proxmox 来宾",
+      "type": "类型",
+      "node": "节点",
+      "status": "状态",
+      "running": "运行中的来宾"
+    }
   }
 }

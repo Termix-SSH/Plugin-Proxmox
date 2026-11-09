@@ -129,9 +129,56 @@
     "name": "Proxmox",
     "description": "Importujte hostí Proxmox VE ako hostiteľov, udržiavajte ich synchronizáciu a sledujte štatistiky uzlov."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Upozornenie na zmeny hosťov a uzlov",
+        "description": "Poslať upozornenie, keď sa zastaví hosť, ktorý bežal, alebo keď sa uzel odpojí."
+      }
+    }
+  },
+  "tile": {
+    "running": "Beží",
+    "stopped": "Zastavený",
+    "total": "Hostia"
+  },
+  "widget": {
+    "name": "Hostia Proxmox",
+    "description": "Bežiaci hostia na každom uzle Proxmox."
+  },
   "card": {
     "title": "Uzly Proxmox",
     "loading": "Načítava sa...",
     "empty": "Zatiaľ žiadne uzly. Zapnite štatistiky Proxmox v nastaveniach hostiteľa uzla."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Spravovať hostia Proxmox",
+      "description": "Spúšťanie, zastavovanie a reštartovanie virtuálnych strojov a kontajnerov na uzloch Proxmox, ktoré môžete upravovať."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Zoznam hostí Proxmox"
+    },
+    "start": {
+      "title": "Spustiť hosťa"
+    },
+    "shutdown": {
+      "title": "Vypnúť hosťa"
+    },
+    "reboot": {
+      "title": "Reštartovať hosťa"
+    },
+    "stop": {
+      "title": "Vynútiť zastavenie hosťa"
+    },
+    "guests": {
+      "title": "Hostia Proxmox",
+      "type": "Typ",
+      "node": "Uzol",
+      "status": "Stav",
+      "running": "Bežiaci hostia"
+    }
   }
 }

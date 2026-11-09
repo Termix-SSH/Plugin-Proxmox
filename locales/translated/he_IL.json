@@ -124,9 +124,56 @@
     "name": "Proxmox",
     "description": "ייבוא אורחים מ-Proxmox VE כמארחים, שמירה על סנכרון ועקיפת סטטיסטיקות צומת."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "התראה על שינויים באורחים ובצמתים",
+        "description": "שלח התראה כאשר אורח שהיה פעיל נעצר, או כאשר צומת יוצא מהקו."
+      }
+    }
+  },
+  "tile": {
+    "running": "פעיל",
+    "stopped": "עצור",
+    "total": "אורחים"
+  },
+  "widget": {
+    "name": "אורחים ב-Proxmox",
+    "description": "אורחים פעילים בכל צומת Proxmox."
+  },
   "card": {
     "title": "צמתים ב-Proxmox",
     "loading": "טוען...",
     "empty": "אין צמתים עדיין. הפעל את סטטיסטיקות Proxmox בהגדרות המארח של צומת."
+  },
+  "permissions": {
+    "guests": {
+      "title": "ניהול אורחים ב-Proxmox",
+      "description": "הפעל, עצור והפעל מחדש מכונות וירטואליות ומיכלים בצמתים Proxmox שיש לך הרשאת עריכה עליהם."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "רשימת אורחים ב-Proxmox"
+    },
+    "start": {
+      "title": "הפעל אורח"
+    },
+    "shutdown": {
+      "title": "כבה אורח"
+    },
+    "reboot": {
+      "title": "הפעל מחדש אורח"
+    },
+    "stop": {
+      "title": "עצור אורח בכוח"
+    },
+    "guests": {
+      "title": "אורחים ב-Proxmox",
+      "type": "סוג",
+      "node": "צומת",
+      "status": "סטטוס",
+      "running": "אורחים פעילים"
+    }
   }
 }

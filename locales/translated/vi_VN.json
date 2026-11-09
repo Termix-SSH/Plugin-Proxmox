@@ -114,9 +114,56 @@
     "name": "Proxmox",
     "description": "Nhập máy khách Proxmox VE dưới dạng host, đồng bộ hóa chúng và xem thống kê nút."
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "Cảnh báo khi có thay đổi về khách ảo và nút",
+        "description": "Gửi cảnh báo khi một khách ảo đang chạy bị dừng, hoặc một nút bị ngắt kết nối."
+      }
+    }
+  },
+  "tile": {
+    "running": "Đang chạy",
+    "stopped": "Đã dừng",
+    "total": "Khách ảo"
+  },
+  "widget": {
+    "name": "Khách ảo Proxmox",
+    "description": "Khách ảo đang chạy trên mỗi nút Proxmox."
+  },
   "card": {
     "title": "Nút Proxmox",
     "loading": "Đang tải...",
     "empty": "Chưa có nút nào. Bật thống kê Proxmox trong cài đặt máy chủ của nút."
+  },
+  "permissions": {
+    "guests": {
+      "title": "Quản lý khách ảo Proxmox",
+      "description": "Khởi động, dừng và khởi động lại máy ảo và container trên các nút Proxmox mà bạn có quyền chỉnh sửa."
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Liệt kê khách ảo Proxmox"
+    },
+    "start": {
+      "title": "Khởi động khách ảo"
+    },
+    "shutdown": {
+      "title": "Tắt khách ảo"
+    },
+    "reboot": {
+      "title": "Khởi động lại khách ảo"
+    },
+    "stop": {
+      "title": "Buộc dừng khách ảo"
+    },
+    "guests": {
+      "title": "Khách ảo Proxmox",
+      "type": "Loại",
+      "node": "Nút",
+      "status": "Trạng thái",
+      "running": "Khách ảo đang chạy"
+    }
   }
 }

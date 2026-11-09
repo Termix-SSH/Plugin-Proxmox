@@ -114,9 +114,56 @@
     "name": "Proxmox",
     "description": "Proxmox VE ゲストをホストとしてインポートし、同期を維持してノードの統計情報を確認します。"
   },
+  "settings": {
+    "host": {
+      "alertGuests": {
+        "label": "ゲストとノードの変更時に通知",
+        "description": "実行中のゲストが停止した場合、またはノードがオフラインになった場合に通知を送信します。"
+      }
+    }
+  },
+  "tile": {
+    "running": "実行中",
+    "stopped": "停止中",
+    "total": "ゲスト"
+  },
+  "widget": {
+    "name": "Proxmox ゲスト",
+    "description": "各 Proxmox ノードで実行中のゲスト。"
+  },
   "card": {
     "title": "Proxmox ノード",
     "loading": "読み込み中...",
     "empty": "ノードがありません。ノードのホスト設定で Proxmox の統計情報を有効にしてください。"
+  },
+  "permissions": {
+    "guests": {
+      "title": "Proxmox ゲストの管理",
+      "description": "編集可能な Proxmox ノード上の VM およびコンテナの起動、停止、再起動を行います。"
+    }
+  },
+  "operations": {
+    "list": {
+      "title": "Proxmox ゲストの一覧"
+    },
+    "start": {
+      "title": "ゲストの起動"
+    },
+    "shutdown": {
+      "title": "ゲストのシャットダウン"
+    },
+    "reboot": {
+      "title": "ゲストの再起動"
+    },
+    "stop": {
+      "title": "ゲストの強制停止"
+    },
+    "guests": {
+      "title": "Proxmox ゲスト",
+      "type": "タイプ",
+      "node": "ノード",
+      "status": "ステータス",
+      "running": "実行中のゲスト"
+    }
   }
 }
