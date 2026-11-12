@@ -6,6 +6,7 @@
  * this plugin owns its own polling manager, SSH connections and routes.
  */
 
+import { randomUUID } from "node:crypto";
 import type { Router } from "express";
 import express from "express";
 import type { PluginContext } from "@termix-ssh/plugin-sdk/backend";
@@ -179,7 +180,7 @@ function registerRoutes(
           .json({ error: "Proxmox stats is not enabled for this host" });
       }
 
-      const viewerSessionId = `proxmox-viewer-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+      const viewerSessionId = `proxmox-viewer-${randomUUID()}`;
       manager.registerViewer(id, viewerSessionId, userId);
       await manager.ensurePolling(host, userId);
 
@@ -240,11 +241,15 @@ function registerRoutes(
    *       200:
    *         description: Polling stopped successfully.
    */
-  app.post("/stop/:id", (req, res) => {
+  app.post("/stop/:id", async (req, res) => {
     const id = Number(req.params.id);
+    if (!(await canSeeHost(id))) {
+      return res.status(404).json({ error: "Host not found" });
+    }
+    const userId = pluginCtx().currentActor()!;
     const { viewerSessionId } = req.body as { viewerSessionId?: string };
     if (viewerSessionId && typeof viewerSessionId === "string") {
-      manager.unregisterViewer(id, viewerSessionId);
+      manager.unregisterViewer(id, viewerSessionId, userId);
     }
     res.json({ success: true });
   });
@@ -278,7 +283,10 @@ function registerRoutes(
     if (!viewerSessionId || typeof viewerSessionId !== "string") {
       return res.status(400).json({ error: "Invalid viewerSessionId" });
     }
-    const ok = manager.updateHeartbeat(viewerSessionId);
+    const ok = manager.updateHeartbeat(
+      viewerSessionId,
+      pluginCtx().currentActor()!,
+    );
     if (!ok) return res.status(404).json({ error: "Viewer session not found" });
     res.json({ success: true });
   });

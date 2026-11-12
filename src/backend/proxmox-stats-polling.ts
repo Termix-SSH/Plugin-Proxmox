@@ -307,7 +307,15 @@ export class ProxmoxPollingManager<
     }
   };
 
-  unregisterViewer = (hostId: number, sessionId: string): void => {
+  /** Without a userId this is the cleanup timer; a request passes the caller. */
+  unregisterViewer = (
+    hostId: number,
+    sessionId: string,
+    userId?: string,
+  ): void => {
+    const viewer = this.viewerDetails.get(sessionId);
+    if (!viewer || viewer.hostId !== hostId) return;
+    if (userId !== undefined && viewer.userId !== userId) return;
     const viewers = this.activeViewers.get(hostId);
     if (viewers) {
       viewers.delete(sessionId);
@@ -319,9 +327,9 @@ export class ProxmoxPollingManager<
     this.viewerDetails.delete(sessionId);
   };
 
-  updateHeartbeat(sessionId: string): boolean {
+  updateHeartbeat(sessionId: string, userId: string): boolean {
     const viewer = this.viewerDetails.get(sessionId);
-    if (viewer) {
+    if (viewer && viewer.userId === userId) {
       viewer.lastHeartbeat = Date.now();
       return true;
     }

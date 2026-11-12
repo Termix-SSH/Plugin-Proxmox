@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1
+
+### Fixed
+
+- Stopping the stats view checks that you can see the host and only stops your own view
+
 ## 1.3.0
 
 ### Added

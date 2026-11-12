@@ -129,7 +129,7 @@ describe("ProxmoxPollingManager", () => {
 
   it("updateHeartbeat returns false for an unknown session", () => {
     const { manager } = makeManager({ id: 3, userId: "user-1" });
-    expect(manager.updateHeartbeat("nope")).toBe(false);
+    expect(manager.updateHeartbeat("nope", "user-1")).toBe(false);
     manager.destroy();
   });
 
