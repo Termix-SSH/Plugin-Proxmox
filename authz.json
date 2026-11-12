@@ -1,0 +1,62 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Termix-SSH/Termix/main/scripts/authz/authz.schema.json",
+  "seed": [],
+  "routes": {
+    "POST /plugin-api/proxmox/discover": {
+      "access": "user"
+    },
+    "GET /plugin-api/proxmox/discover/stream": {
+      "access": "user"
+    },
+    "POST /plugin-api/proxmox/import": {
+      "access": "user"
+    },
+    "POST /plugin-api/proxmox/sync": {
+      "access": "user"
+    },
+    "GET /plugin-api/proxmox/stats/:id": {
+      "access": "user",
+      "resource": {
+        "kind": "host",
+        "min": "connect"
+      },
+      "params": {
+        "id": "host"
+      },
+      "allowed": "any",
+      "note": "No Proxmox node in the test data; host access is still checked"
+    },
+    "POST /plugin-api/proxmox/stats/heartbeat": {
+      "access": "user"
+    },
+    "GET /plugin-api/proxmox/stats/history/:hostId": {
+      "access": "user",
+      "resource": {
+        "kind": "host",
+        "min": "connect"
+      }
+    },
+    "POST /plugin-api/proxmox/stats/start/:id": {
+      "access": "user",
+      "resource": {
+        "kind": "host",
+        "min": "connect"
+      },
+      "params": {
+        "id": "host"
+      },
+      "destructive": true
+    },
+    "POST /plugin-api/proxmox/stats/stop/:id": {
+      "access": "user",
+      "resource": {
+        "kind": "host",
+        "min": "connect"
+      },
+      "params": {
+        "id": "host"
+      },
+      "destructive": true
+    }
+  }
+}
