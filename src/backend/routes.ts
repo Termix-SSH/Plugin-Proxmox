@@ -953,6 +953,32 @@ router.get("/discover/stream", async (req, res) => {
  *       404: { description: Host not found. }
  *       422: { description: Host is not a Proxmox node or is unreachable. }
  */
+/** The answer for a failed discovery. A 500's details stay in the log. */
+export function discoverFailure(err: unknown): {
+  status: number;
+  body: { error: string; code?: string };
+} {
+  if ((err as Error)?.name === "SshHostNotFoundError") {
+    return { status: 404, body: { error: "Host not found" } };
+  }
+  const message = getErrorMessage(err);
+  const status =
+    (err as Error & { status?: number }).status ||
+    (message.includes("Authentication failed") ||
+    message.includes("connect ECONNREFUSED") ||
+    message.includes("connect ETIMEDOUT")
+      ? 422
+      : 500);
+  return {
+    status,
+    body: {
+      error:
+        status >= 500 ? "Discovery failed" : `Discovery failed: ${message}`,
+      code: errorCodeOf(err),
+    },
+  };
+}
+
 router.post("/discover", async (req, res) => {
   const { hostId } = req.body as { hostId?: unknown };
   const userId = pluginCtx().currentActor()!;
@@ -972,22 +998,13 @@ router.post("/discover", async (req, res) => {
       clusterName: discovery.clusterName,
     });
   } catch (err: unknown) {
-    const message = getErrorMessage(err);
     pluginCtx().log.error(
       `Proxmox discovery failed for host ${parsedHostId}`,
       err as Error,
     );
 
-    const status =
-      (err as Error & { status?: number }).status ||
-      (message.includes("Authentication failed") ||
-      message.includes("connect ECONNREFUSED") ||
-      message.includes("connect ETIMEDOUT")
-        ? 422
-        : 500);
-    return res
-      .status(status)
-      .json({ error: `Discovery failed: ${message}`, code: errorCodeOf(err) });
+    const failure = discoverFailure(err);
+    return res.status(failure.status).json(failure.body);
   }
 });
 

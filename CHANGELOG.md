@@ -5,6 +5,7 @@
 ### Fixed
 
 - Stopping the stats view checks that you can see the host and only stops your own view
+- Discovering guests on a host you can't reach answers not found, and server errors no longer show their details
 
 ## 1.3.0
 
