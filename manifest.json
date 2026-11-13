@@ -20,8 +20,8 @@
     "A dashboard card with CPU, memory, disk and guests for each node"
   ],
   "engine": {
-    "termix": ">=26.11.1-0",
-    "api": "^1.15"
+    "termix": ">=26.11.2-0",
+    "api": "^2.0.0"
   },
   "capabilities": [
     "hosts:read",
@@ -37,6 +37,14 @@
     "users:impersonate",
     "operations:provide"
   ],
+  "sandbox": {
+    "schedules": [
+      {
+        "id": "host-alerts",
+        "every": 120000
+      }
+    ]
+  },
   "contributes": {
     "tabs": [
       {

@@ -27,6 +27,7 @@ const manifest = manifestJson as unknown as PluginManifest;
 describe("proxmox alerts", () => {
   it("alerts when a running guest stops and a node goes offline", async () => {
     const mock = createMockCtx({
+      sandbox: true,
       pluginId: manifest.id,
       manifest,
       capabilities: manifest.capabilities,

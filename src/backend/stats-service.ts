@@ -8,7 +8,6 @@
 
 import { randomUUID } from "node:crypto";
 import type { Router } from "express";
-import express from "express";
 import type { PluginContext } from "@termix-ssh/plugin-sdk/backend";
 import { pluginCtx } from "./plugin-ctx.js";
 import {
@@ -36,7 +35,6 @@ const EMPTY_SNAPSHOT = {
 type PollableHost = ProxmoxStatsPollableHost & { enableProxmoxStats: boolean };
 
 let pollingManager: ProxmoxPollingManager<PollableHost> | undefined;
-let router: Router | undefined;
 
 async function fetchHostForPolling(
   ctx: PluginContext,
@@ -91,15 +89,12 @@ export function startProxmoxStatsService(
     historyRepository,
   });
 
-  router = express.Router();
-  registerRoutes(router, pollingManager, historyRepository);
-  mountOn.use("/stats", router);
+  registerRoutes(mountOn, pollingManager, historyRepository);
 }
 
 export function stopProxmoxStatsService(): void {
   pollingManager?.destroy();
   pollingManager = undefined;
-  router = undefined;
 }
 
 function registerRoutes(
@@ -126,7 +121,7 @@ function registerRoutes(
    *       404:
    *         description: Stats not available yet, or the host is not found.
    */
-  app.get("/:id", async (req, res) => {
+  app.get("/stats/:id", async (req, res) => {
     const id = Number(req.params.id);
     if (!(await canSeeHost(id))) {
       return res.status(404).json({ error: "Host not found" });
@@ -168,7 +163,7 @@ function registerRoutes(
    *       404:
    *         description: Host not found.
    */
-  app.post("/start/:id", async (req, res) => {
+  app.post("/stats/start/:id", async (req, res) => {
     const id = Number(req.params.id);
     const userId = pluginCtx().currentActor()!;
 
@@ -241,7 +236,7 @@ function registerRoutes(
    *       200:
    *         description: Polling stopped successfully.
    */
-  app.post("/stop/:id", async (req, res) => {
+  app.post("/stats/stop/:id", async (req, res) => {
     const id = Number(req.params.id);
     if (!(await canSeeHost(id))) {
       return res.status(404).json({ error: "Host not found" });
@@ -278,7 +273,7 @@ function registerRoutes(
    *       404:
    *         description: Viewer session not found.
    */
-  app.post("/heartbeat", (req, res) => {
+  app.post("/stats/heartbeat", (req, res) => {
     const { viewerSessionId } = req.body as { viewerSessionId?: string };
     if (!viewerSessionId || typeof viewerSessionId !== "string") {
       return res.status(400).json({ error: "Invalid viewerSessionId" });
@@ -326,7 +321,7 @@ function registerRoutes(
    *       404:
    *         description: Host not found.
    */
-  app.get("/history/:hostId", async (req, res) => {
+  app.get("/stats/history/:hostId", async (req, res) => {
     const hostId = Number(req.params.hostId);
     if (!(await canSeeHost(hostId))) {
       return res.status(404).json({ error: "Host not found" });
