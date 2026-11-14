@@ -5,6 +5,7 @@
 ### Changed
 
 - Runs in its own process on Termix 26.11.2 and later, with no access to the server beyond what Termix allows it
+- Other plugins can add their own settings to the Proxmox host settings, drawn in their own frames (needs Termix 26.11.2)
 
 ### Fixed
 
