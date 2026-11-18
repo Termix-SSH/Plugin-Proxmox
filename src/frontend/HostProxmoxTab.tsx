@@ -113,7 +113,7 @@ export function HostProxmoxTab({
                     defaultAuthType: e.target.value,
                   })
                 }
-                className="h-7 w-44 text-xs border border-border bg-background px-2 outline-none focus:ring-1 focus:ring-ring"
+                className="h-7 w-44 text-xs border border-border bg-(--field) px-2 outline-none focus:ring-1 focus:ring-ring"
               >
                 {sshAuthTypes.types.map((option) => (
                   <option key={option.type} value={option.type}>
@@ -136,7 +136,7 @@ export function HostProxmoxTab({
                       : null,
                   })
                 }
-                className="h-7 w-44 text-xs border border-border bg-background px-2 outline-none focus:ring-1 focus:ring-ring"
+                className="h-7 w-44 text-xs border border-border bg-(--field) px-2 outline-none focus:ring-1 focus:ring-ring"
               >
                 <option value="">{t("hosts.none")}</option>
                 {credentials.map((c) => (

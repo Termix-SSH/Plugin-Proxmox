@@ -98,6 +98,26 @@ export function indexImportedGuests<H extends { id: unknown }>(
   return out;
 }
 
+const writeLocks = new Map<string, Promise<void>>();
+
+/**
+ * Waits for earlier holders of the key, then hands back a release function.
+ * Nodes of one cluster list the same guests, so their syncs must not read the
+ * host list while another sync is still creating hosts from it.
+ */
+export async function acquireWriteLock(key: string): Promise<() => void> {
+  const previous = writeLocks.get(key) ?? Promise.resolve();
+  let release!: () => void;
+  const mine = new Promise<void>((resolve) => (release = resolve));
+  const chained = previous.then(() => mine);
+  writeLocks.set(key, chained);
+  await previous;
+  return () => {
+    release();
+    if (writeLocks.get(key) === chained) writeLocks.delete(key);
+  };
+}
+
 /** The cluster's name from `pvesh get /cluster/status`, or null on one node. */
 export function parseClusterName(json: string): string | null {
   try {

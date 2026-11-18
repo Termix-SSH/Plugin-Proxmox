@@ -1,3 +1,4 @@
+import { AsyncResource } from "node:async_hooks";
 import {
   collectProxmoxStats,
   type ProxmoxStatsSnapshot,
@@ -108,6 +109,8 @@ export class ProxmoxPollingManager<
   private viewerDetails = new Map<string, ViewerDetail>();
   private inFlight = new Map<number, Promise<void>>();
   private viewerCleanupInterval: NodeJS.Timeout;
+  // Made in activate, so it carries no request's actor.
+  private readonly background = new AsyncResource("proxmox-stats-polls");
 
   constructor(
     private readonly deps: {
@@ -118,6 +121,7 @@ export class ProxmoxPollingManager<
       withSshConnection: <T>(
         host: THost,
         fn: (client: Client) => Promise<T>,
+        userId: string,
       ) => Promise<T>;
       historyRepository: ProxmoxNodeHistoryRepository;
       historyEnabled?: () => boolean;
@@ -169,6 +173,7 @@ export class ProxmoxPollingManager<
               config.nodeName,
               refreshed.sudoPassword,
             ),
+          userId,
         );
 
         this.snapshotStore.set(host.id, {
@@ -223,7 +228,15 @@ export class ProxmoxPollingManager<
     }
   }
 
+  // Polls run here, not in the request that started them: a request's actor
+  // expires soon after the reply in a plugin process.
   private startPollingForHost(host: THost, viewerUserId?: string): void {
+    this.background.runInAsyncScope(() =>
+      this.startPollingNow(host, viewerUserId),
+    );
+  }
+
+  private startPollingNow(host: THost, viewerUserId?: string): void {
     const existing = this.pollingConfigs.get(host.id);
     if (existing?.timer) {
       clearInterval(existing.timer);
@@ -307,7 +320,15 @@ export class ProxmoxPollingManager<
     }
   };
 
-  unregisterViewer = (hostId: number, sessionId: string): void => {
+  /** Without a userId this is the cleanup timer; a request passes the caller. */
+  unregisterViewer = (
+    hostId: number,
+    sessionId: string,
+    userId?: string,
+  ): void => {
+    const viewer = this.viewerDetails.get(sessionId);
+    if (!viewer || viewer.hostId !== hostId) return;
+    if (userId !== undefined && viewer.userId !== userId) return;
     const viewers = this.activeViewers.get(hostId);
     if (viewers) {
       viewers.delete(sessionId);
@@ -319,9 +340,9 @@ export class ProxmoxPollingManager<
     this.viewerDetails.delete(sessionId);
   };
 
-  updateHeartbeat(sessionId: string): boolean {
+  updateHeartbeat(sessionId: string, userId: string): boolean {
     const viewer = this.viewerDetails.get(sessionId);
-    if (viewer) {
+    if (viewer && viewer.userId === userId) {
       viewer.lastHeartbeat = Date.now();
       return true;
     }

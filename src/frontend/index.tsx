@@ -189,6 +189,14 @@ export function activate(app: TermixApp): void {
     },
   });
 
+  // Other plugins add Proxmox settings to the section below, drawn with
+  // { form, setField }.
+  app.declareActionSlot({
+    id: "proxmox.hostEditor",
+    accepts: ["component"],
+    fit: "content",
+  });
+
   app.registerHostEditorSection({
     id: "proxmox",
     group: "ssh",

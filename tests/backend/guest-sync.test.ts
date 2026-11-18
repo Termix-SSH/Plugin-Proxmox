@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  acquireWriteLock,
   getProxmoxSource,
   guestFolder,
   indexImportedGuests,
@@ -174,5 +175,34 @@ describe("cluster aware sync", () => {
       "lab / pve2",
     );
     expect(nextGuestFolder("Databases", "lab", managed)).toBe("Databases");
+  });
+});
+
+describe("acquireWriteLock", () => {
+  it("runs syncs of one user one after another", async () => {
+    const order: string[] = [];
+    const run = async (name: string, wait: number) => {
+      const release = await acquireWriteLock("user-1");
+      order.push(`${name} start`);
+      await new Promise((resolve) => setTimeout(resolve, wait));
+      order.push(`${name} end`);
+      release();
+    };
+    await Promise.all([run("a", 20), run("b", 0), run("c", 0)]);
+    expect(order).toEqual([
+      "a start",
+      "a end",
+      "b start",
+      "b end",
+      "c start",
+      "c end",
+    ]);
+  });
+
+  it("does not hold up other users", async () => {
+    const release = await acquireWriteLock("user-2");
+    const other = await acquireWriteLock("user-3");
+    other();
+    release();
   });
 });

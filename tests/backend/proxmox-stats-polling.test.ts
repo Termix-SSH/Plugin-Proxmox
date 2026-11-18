@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 vi.mock("../../src/backend/plugin-ctx.js", () => ({
@@ -76,8 +77,11 @@ describe("ProxmoxPollingManager", () => {
   function makeManager(host: TestHost) {
     const fetchHostById = vi.fn(async () => host);
     const withSshConnection = vi.fn(
-      async (_host: TestHost, fn: (client: Client) => Promise<unknown>) =>
-        fn({} as Client),
+      async (
+        _host: TestHost,
+        fn: (client: Client) => Promise<unknown>,
+        _userId?: string,
+      ) => fn({} as Client),
     );
     const historyRepository = {
       create: vi.fn(async () => {}),
@@ -91,6 +95,28 @@ describe("ProxmoxPollingManager", () => {
     });
     return { manager, fetchHostById, withSshConnection, historyRepository };
   }
+
+  it("polls outside the viewer's request, as the viewer", async () => {
+    // Stands in for the plugin process's request token store.
+    const request = new AsyncLocalStorage<string>();
+    const host: TestHost = { id: 3, userId: "owner" };
+    collectProxmoxStats.mockResolvedValue(snapshot());
+    const { manager, withSshConnection } = makeManager(host);
+    const seen: Array<string | undefined> = [];
+    withSshConnection.mockImplementation(async (_host, fn) => {
+      seen.push(request.getStore());
+      return fn({} as Client);
+    });
+
+    request.run("request-token", () =>
+      manager.registerViewer(3, "viewer-1", "viewer-user"),
+    );
+    await vi.waitFor(() => expect(withSshConnection).toHaveBeenCalled());
+
+    expect(seen).toEqual([undefined]);
+    expect(withSshConnection.mock.calls[0]?.[2]).toBe("viewer-user");
+    manager.destroy();
+  });
 
   it("starts polling and caches a snapshot when the first viewer registers", async () => {
     const host: TestHost = { id: 1, userId: "user-1" };
@@ -129,7 +155,7 @@ describe("ProxmoxPollingManager", () => {
 
   it("updateHeartbeat returns false for an unknown session", () => {
     const { manager } = makeManager({ id: 3, userId: "user-1" });
-    expect(manager.updateHeartbeat("nope")).toBe(false);
+    expect(manager.updateHeartbeat("nope", "user-1")).toBe(false);
     manager.destroy();
   });
 

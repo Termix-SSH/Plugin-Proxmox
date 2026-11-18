@@ -1,4 +1,4 @@
-import express, { type Router } from "express";
+import type { Request, Response, Router } from "express";
 import type { Client as SSHClient } from "ssh2";
 import { execElevated } from "@termix-ssh/plugin-sdk/host-commands";
 import type {
@@ -13,6 +13,7 @@ import { resolveProxmoxImportAuth } from "./proxmox-import-auth.js";
 import { parseProxmoxJumpHosts } from "./proxmox-jump-hosts.js";
 import { ProxmoxError, errorCodeOf, isSafeNodeName } from "./proxmox-shared.js";
 import {
+  acquireWriteLock,
   indexImportedGuests,
   parseJsonObject,
   guestFolder,
@@ -27,7 +28,16 @@ function getErrorMessage(error: unknown, fallback = "Unknown error"): string {
   return error instanceof Error ? error.message : fallback;
 }
 
-const router = express.Router();
+type RouteHandler = (req: Request, res: Response) => unknown;
+// Registered on ctx's router in startProxmoxService: a plugin process only
+// serves routes added to that router itself, not a router mounted with use().
+const routes: ["get" | "post", string, RouteHandler][] = [];
+const router = {
+  get: (path: string, handler: RouteHandler) =>
+    routes.push(["get", path, handler]),
+  post: (path: string, handler: RouteHandler) =>
+    routes.push(["post", path, handler]),
+};
 const runningSyncs = new Set<string>();
 
 const MIN_SYNC_INTERVAL_MINUTES = 5;
@@ -551,9 +561,11 @@ async function syncProxmoxHost(
     errors: [],
   };
   const startedAt = new Date().toISOString();
+  let releaseWrites: (() => void) | undefined;
 
   try {
     const discovery = await discoverProxmoxGuestsForHost(userId, sourceHostId);
+    releaseWrites = await acquireWriteLock(userId);
     const sourceHostName = String(discovery.host.name || "Proxmox");
     const defaultCredentialId =
       discovery.config.defaultCredentialId ?? discovery.credentialId ?? null;
@@ -728,6 +740,7 @@ async function syncProxmoxHost(
     });
     throw error;
   } finally {
+    releaseWrites?.();
     runningSyncs.delete(lockKey);
   }
 }
@@ -953,6 +966,32 @@ router.get("/discover/stream", async (req, res) => {
  *       404: { description: Host not found. }
  *       422: { description: Host is not a Proxmox node or is unreachable. }
  */
+/** The answer for a failed discovery. A 500's details stay in the log. */
+export function discoverFailure(err: unknown): {
+  status: number;
+  body: { error: string; code?: string };
+} {
+  if ((err as Error)?.name === "SshHostNotFoundError") {
+    return { status: 404, body: { error: "Host not found" } };
+  }
+  const message = getErrorMessage(err);
+  const status =
+    (err as Error & { status?: number }).status ||
+    (message.includes("Authentication failed") ||
+    message.includes("connect ECONNREFUSED") ||
+    message.includes("connect ETIMEDOUT")
+      ? 422
+      : 500);
+  return {
+    status,
+    body: {
+      error:
+        status >= 500 ? "Discovery failed" : `Discovery failed: ${message}`,
+      code: errorCodeOf(err),
+    },
+  };
+}
+
 router.post("/discover", async (req, res) => {
   const { hostId } = req.body as { hostId?: unknown };
   const userId = pluginCtx().currentActor()!;
@@ -972,22 +1011,13 @@ router.post("/discover", async (req, res) => {
       clusterName: discovery.clusterName,
     });
   } catch (err: unknown) {
-    const message = getErrorMessage(err);
     pluginCtx().log.error(
       `Proxmox discovery failed for host ${parsedHostId}`,
       err as Error,
     );
 
-    const status =
-      (err as Error & { status?: number }).status ||
-      (message.includes("Authentication failed") ||
-      message.includes("connect ECONNREFUSED") ||
-      message.includes("connect ETIMEDOUT")
-        ? 422
-        : 500);
-    return res
-      .status(status)
-      .json({ error: `Discovery failed: ${message}`, code: errorCodeOf(err) });
+    const failure = discoverFailure(err);
+    return res.status(failure.status).json(failure.body);
   }
 });
 
@@ -1041,12 +1071,13 @@ router.post("/import", async (req, res) => {
   return res.json(result);
 });
 
-/** Called from activate(). Mounts this router at /proxmox via the shared
- * dispatcher, and starts the background auto-sync scan (a 60s interval plus
+/** Called from activate(). Adds the routes to the plugin's router and starts the background auto-sync scan (a 60s interval plus
  * a one-off 30s-delayed startup run, both unref'd so they never keep the
  * process alive on their own). */
 export function startProxmoxService(mountOn: Router): void {
-  mountOn.use(router);
+  for (const [method, path, handler] of routes) {
+    mountOn[method](path, handler as never);
+  }
   proxmoxAutoSyncTimer = setInterval(runDueProxmoxAutoSyncs, 60 * 1000);
   proxmoxAutoSyncTimer.unref?.();
   proxmoxAutoSyncStartupTimer = setTimeout(runDueProxmoxAutoSyncs, 30 * 1000);
