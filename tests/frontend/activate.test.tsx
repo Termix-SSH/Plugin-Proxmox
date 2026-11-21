@@ -65,6 +65,16 @@ describe(`${manifest.id} activate`, () => {
     ]);
   });
 
+  it("puts the import menu entry in as a button and the dialog in the overlay", async () => {
+    rendered = await renderWithApp(plugin, { manifest, locales });
+    expect(rendered.registered.slot("hosts.importMenu")).toEqual([
+      "proxmox.import",
+    ]);
+    expect(rendered.registered.actions()).toContain("proxmox.import");
+    expect(rendered.registered.slot("shell.overlay")).toHaveLength(1);
+    expect(rendered.registered.slot("hosts.panel")).toHaveLength(0);
+  });
+
   it("removes everything it registered on deactivate", async () => {
     const app = await renderWithApp(plugin, { manifest, locales });
     await app.deactivate();

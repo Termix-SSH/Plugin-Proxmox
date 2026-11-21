@@ -57,6 +57,34 @@
         "id": "host"
       },
       "destructive": true
+    },
+    "GET /plugin-api/proxmox/guests/:hostId/tree": {
+      "access": "user",
+      "resource": {
+        "kind": "host",
+        "min": "connect"
+      },
+      "params": {
+        "hostId": "host"
+      },
+      "allowed": "any",
+      "note": "No Proxmox node in the test data; host access is still checked"
+    },
+    "GET /plugin-api/proxmox/guests/:hostId/options": {
+      "access": "user",
+      "note": "Needs edit access to the host; no Proxmox node in the test data",
+      "resource": {
+        "kind": "host",
+        "min": "edit"
+      }
+    },
+    "POST /plugin-api/proxmox/guests/:hostId/:action": {
+      "access": "user",
+      "note": "Runs an operation that needs proxmox.guests and edit access to the host"
+    },
+    "WS /plugin-ws/proxmox/console": {
+      "access": "user",
+      "permission": "proxmox.guests"
     }
   }
 }

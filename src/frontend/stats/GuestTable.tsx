@@ -1,13 +1,23 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "@termix-ssh/plugin-sdk/frontend";
-import { Box, Server as ServerIcon } from "lucide-react";
 import {
+  Box,
+  Copy,
+  Monitor,
+  Plus,
+  Server as ServerIcon,
+  SquareTerminal,
+} from "lucide-react";
+import {
+  Button,
   PanelSearch,
   EmptyState,
   Segmented,
   ToolbarBand,
 } from "@termix-ssh/plugin-sdk/ui";
 import type { ProxmoxGuestSummary } from "../types";
+import { GuestConsole, type ConsoleKind } from "../guests/GuestConsole";
+import { CloneForm, NewGuestForm } from "../guests/GuestForms";
 import { cn } from "@termix-ssh/plugin-sdk/ui";
 
 type StatusFilter = "all" | "running" | "stopped";
@@ -64,9 +74,35 @@ function UsageCell({
   );
 }
 
-export function GuestTable({ guests }: { guests: ProxmoxGuestSummary[] }) {
+export function GuestTable({
+  guests,
+  hostId,
+  connectionOrigin,
+  onChanged,
+  focusQuery,
+  focusToken,
+}: {
+  guests: ProxmoxGuestSummary[];
+  /** Without a host id the table only shows guests. */
+  hostId?: number;
+  connectionOrigin?: unknown;
+  onChanged?: () => void;
+  /** Search text to start with, set again whenever focusToken changes. */
+  focusQuery?: string;
+  focusToken?: unknown;
+}) {
   const { t } = useTranslation();
-  const [query, setQuery] = useState("");
+  const [consoleOf, setConsoleOf] = useState<{
+    guest: ProxmoxGuestSummary;
+    kind: ConsoleKind;
+  } | null>(null);
+  const [cloneOf, setCloneOf] = useState<ProxmoxGuestSummary | null>(null);
+  const [creating, setCreating] = useState(false);
+  const [query, setQuery] = useState(focusQuery ?? "");
+  useEffect(() => {
+    if (focusQuery !== undefined) setQuery(focusQuery);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusToken]);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
 
@@ -98,6 +134,16 @@ export function GuestTable({ guests }: { guests: ProxmoxGuestSummary[] }) {
           {t("proxmoxStats.guestCounts", { running, total: guests.length })}
         </span>
         <div className="ml-auto flex items-center gap-1.5">
+          {hostId && (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setCreating(true)}
+            >
+              <Plus className="size-3.5" />
+              {t("guests.new")}
+            </Button>
+          )}
           <PanelSearch
             value={query}
             onChange={setQuery}
@@ -153,6 +199,7 @@ export function GuestTable({ guests }: { guests: ProxmoxGuestSummary[] }) {
                 <th className="px-3 py-2 text-left font-semibold">
                   {t("proxmoxStats.uptime")}
                 </th>
+                {hostId && <th className="px-3 py-2" />}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -223,12 +270,91 @@ export function GuestTable({ guests }: { guests: ProxmoxGuestSummary[] }) {
                   <td className="px-3 py-2 whitespace-nowrap text-muted-foreground">
                     {formatUptime(guest.uptimeSeconds)}
                   </td>
+                  {hostId && (
+                    <td className="px-3 py-1">
+                      <div className="flex justify-end gap-0.5">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="size-7"
+                          title={t("guests.console")}
+                          aria-label={t("guests.console")}
+                          disabled={guest.status !== "running"}
+                          onClick={() =>
+                            setConsoleOf({
+                              guest,
+                              kind: guest.type === "lxc" ? "shell" : "vnc",
+                            })
+                          }
+                        >
+                          <Monitor className="size-3.5" />
+                        </Button>
+                        {guest.type === "qemu" && (
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="size-7"
+                            title={t("guests.serial")}
+                            aria-label={t("guests.serial")}
+                            disabled={guest.status !== "running"}
+                            onClick={() =>
+                              setConsoleOf({ guest, kind: "serial" })
+                            }
+                          >
+                            <SquareTerminal className="size-3.5" />
+                          </Button>
+                        )}
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="size-7"
+                          title={t("guests.clone")}
+                          aria-label={t("guests.clone")}
+                          onClick={() => setCloneOf(guest)}
+                        >
+                          <Copy className="size-3.5" />
+                        </Button>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
           </table>
         )}
       </div>
+      {hostId && consoleOf && (
+        <GuestConsole
+          hostId={hostId}
+          connectionOrigin={connectionOrigin}
+          vmid={consoleOf.guest.vmid}
+          name={consoleOf.guest.name}
+          kind={consoleOf.kind}
+          onClose={() => setConsoleOf(null)}
+        />
+      )}
+      {hostId && cloneOf && (
+        <CloneForm
+          hostId={hostId}
+          vmid={cloneOf.vmid}
+          name={cloneOf.name}
+          onClose={() => setCloneOf(null)}
+          onDone={() => {
+            setCloneOf(null);
+            onChanged?.();
+          }}
+        />
+      )}
+      {hostId && creating && (
+        <NewGuestForm
+          hostId={hostId}
+          onClose={() => setCreating(false)}
+          onDone={() => {
+            setCreating(false);
+            onChanged?.();
+          }}
+        />
+      )}
     </div>
   );
 }

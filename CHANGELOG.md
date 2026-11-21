@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.0
+
+### Added
+
+- Snapshot actions for guests: list, take, roll back and delete, so Operations Center and Automations can take a snapshot before an update
+- A console for every running guest from the Guests list: the VM's screen with noVNC, a VM serial console, or a container shell. Works for guests with no network or SSH, and for guests on other nodes of the cluster
+- Create VMs and containers from the Guests list, with the node's storages, ISO images, templates and bridges to pick from
+- Clone a guest, as a full or linked clone and to another node
+- VMs and containers show under their Proxmox host in layouts with a host tree, like Host Layout, and open in its Guests list
+
+### Fixed
+
+- Import from Proxmox in the hosts Import / Export menu showed "Something went wrong" instead of opening
+
 ## 1.3.1
 
 ### Changed

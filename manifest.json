@@ -1,7 +1,7 @@
 {
   "id": "proxmox",
   "name": "Proxmox",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Import Proxmox VE guests as hosts, keep them in sync and watch node stats.",
   "author": {
     "name": "Termix"
@@ -17,7 +17,9 @@
     "Keep imported hosts in sync on a schedule",
     "Set up Windows guests for RDP and turn on Docker for guests by name",
     "Node, guest, storage and cluster stats in their own tab",
-    "A dashboard card with CPU, memory, disk and guests for each node"
+    "A dashboard card with CPU, memory, disk and guests for each node",
+    "Open a VM's screen with noVNC, a container shell or a serial console right in Termix",
+    "Create VMs and containers, and clone guests"
   ],
   "engine": {
     "termix": ">=26.11.2-0",
@@ -195,6 +197,335 @@
               "enableProxmox": true
             }
           }
+        },
+        {
+          "id": "proxmox.list-snapshots",
+          "titleKey": "operations.snapshots.list",
+          "scope": "host",
+          "risk": "read",
+          "permission": "guests",
+          "hostAccess": "connect",
+          "inputs": [
+            {
+              "key": "vmid",
+              "type": "string",
+              "labelKey": "operations.snapshots.vmid",
+              "pattern": "[0-9]{1,9}"
+            }
+          ],
+          "surfaces": {
+            "assistant": true,
+            "mcp": true,
+            "palette": false
+          },
+          "when": {
+            "settings": {
+              "enableProxmox": true
+            }
+          }
+        },
+        {
+          "id": "proxmox.create-snapshot",
+          "titleKey": "operations.snapshots.create",
+          "icon": "Camera",
+          "scope": "resource",
+          "resource": "proxmox.guest",
+          "risk": "change",
+          "permission": "guests",
+          "hostAccess": "edit",
+          "dryRun": "describe",
+          "exclusive": true,
+          "inputs": [
+            {
+              "key": "name",
+              "type": "string",
+              "labelKey": "operations.snapshots.name",
+              "pattern": "[A-Za-z][A-Za-z0-9_-]{1,39}"
+            },
+            {
+              "key": "description",
+              "type": "string",
+              "labelKey": "operations.snapshots.description"
+            },
+            {
+              "key": "vmstate",
+              "type": "boolean",
+              "labelKey": "operations.snapshots.vmstate"
+            }
+          ],
+          "surfaces": {
+            "assistant": true,
+            "mcp": true
+          },
+          "when": {
+            "settings": {
+              "enableProxmox": true
+            }
+          }
+        },
+        {
+          "id": "proxmox.rollback-snapshot",
+          "titleKey": "operations.snapshots.rollback",
+          "icon": "History",
+          "scope": "resource",
+          "resource": "proxmox.snapshot",
+          "risk": "destructive",
+          "permission": "guests",
+          "hostAccess": "edit",
+          "dryRun": "describe",
+          "exclusive": true,
+          "when": {
+            "settings": {
+              "enableProxmox": true
+            }
+          }
+        },
+        {
+          "id": "proxmox.delete-snapshot",
+          "titleKey": "operations.snapshots.delete",
+          "icon": "Trash2",
+          "scope": "resource",
+          "resource": "proxmox.snapshot",
+          "risk": "destructive",
+          "permission": "guests",
+          "hostAccess": "edit",
+          "dryRun": "describe",
+          "when": {
+            "settings": {
+              "enableProxmox": true
+            }
+          }
+        },
+        {
+          "id": "proxmox.create-vm",
+          "titleKey": "operations.guestForm.createVm",
+          "icon": "Plus",
+          "scope": "host",
+          "risk": "change",
+          "permission": "guests",
+          "hostAccess": "edit",
+          "dryRun": "describe",
+          "when": {
+            "settings": {
+              "enableProxmox": true
+            }
+          },
+          "inputs": [
+            {
+              "key": "name",
+              "type": "string",
+              "labelKey": "operations.guestForm.name",
+              "required": true
+            },
+            {
+              "key": "node",
+              "type": "string",
+              "labelKey": "operations.guestForm.node",
+              "required": true
+            },
+            {
+              "key": "vmid",
+              "type": "number",
+              "labelKey": "operations.guestForm.vmid",
+              "min": 100,
+              "max": 999999999
+            },
+            {
+              "key": "cores",
+              "type": "number",
+              "labelKey": "operations.guestForm.cores",
+              "min": 1,
+              "max": 512
+            },
+            {
+              "key": "memoryMiB",
+              "type": "number",
+              "labelKey": "operations.guestForm.memory",
+              "min": 16,
+              "max": 4194304
+            },
+            {
+              "key": "diskGiB",
+              "type": "number",
+              "labelKey": "operations.guestForm.disk",
+              "min": 1,
+              "max": 65536
+            },
+            {
+              "key": "storage",
+              "type": "string",
+              "labelKey": "operations.guestForm.storage",
+              "required": true
+            },
+            {
+              "key": "bridge",
+              "type": "string",
+              "labelKey": "operations.guestForm.bridge",
+              "default": "vmbr0"
+            },
+            {
+              "key": "start",
+              "type": "boolean",
+              "labelKey": "operations.guestForm.start",
+              "default": false
+            },
+            {
+              "key": "iso",
+              "type": "string",
+              "labelKey": "operations.guestForm.iso"
+            }
+          ],
+          "surfaces": {
+            "assistant": false,
+            "mcp": false
+          }
+        },
+        {
+          "id": "proxmox.create-ct",
+          "titleKey": "operations.guestForm.createCt",
+          "icon": "Plus",
+          "scope": "host",
+          "risk": "change",
+          "permission": "guests",
+          "hostAccess": "edit",
+          "dryRun": "describe",
+          "when": {
+            "settings": {
+              "enableProxmox": true
+            }
+          },
+          "inputs": [
+            {
+              "key": "hostname",
+              "type": "string",
+              "labelKey": "operations.guestForm.hostname",
+              "required": true
+            },
+            {
+              "key": "template",
+              "type": "string",
+              "labelKey": "operations.guestForm.template",
+              "required": true
+            },
+            {
+              "key": "node",
+              "type": "string",
+              "labelKey": "operations.guestForm.node",
+              "required": true
+            },
+            {
+              "key": "vmid",
+              "type": "number",
+              "labelKey": "operations.guestForm.vmid",
+              "min": 100,
+              "max": 999999999
+            },
+            {
+              "key": "cores",
+              "type": "number",
+              "labelKey": "operations.guestForm.cores",
+              "min": 1,
+              "max": 512
+            },
+            {
+              "key": "memoryMiB",
+              "type": "number",
+              "labelKey": "operations.guestForm.memory",
+              "min": 16,
+              "max": 4194304
+            },
+            {
+              "key": "diskGiB",
+              "type": "number",
+              "labelKey": "operations.guestForm.disk",
+              "min": 1,
+              "max": 65536
+            },
+            {
+              "key": "storage",
+              "type": "string",
+              "labelKey": "operations.guestForm.storage",
+              "required": true
+            },
+            {
+              "key": "bridge",
+              "type": "string",
+              "labelKey": "operations.guestForm.bridge",
+              "default": "vmbr0"
+            },
+            {
+              "key": "start",
+              "type": "boolean",
+              "labelKey": "operations.guestForm.start",
+              "default": false
+            },
+            {
+              "key": "unprivileged",
+              "type": "boolean",
+              "labelKey": "operations.guestForm.unprivileged",
+              "default": true
+            },
+            {
+              "key": "sshKey",
+              "type": "textarea",
+              "labelKey": "operations.guestForm.sshKey"
+            }
+          ],
+          "surfaces": {
+            "assistant": false,
+            "mcp": false
+          }
+        },
+        {
+          "id": "proxmox.clone-guest",
+          "titleKey": "operations.guestForm.clone",
+          "icon": "Copy",
+          "scope": "resource",
+          "resource": "proxmox.guest",
+          "risk": "change",
+          "permission": "guests",
+          "hostAccess": "edit",
+          "dryRun": "describe",
+          "when": {
+            "settings": {
+              "enableProxmox": true
+            }
+          },
+          "inputs": [
+            {
+              "key": "name",
+              "type": "string",
+              "labelKey": "operations.guestForm.name",
+              "required": true
+            },
+            {
+              "key": "newid",
+              "type": "number",
+              "labelKey": "operations.guestForm.vmid",
+              "min": 100,
+              "max": 999999999
+            },
+            {
+              "key": "full",
+              "type": "boolean",
+              "labelKey": "operations.guestForm.full",
+              "default": false
+            },
+            {
+              "key": "target",
+              "type": "string",
+              "labelKey": "operations.guestForm.target"
+            },
+            {
+              "key": "storage",
+              "type": "string",
+              "labelKey": "operations.guestForm.storage"
+            }
+          ],
+          "surfaces": {
+            "assistant": false,
+            "mcp": false
+          }
         }
       ],
       "resources": [
@@ -220,6 +551,26 @@
               "titleKey": "operations.guests.status"
             }
           ]
+        },
+        {
+          "id": "proxmox.snapshot",
+          "titleKey": "operations.snapshots.title",
+          "icon": "History",
+          "list": "proxmox.list-snapshots",
+          "key": "key",
+          "name": "name",
+          "tab": "proxmox-stats",
+          "columns": [
+            {
+              "key": "guest",
+              "titleKey": "operations.snapshots.guest"
+            },
+            {
+              "key": "createdAt",
+              "titleKey": "operations.snapshots.created"
+            }
+          ],
+          "filters": ["guest"]
         }
       ],
       "signals": [

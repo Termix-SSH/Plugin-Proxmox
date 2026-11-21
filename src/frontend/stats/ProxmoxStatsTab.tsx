@@ -65,6 +65,8 @@ interface ProxmoxStatsProps {
   isVisible?: boolean;
   isTopbarOpen?: boolean;
   embedded?: boolean;
+  /** A guest to show, by vmid, e.g. picked in a host tree. */
+  focus?: { vmid?: number };
 }
 
 interface ProxmoxStatsHistories {
@@ -100,6 +102,7 @@ function ProxmoxStatsInner({
   isVisible = true,
   isTopbarOpen = true,
   embedded = false,
+  focus,
 }: ProxmoxStatsProps): React.ReactElement {
   const { t } = useTranslation();
   const { addLog, clearLogs } = useConnectionLog();
@@ -110,7 +113,15 @@ function ProxmoxStatsInner({
   );
   const { hosts } = useHosts();
 
-  const [view, setView] = React.useState<"overview" | "guests">("overview");
+  const [view, setView] = React.useState<"overview" | "guests">(
+    focus?.vmid !== undefined ? "guests" : "overview",
+  );
+  // A host tree picked a guest: show the guest list filtered to it. A new
+  // focus object asks again, even for the same guest.
+  const focusQuery = focus?.vmid !== undefined ? String(focus.vmid) : undefined;
+  React.useEffect(() => {
+    if (focus?.vmid !== undefined) setView("guests");
+  }, [focus]);
   const [snapshot, setSnapshot] = React.useState<ProxmoxStatsSnapshot | null>(
     null,
   );
@@ -399,7 +410,18 @@ function ProxmoxStatsInner({
             scroll={false}
           >
             {showContent && view === "guests" && (
-              <GuestTable guests={snapshot.guests.guests} />
+              <GuestTable
+                guests={snapshot.guests.guests}
+                hostId={currentHostConfig?.id}
+                focusQuery={focusQuery}
+                focusToken={focus}
+                connectionOrigin={
+                  (
+                    currentHostConfig as
+                      { connectionOrigin?: unknown } | undefined
+                  )?.connectionOrigin
+                }
+              />
             )}
             {showContent && view === "overview" && (
               <div className="min-h-0 flex-1 overflow-y-auto thin-scrollbar">

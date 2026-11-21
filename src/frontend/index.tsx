@@ -1,14 +1,14 @@
+import "@xterm/xterm/css/xterm.css";
 import { useEffect, useState, type ComponentType } from "react";
 import { Boxes, HardDrive, Server } from "lucide-react";
 import {
   useHosts,
-  useTranslation,
   type HostEditorSectionProps,
   type StandaloneViewProps,
   type TabProps,
   type TermixApp,
 } from "@termix-ssh/plugin-sdk/frontend";
-import { ComponentSlot, DropdownMenuItem } from "@termix-ssh/plugin-sdk/ui";
+import { ComponentSlot } from "@termix-ssh/plugin-sdk/ui";
 import type { PluginHostRecord } from "@termix-ssh/plugin-sdk/frontend";
 import { setProxmoxApp } from "./proxmox-api";
 import { ProxmoxDiscoverDialog } from "./ProxmoxDiscoverDialog";
@@ -19,6 +19,7 @@ import { HostProxmoxStatsTab } from "./stats/HostProxmoxStatsTab";
 import { ProxmoxNodesCard } from "./stats/ProxmoxNodesCard";
 import { ProxmoxHostTile } from "./stats/ProxmoxHostTile";
 import { guestsWidget } from "./stats/HomepageWidget";
+import { registerTreeChildren } from "./tree-children";
 
 interface DiscoverRequest {
   hostId?: number;
@@ -26,7 +27,7 @@ interface DiscoverRequest {
   defaultAuthType?: string;
 }
 
-type Opener = (request: DiscoverRequest) => void;
+type Opener = (request: DiscoverRequest | null) => void;
 
 // The Proxmox fields are this plugin's host settings, saved with the host
 // through form.pluginSettings.proxmox.
@@ -79,9 +80,11 @@ function ProxmoxHostSection({ form, updateForm }: HostEditorSectionProps) {
   );
 }
 
-function ProxmoxStatsTabView({ sshHost, label, isVisible }: TabProps) {
+function ProxmoxStatsTabView({ sshHost, label, isVisible, tab }: TabProps) {
+  const focus = (tab?.data as { focus?: { vmid?: number } } | undefined)?.focus;
   return (
     <ProxmoxStatsTab
+      focus={focus}
       hostConfig={sshHost as never}
       title={label}
       isVisible={isVisible}
@@ -105,21 +108,18 @@ export function proxmoxSettings(
 export function activate(app: TermixApp): void {
   setProxmoxApp(app);
   app.onDispose(() => setProxmoxApp(null));
-  // The dialog lives in the hosts panel; the menu item and host action open
-  // it through this, created per activation.
+  // Actions and the overlay both run in the plugin's background frame, so
+  // the menu item and host action reach the dialog through this.
+  let current: DiscoverRequest | null = null;
   const openers = new Set<Opener>();
-  const openDiscover: Opener = (request) => {
+  const openDiscover = (request: DiscoverRequest | null) => {
+    current = request;
     for (const open of openers) open(request);
   };
 
-  function DiscoverDialogHost({
-    hosts,
-    onHostsChanged,
-  }: {
-    hosts: PluginHostRecord[];
-    onHostsChanged: (hosts: PluginHostRecord[]) => void;
-  }) {
-    const [request, setRequest] = useState<DiscoverRequest | null>(null);
+  function DiscoverOverlay() {
+    const [request, setRequest] = useState<DiscoverRequest | null>(current);
+    const { hosts } = useHosts();
     useEffect(() => {
       openers.add(setRequest);
       return () => {
@@ -127,47 +127,36 @@ export function activate(app: TermixApp): void {
       };
     }, []);
     if (!request) return null;
+    // The shell only shows the overlay frame while it sees this marker.
     return (
-      <ProxmoxDiscoverDialog
-        open
-        onClose={() => setRequest(null)}
-        hosts={hosts}
-        onHostsChanged={onHostsChanged}
-        preselectedHostId={request.hostId}
-        defaultCredentialId={request.defaultCredentialId ?? null}
-        defaultAuthType={request.defaultAuthType}
-      />
+      <>
+        <span data-overlay="" hidden />
+        <ProxmoxDiscoverDialog
+          open
+          onClose={() => openDiscover(null)}
+          hosts={hosts}
+          onHostsChanged={() => {}}
+          preselectedHostId={request.hostId}
+          defaultCredentialId={request.defaultCredentialId ?? null}
+          defaultAuthType={request.defaultAuthType}
+        />
+      </>
     );
   }
 
-  function ImportMenuItem() {
-    const { t } = useTranslation();
-    const { hosts } = useHosts();
-    return (
-      <DropdownMenuItem
-        onClick={() => openDiscover({})}
-        disabled={!hosts.some((host) => proxmoxSettings(host).enableProxmox)}
-      >
-        <Server className="size-3.5 mr-2" />
-        {t("hosts.proxmoxImportTitle")}
-      </DropdownMenuItem>
-    );
-  }
-
-  app.registerSlotContribution("hosts.panel", {
-    actionId: "proxmox.discoverDialog",
+  app.registerSlotContribution("shell.overlay", {
+    actionId: "proxmox.discoverOverlay",
     titleKey: "hosts.proxmoxImportTitle",
     kind: "component",
-    component: DiscoverDialogHost as unknown as ComponentType<
-      Record<string, unknown>
-    >,
+    component: DiscoverOverlay as ComponentType<Record<string, unknown>>,
   });
 
+  app.registerAction("proxmox.import", () => openDiscover({}));
   app.registerSlotContribution("hosts.importMenu", {
     actionId: "proxmox.import",
     titleKey: "hosts.proxmoxImportTitle",
-    kind: "component",
-    component: ImportMenuItem as ComponentType<Record<string, unknown>>,
+    icon: Server as never,
+    kind: "button",
   });
 
   app.registerHostAction({
@@ -249,4 +238,9 @@ export function activate(app: TermixApp): void {
   });
 
   app.registerExtension("homepage.widgets", guestsWidget(app.t));
+
+  registerTreeChildren(
+    app,
+    (host) => proxmoxSettings(host).enableProxmoxStats === true,
+  );
 }

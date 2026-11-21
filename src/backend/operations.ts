@@ -5,6 +5,8 @@ import type {
 } from "@termix-ssh/plugin-sdk/backend";
 import { createPveshRunner, type PveshRunner } from "./proxmox/pvesh-runner.js";
 import { isSafeNodeName } from "./proxmox-shared.js";
+import { registerSnapshotOperations } from "./snapshot-operations.js";
+import { registerGuestOperations } from "./guests.js";
 
 export interface Guest {
   vmid: number;
@@ -21,7 +23,7 @@ const POWER = {
   "proxmox.stop-guest": "stop",
 } as const;
 
-function requireHost(context: PluginOperationContext): number {
+export function requireHost(context: PluginOperationContext): number {
   if (context.hostId === undefined) throw new Error("This needs a host");
   return context.hostId;
 }
@@ -157,4 +159,7 @@ export function registerOperations(ctx: PluginContext): void {
         }),
     });
   }
+
+  registerSnapshotOperations(ctx);
+  registerGuestOperations(ctx);
 }
